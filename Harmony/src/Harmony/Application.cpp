@@ -1,5 +1,8 @@
 #include "Application.h"
 
+#include "Harmony/Log.h"
+#include "Harmony/Event/ApplicationEvent.h"
+
 namespace Harmony
 {
 
@@ -14,7 +17,15 @@ namespace Harmony
 
 	void Application::run()
 	{
-		while (true);
+		WindowResizeEvent e(1280, 720);
+		if (e.is_in_category(EventCategoryApplication))
+		{
+			HM_TRACE(e);
+		}
+		if (e.is_in_category(EventCategoryInput))
+		{
+			HM_TRACE(e);
+		}
 	}
 
 }
