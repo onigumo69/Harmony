@@ -83,12 +83,11 @@ namespace Harmony
 		EVENT_CLASS_TYPE(MouseButtonPressed)
 	};
 
-	class HARMONY_API MouseButtonReleasedEvent : MouseButtonEvent
+	class HARMONY_API MouseButtonReleasedEvent : public MouseButtonEvent
 	{
 	public:
 		MouseButtonReleasedEvent(int button)
-			: MouseButtonEvent(button)
-		{}
+			: MouseButtonEvent(button) {}
 
 		std::string debug_to_string() const override
 		{

@@ -2,6 +2,8 @@
 
 #include "Core.h"
 #include "Event/Event.h"
+#include "Event/ApplicationEvent.h"
+
 #include "Window.h"
 
 #include <memory>
@@ -15,7 +17,11 @@ namespace Harmony
 		virtual ~Application();
 
 		void run();
+
+		void on_event(Event& e);
 	private:
+		bool on_window_close(WindowCloseEvent& e);
+
 		std::unique_ptr<Window> _window;
 		bool _running = true;
 	};
