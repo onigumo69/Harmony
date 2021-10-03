@@ -128,7 +128,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>HM_ENABLE_ASSERTS;HARMONY_BUILD_DLL;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HM_DEBUG;HARMONY_BUILD_DLL;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Harmony\thirdparty\glad\include\;$(SolutionDir)Harmony\thirdparty\imgui\;$(SolutionDir)Harmony\thirdparty\spdlog\include\;$(SolutionDir)Harmony\thirdparty\glfw\include\</AdditionalIncludeDirectories>
     </ClCompile>
