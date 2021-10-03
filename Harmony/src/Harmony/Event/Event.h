@@ -36,16 +36,15 @@ namespace Harmony
 
 	class HARMONY_API Event
 	{
-		friend class EventDispatcher;
 	public:
+		bool _handled = false;
+
 		virtual EventType get_event_type() const = 0;
 		virtual const char* get_name() const = 0;
 		virtual int get_category_flags() const = 0;
 		virtual std::string debug_to_string() const { return get_name(); }
 
 		inline bool is_in_category(EventCategory category) { return get_category_flags() & category; }
-	protected:
-		bool _handled = false;
 	};
 
 	class EventDispatcher

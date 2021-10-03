@@ -167,12 +167,16 @@
     <ClInclude Include="src\Harmony\Event\Event.h" />
     <ClInclude Include="src\Harmony\Event\KeyEvent.h" />
     <ClInclude Include="src\Harmony\Event\MouseEvent.h" />
+    <ClInclude Include="src\Harmony\Layer.h" />
+    <ClInclude Include="src\Harmony\LayerStack.h" />
     <ClInclude Include="src\Harmony\Log.h" />
     <ClInclude Include="src\Harmony\Window.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Harmony\Application.cpp" />
+    <ClCompile Include="src\Harmony\Layer.cpp" />
+    <ClCompile Include="src\Harmony\LayerStack.cpp" />
     <ClCompile Include="src\Harmony\Log.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
   </ItemGroup>

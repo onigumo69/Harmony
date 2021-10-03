@@ -25,6 +25,10 @@ namespace Harmony
 		{
 			glClearColor(1, 0, 1, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
+
+			for (Layer* layer : _layer_stack)
+				layer->on_update();
+
 			_window->on_update();
 		}
 	}
@@ -34,7 +38,22 @@ namespace Harmony
 		EventDispatcher dispatcher(e);
 		dispatcher.dispatch<WindowCloseEvent>(BIND_EVENT_FN(on_window_close));
 
-		HM_CORE_TRACE("{0}", e);
+		for (auto it = _layer_stack.end(); it != _layer_stack.begin(); )
+		{
+			(*--it)->on_event(e);
+			if (e._handled)
+				break;
+		}
+	}
+
+	void Application::push_layer(Layer* layer)
+	{
+		_layer_stack.push_layer(layer);
+	}
+
+	void Application::push_overlay(Layer* overlay)
+	{
+		_layer_stack.push_overlay(overlay);
 	}
 
 	bool Application::on_window_close(WindowCloseEvent& e)
