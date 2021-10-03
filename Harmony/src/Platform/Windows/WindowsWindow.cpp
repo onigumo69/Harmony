@@ -51,6 +51,8 @@ namespace Harmony
 
 		_window = glfwCreateWindow((int)props._width, (int)props._height, _data._title.c_str(), nullptr, nullptr);
 		glfwMakeContextCurrent(_window);
+		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+		HM_CORE_ASSERT(status, "Failed to initialize Glad!");
 		glfwSetWindowUserPointer(_window, &_data);
 		set_vsync(true);
 

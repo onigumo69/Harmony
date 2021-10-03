@@ -24,12 +24,18 @@ namespace Harmony
 
 		void push_layer(Layer* layer);
 		void push_overlay(Layer* overlay);
+
+		inline Window& get_window() { return *_window; }
+
+		inline static Application& get() { return *Instance; }
 	private:
 		bool on_window_close(WindowCloseEvent& e);
 
 		std::unique_ptr<Window> _window;
 		bool _running = true;
 		LayerStack _layer_stack;
+	private:
+		static Application* Instance;
 	};
 
 	// to be defined in client side

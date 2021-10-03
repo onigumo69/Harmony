@@ -2,14 +2,19 @@
 
 #include "Harmony/Log.h"
 
-#include <GLFW/glfw3.h>
+#include <glad/glad.h>
 
 namespace Harmony
 {
 	#define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
 
+	Application* Application::Instance = nullptr;
+
 	Application::Application()
 	{
+		HM_CORE_ASSERT(!Instance, "Application already exists!");
+		Instance = this;
+
 		_window = std::unique_ptr<Window>(Window::create());
 		_window->set_event_callback(BIND_EVENT_FN(on_event));
 	}
@@ -49,11 +54,13 @@ namespace Harmony
 	void Application::push_layer(Layer* layer)
 	{
 		_layer_stack.push_layer(layer);
+		layer->on_attach();
 	}
 
 	void Application::push_overlay(Layer* overlay)
 	{
 		_layer_stack.push_overlay(overlay);
+		overlay->on_attach();
 	}
 
 	bool Application::on_window_close(WindowCloseEvent& e)

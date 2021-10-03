@@ -130,7 +130,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>HM_ENABLE_ASSERTS;HARMONY_BUILD_DLL;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Harmony\thirdparty\spdlog\include\;$(SolutionDir)Harmony\thirdparty\glfw\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Harmony\thirdparty\glad\include\;$(SolutionDir)Harmony\thirdparty\imgui\;$(SolutionDir)Harmony\thirdparty\spdlog\include\;$(SolutionDir)Harmony\thirdparty\glfw\include\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -147,7 +147,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>HARMONY_BUILD_DLL;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Harmony\thirdparty\spdlog\include\;$(SolutionDir)Harmony\thirdparty\glfw\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Harmony\thirdparty\glad\include\;$(SolutionDir)Harmony\thirdparty\imgui\;$(SolutionDir)Harmony\thirdparty\spdlog\include\;$(SolutionDir)Harmony\thirdparty\glfw\include\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -167,18 +167,32 @@
     <ClInclude Include="src\Harmony\Event\Event.h" />
     <ClInclude Include="src\Harmony\Event\KeyEvent.h" />
     <ClInclude Include="src\Harmony\Event\MouseEvent.h" />
+    <ClInclude Include="src\Harmony\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Harmony\Layer.h" />
     <ClInclude Include="src\Harmony\LayerStack.h" />
     <ClInclude Include="src\Harmony\Log.h" />
     <ClInclude Include="src\Harmony\Window.h" />
+    <ClInclude Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
+    <ClInclude Include="thirdparty\imgui\imconfig.h" />
+    <ClInclude Include="thirdparty\imgui\imgui.h" />
+    <ClInclude Include="thirdparty\imgui\imgui_internal.h" />
+    <ClInclude Include="thirdparty\imgui\imstb_rectpack.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Harmony\Application.cpp" />
+    <ClCompile Include="src\Harmony\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Harmony\Layer.cpp" />
     <ClCompile Include="src\Harmony\LayerStack.cpp" />
     <ClCompile Include="src\Harmony\Log.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
+    <ClCompile Include="thirdparty\glad\src\glad.c" />
+    <ClCompile Include="thirdparty\imgui\imgui.cpp" />
+    <ClCompile Include="thirdparty\imgui\imgui_demo.cpp" />
+    <ClCompile Include="thirdparty\imgui\imgui_draw.cpp" />
+    <ClCompile Include="thirdparty\imgui\imgui_tables.cpp" />
+    <ClCompile Include="thirdparty\imgui\imgui_widgets.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
