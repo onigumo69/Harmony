@@ -22,6 +22,8 @@ namespace Harmony
 		inline void set_event_callback(const EventCallbackFn& callback) override { _data._event_callback = callback; }
 		void set_vsync(bool enabled) override;
 		bool is_vsync() const override;
+
+		inline virtual void* get_native_window() const { return _window; }
 	private:
 		virtual void init(const WindowProps& props);
 		virtual void shutdown();
