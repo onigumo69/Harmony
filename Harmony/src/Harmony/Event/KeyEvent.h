@@ -57,4 +57,20 @@ namespace Harmony
 
 		EVENT_CLASS_TYPE(KeyReleased)
 	};
+
+	class HARMONY_API KeyTypedEvent : public KeyEvent
+	{
+	public:
+		KeyTypedEvent(int keycode)
+			: KeyEvent(keycode) {}
+
+		std::string debug_to_string() const override
+		{
+			std::stringstream ss;
+			ss << "KeyTypedEvent: " << _keycode;
+			return ss.str();
+		}
+
+		EVENT_CLASS_TYPE(KeyTyped)
+	};
 }
