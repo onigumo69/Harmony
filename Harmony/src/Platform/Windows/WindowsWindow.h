@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Harmony/Window.h"
+#include "Harmony/Renderer/GraphicsContext.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -29,6 +30,7 @@ namespace Harmony
 		virtual void shutdown();
 	private:
 		GLFWwindow* _window;
+		GraphicsContext* _context;
 
 		struct WindowData
 		{

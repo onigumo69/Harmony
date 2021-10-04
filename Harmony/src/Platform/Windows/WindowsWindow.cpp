@@ -6,6 +6,8 @@
 #include "Harmony/Event/MouseEvent.h"
 #include "Harmony/Event/KeyEvent.h"
 
+#include "Platform/OpenGL/OpenGLContext.h"
+
 namespace Harmony
 {
 
@@ -50,9 +52,10 @@ namespace Harmony
 		}
 
 		_window = glfwCreateWindow((int)props._width, (int)props._height, _data._title.c_str(), nullptr, nullptr);
-		glfwMakeContextCurrent(_window);
-		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-		HM_CORE_ASSERT(status, "Failed to initialize Glad!");
+
+		_context = new OpenGLContext(_window);
+		_context->init();
+
 		glfwSetWindowUserPointer(_window, &_data);
 		set_vsync(true);
 
@@ -155,7 +158,7 @@ namespace Harmony
 	void WindowsWindow::on_update()
 	{
 		glfwPollEvents();
-		glfwSwapBuffers(_window);
+		_context->swap_buffers();
 	}
 
 	void WindowsWindow::set_vsync(bool enabled)

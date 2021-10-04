@@ -171,6 +171,7 @@
     <ClInclude Include="src\Harmony\Event\Event.h" />
     <ClInclude Include="src\Harmony\Event\KeyEvent.h" />
     <ClInclude Include="src\Harmony\Event\MouseEvent.h" />
+    <ClInclude Include="src\Harmony\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Harmony\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Harmony\Input.h" />
     <ClInclude Include="src\Harmony\KeyCode.h" />
@@ -179,6 +180,7 @@
     <ClInclude Include="src\Harmony\Log.h" />
     <ClInclude Include="src\Harmony\MouseButtonCode.h" />
     <ClInclude Include="src\Harmony\Window.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="thirdparty\imgui\imconfig.h" />
@@ -192,6 +194,7 @@
     <ClCompile Include="src\Harmony\Layer.cpp" />
     <ClCompile Include="src\Harmony\LayerStack.cpp" />
     <ClCompile Include="src\Harmony\Log.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="thirdparty\glad\src\glad.c" />
