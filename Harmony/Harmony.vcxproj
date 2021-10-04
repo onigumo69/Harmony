@@ -179,6 +179,7 @@
     <ClInclude Include="src\Harmony\LayerStack.h" />
     <ClInclude Include="src\Harmony\Log.h" />
     <ClInclude Include="src\Harmony\MouseButtonCode.h" />
+    <ClInclude Include="src\Harmony\Renderer\Shader.h" />
     <ClInclude Include="src\Harmony\Window.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
@@ -194,6 +195,7 @@
     <ClCompile Include="src\Harmony\Layer.cpp" />
     <ClCompile Include="src\Harmony\LayerStack.cpp" />
     <ClCompile Include="src\Harmony\Log.cpp" />
+    <ClCompile Include="src\Harmony\Renderer\Shader.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />

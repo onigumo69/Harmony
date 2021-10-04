@@ -7,6 +7,8 @@
 #include "LayerStack.h"
 #include "ImGui/ImGuiLayer.h"
 
+#include "Renderer/Shader.h"
+
 #include "Window.h"
 
 #include <memory>
@@ -40,6 +42,7 @@ namespace Harmony
 		unsigned int _vertex_array;
 		unsigned int _vertex_buffer;
 		unsigned int _index_buffer;
+		std::unique_ptr<Shader> _shader;
 	private:
 		static Application* Instance;
 	};
