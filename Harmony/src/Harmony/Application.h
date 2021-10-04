@@ -36,6 +36,10 @@ namespace Harmony
 		ImGuiLayer* _imgui_layer;
 		bool _running = true;
 		LayerStack _layer_stack;
+
+		unsigned int _vertex_array;
+		unsigned int _vertex_buffer;
+		unsigned int _index_buffer;
 	private:
 		static Application* Instance;
 	};
