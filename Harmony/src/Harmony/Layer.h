@@ -16,6 +16,7 @@ namespace Harmony
 		virtual void on_attach() {}
 		virtual void on_detach() {}
 		virtual void on_update() {}
+		virtual void on_imgui_render() {}
 		virtual void on_event(Event& event) {}
 
 		inline const std::string& get_name() { return _debug_name; }

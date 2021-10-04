@@ -23,7 +23,7 @@ namespace Harmony
 		std::vector<Layer*>::iterator end() { return _layers.end(); }
 	private:
 		std::vector<Layer*> _layers;
-		std::vector<Layer*>::iterator _layer_insert;
+		unsigned int _layer_insert_index = 0;
 	};
 
 }

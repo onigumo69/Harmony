@@ -6,7 +6,8 @@
 #include "Harmony/Event/KeyEvent.h"
 #include "Harmony/Event/MouseEvent.h"
 
-namespace Harmony {
+namespace Harmony
+{
 
 	class HARMONY_API ImGuiLayer : public Layer
 	{
@@ -14,21 +15,12 @@ namespace Harmony {
 		ImGuiLayer();
 		~ImGuiLayer();
 
-		void on_attach();
-		void on_detach();
-		void on_update();
-		void on_event(Event& event);
+		virtual void on_attach() override;
+		virtual void on_detach() override;
+		virtual void on_imgui_render() override;
 
-		// for testing only
-	private:
-		bool OnMouseButtonPressedEvent(MouseButtonPressedEvent& e);
-		bool OnMouseButtonReleasedEvent(MouseButtonReleasedEvent& e);
-		bool OnMouseMovedEvent(MouseMovedEvent& e);
-		bool OnMouseScrolledEvent(MouseScrolledEvent& e);
-		bool OnKeyPressedEvent(KeyPressedEvent& e);
-		bool OnKeyReleasedEvent(KeyReleasedEvent& e);
-		bool OnKeyTypedEvent(KeyTypedEvent& e);
-		bool OnWindowResizeEvent(WindowResizeEvent& e);
+		void begin();
+		void end();
 	private:
 		float _time = 0.0f;
 	};

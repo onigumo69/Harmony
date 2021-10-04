@@ -5,7 +5,7 @@ namespace Harmony
 
 	LayerStack::LayerStack()
 	{
-		_layer_insert = _layers.begin();
+		
 	}
 
 	LayerStack::~LayerStack()
@@ -16,7 +16,8 @@ namespace Harmony
 
 	void LayerStack::push_layer(Layer* layer)
 	{
-		_layer_insert = _layers.emplace(_layer_insert, layer);
+		_layers.emplace(_layers.begin() + _layer_insert_index, layer);
+		_layer_insert_index++;
 	}
 
 	void LayerStack::push_overlay(Layer* overlay)
@@ -29,8 +30,7 @@ namespace Harmony
 		auto it = std::find(_layers.begin(), _layers.end(), layer);
 		if (it != _layers.end())
 		{
-			_layers.erase(it);
-			_layer_insert--;
+			_layer_insert_index--;
 		}
 	}
 

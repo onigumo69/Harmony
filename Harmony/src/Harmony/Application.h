@@ -5,6 +5,7 @@
 #include "Event/ApplicationEvent.h"
 
 #include "LayerStack.h"
+#include "ImGui/ImGuiLayer.h"
 
 #include "Window.h"
 
@@ -32,6 +33,7 @@ namespace Harmony
 		bool on_window_close(WindowCloseEvent& e);
 
 		std::unique_ptr<Window> _window;
+		ImGuiLayer* _imgui_layer;
 		bool _running = true;
 		LayerStack _layer_stack;
 	private:

@@ -19,6 +19,9 @@ namespace Harmony
 
 		_window = std::unique_ptr<Window>(Window::create());
 		_window->set_event_callback(BIND_EVENT_FN(on_event));
+
+		_imgui_layer = new ImGuiLayer();
+		push_layer(_imgui_layer);
 	}
 
 
@@ -35,6 +38,11 @@ namespace Harmony
 
 			for (Layer* layer : _layer_stack)
 				layer->on_update();
+
+			_imgui_layer->begin();
+			for (Layer* layer : _layer_stack)
+				layer->on_imgui_render();
+			_imgui_layer->end();
 
 			_window->on_update();
 		}

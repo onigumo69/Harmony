@@ -1,5 +1,7 @@
 #include <Harmony.h>
 
+#include "imgui.h"
+
 class ExampleLayer : public Harmony::Layer
 {
 public:
@@ -12,6 +14,13 @@ public:
 	{
 		if(Harmony::Input::is_key_pressed(HM_KEY_TAB))
 			HM_TRACE("Tab key is pressed (poll)!");
+	}
+
+	virtual void on_imgui_render() override
+	{
+		ImGui::Begin("Test");
+		ImGui::Text("Hello ImGui Render");
+		ImGui::End();
 	}
 
 	void on_event(Harmony::Event& event) override
@@ -33,7 +42,6 @@ public:
 	Sandbox()
 	{
 		push_layer(new ExampleLayer());
-		push_layer(new Harmony::ImGuiLayer());
 	}
 
 	~Sandbox()
