@@ -2,6 +2,8 @@
 
 #include "Harmony/Log.h"
 
+#include "Input.h"
+
 #include <glad/glad.h>
 
 namespace Harmony

@@ -169,9 +169,11 @@
     <ClInclude Include="src\Harmony\Event\MouseEvent.h" />
     <ClInclude Include="src\Harmony\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Harmony\Input.h" />
+    <ClInclude Include="src\Harmony\KeyCode.h" />
     <ClInclude Include="src\Harmony\Layer.h" />
     <ClInclude Include="src\Harmony\LayerStack.h" />
     <ClInclude Include="src\Harmony\Log.h" />
+    <ClInclude Include="src\Harmony\MouseButtonCode.h" />
     <ClInclude Include="src\Harmony\Window.h" />
     <ClInclude Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />

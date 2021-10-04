@@ -10,12 +10,19 @@ public:
 
 	void on_update() override
 	{
-		HM_INFO("ExampleLayer::Update");
+		if(Harmony::Input::is_key_pressed(HM_KEY_TAB))
+			HM_TRACE("Tab key is pressed (poll)!");
 	}
 
 	void on_event(Harmony::Event& event) override
 	{
-		HM_TRACE("{0}", event);
+		if (event.get_event_type() == Harmony::EventType::KeyPressed)
+		{
+			Harmony::KeyPressedEvent& e = (Harmony::KeyPressedEvent&)event;
+			if (e.get_keycode() == HM_KEY_TAB)
+				HM_TRACE("Tab key is pressed (event)!");
+			HM_TRACE("{0}", (char)e.get_keycode());
+		}
 	}
 
 };
