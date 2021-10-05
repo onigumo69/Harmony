@@ -26,9 +26,6 @@ namespace Harmony
 		glGenVertexArrays(1, &_vertex_array);
 		glBindVertexArray(_vertex_array);
 
-		glGenBuffers(1, &_vertex_buffer);
-		glBindBuffer(GL_ARRAY_BUFFER, _vertex_buffer);
-
 		float vertices[3 * 3] =
 		{
 			-0.5f, -0.5f, 0.0f,
@@ -36,16 +33,13 @@ namespace Harmony
 			 0.0f,  0.5f, 0.0f
 		};
 
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+		_vertex_buffer.reset(VertexBuffer::create(vertices, sizeof(vertices)));
 
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
 
-		glGenBuffers(1, &_index_buffer);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _index_buffer);
-
-		unsigned int indices[3] = { 0, 1, 2 };
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+		uint32_t indices[3] = { 0, 1, 2 };
+		_index_buffer.reset(IndexBuffer::create(indices, sizeof(indices) / sizeof(uint32_t)));
 
 		std::string vertex_source = R"(
 			#version 330 core
@@ -92,7 +86,7 @@ namespace Harmony
 			_shader->bind();
 
 			glBindVertexArray(_vertex_array);
-			glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+			glDrawElements(GL_TRIANGLES, _index_buffer->get_count(), GL_UNSIGNED_INT, nullptr);
 
 			for (Layer* layer : _layer_stack)
 				layer->on_update();
