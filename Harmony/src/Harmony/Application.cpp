@@ -12,6 +12,27 @@ namespace Harmony
 
 	Application* Application::Instance = nullptr;
 
+	static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type)
+	{
+		switch (type)
+		{
+		case Harmony::ShaderDataType::Float:    return GL_FLOAT;
+		case Harmony::ShaderDataType::Float2:   return GL_FLOAT;
+		case Harmony::ShaderDataType::Float3:   return GL_FLOAT;
+		case Harmony::ShaderDataType::Float4:   return GL_FLOAT;
+		case Harmony::ShaderDataType::Mat3:     return GL_FLOAT;
+		case Harmony::ShaderDataType::Mat4:     return GL_FLOAT;
+		case Harmony::ShaderDataType::Int:      return GL_INT;
+		case Harmony::ShaderDataType::Int2:     return GL_INT;
+		case Harmony::ShaderDataType::Int3:     return GL_INT;
+		case Harmony::ShaderDataType::Int4:     return GL_INT;
+		case Harmony::ShaderDataType::Bool:     return GL_BOOL;
+		}
+
+		HM_CORE_ASSERT(false, "Unknown ShaderDataType!");
+		return 0;
+	}
+
 	Application::Application()
 	{
 		HM_CORE_ASSERT(!Instance, "Application already exists!");
@@ -26,17 +47,38 @@ namespace Harmony
 		glGenVertexArrays(1, &_vertex_array);
 		glBindVertexArray(_vertex_array);
 
-		float vertices[3 * 3] =
+		float vertices[3 * 7] =
 		{
-			-0.5f, -0.5f, 0.0f,
-			 0.5f, -0.5f, 0.0f,
-			 0.0f,  0.5f, 0.0f
+			-0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
+			 0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
+			 0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
 		};
 
 		_vertex_buffer.reset(VertexBuffer::create(vertices, sizeof(vertices)));
 
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
+		{
+			BufferLayout layout =
+			{
+				{ ShaderDataType::Float3, "a_Position" },
+				{ ShaderDataType::Float4, "a_Color" }
+			};
+
+			_vertex_buffer->set_layout(layout);
+		}
+
+		uint32_t index = 0;
+		const auto& layout = _vertex_buffer->get_layout();
+		for (const auto& element : layout)
+		{
+			glEnableVertexAttribArray(index);
+			glVertexAttribPointer(index,
+				element.GetComponentCount(),
+				ShaderDataTypeToOpenGLBaseType(element._type),
+				element._normalized ? GL_TRUE : GL_FALSE,
+				layout.get_stride(),
+				(const void*)element._offset);
+			index++;
+		}
 
 		uint32_t indices[3] = { 0, 1, 2 };
 		_index_buffer.reset(IndexBuffer::create(indices, sizeof(indices) / sizeof(uint32_t)));
@@ -45,12 +87,15 @@ namespace Harmony
 			#version 330 core
 			
 			layout(location = 0) in vec3 a_Position;
+			layout(location = 1) in vec4 a_Color;
 
 			out vec3 v_Position;
+			out vec4 v_Color;
 
 			void main()
 			{
 				v_Position = a_Position;
+				v_Color = a_Color;
 				gl_Position = vec4(a_Position, 1.0);	
 			}
 		)";
@@ -61,10 +106,12 @@ namespace Harmony
 			layout(location = 0) out vec4 color;
 
 			in vec3 v_Position;
+			in vec4 v_Color;
 
 			void main()
 			{
 				color = vec4(v_Position * 0.5 + 0.5, 1.0);
+				color = v_Color;
 			}
 		)";
 

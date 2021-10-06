@@ -11,10 +11,14 @@ namespace Harmony
 		OpenGLVertexBuffer(float* vertices, uint32_t size);
 		virtual ~OpenGLVertexBuffer();
 
-		virtual void bind() const;
-		virtual void unbind() const;
+		virtual void bind() const override;
+		virtual void unbind() const override;
+
+		virtual const BufferLayout& get_layout() const override { return _layout; }
+		virtual void set_layout(const BufferLayout& layout) override { _layout = layout; }
 	private:
 		uint32_t _renderer_id;
+		BufferLayout _layout;
 	};
 
 	class OpenGLIndexBuffer : public IndexBuffer
