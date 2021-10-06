@@ -82,7 +82,7 @@ namespace Harmony
 		}
 
 		inline uint32_t get_stride() const { return _stride; }
-		inline const std::vector<BufferElement>& GetElements() const { return _elements; }
+		inline const std::vector<BufferElement>& get_elements() const { return _elements; }
 
 		std::vector<BufferElement>::iterator begin() { return _elements.begin(); }
 		std::vector<BufferElement>::iterator end() { return _elements.end(); }

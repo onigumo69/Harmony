@@ -9,6 +9,7 @@
 
 #include "Renderer/Shader.h"
 #include "Renderer/Buffer.h"
+#include "Renderer/VertexArray.h"
 
 #include "Window.h"
 
@@ -40,10 +41,16 @@ namespace Harmony
 		bool _running = true;
 		LayerStack _layer_stack;
 
-		unsigned int _vertex_array;
+		/*unsigned int _vertex_array;
 		std::unique_ptr<VertexBuffer> _vertex_buffer;
 		std::unique_ptr<IndexBuffer> _index_buffer;
-		std::unique_ptr<Shader> _shader;
+		std::unique_ptr<Shader> _shader;*/
+		std::shared_ptr<Shader> _shader;
+		std::shared_ptr<VertexArray> _vertex_array;
+
+		std::shared_ptr<Shader> _blue_shader;
+		std::shared_ptr<VertexArray> _suaqre_vertex_array;
+
 	private:
 		static Application* Instance;
 	};
