@@ -1,20 +1,19 @@
 #pragma once
 
+#include "RenderCommand.h"
+
 namespace Harmony
 {
-
-	enum class RendererAPI
-	{
-		None = 0,
-		OpenGL = 1
-	};
 
 	class Renderer
 	{
 	public:
-		inline static RendererAPI get_api() { return API; };
-	private:
-		static RendererAPI API;
+		static void begin_scene();
+		static void end_scene();
+
+		static void submit(const std::shared_ptr<VertexArray>& vertexArray);
+
+		inline static RendererAPI::API get_api() { return RendererAPI::get_api(); }
 	};
 
 }

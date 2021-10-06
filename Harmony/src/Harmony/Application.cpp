@@ -4,7 +4,7 @@
 
 #include "Input.h"
 
-#include <glad/glad.h>
+#include "Harmony/Renderer/Renderer.h"
 
 namespace Harmony
 {
@@ -143,17 +143,20 @@ namespace Harmony
 	{
 		while (_running)
 		{
-			glClearColor(0.1, 0.1, 0.1, 1);
-			glClear(GL_COLOR_BUFFER_BIT);
+			RenderCommand::set_clear_color({ 0.1f, 0.1f, 0.1f, 1 });
+			RenderCommand::clear();
+
+			Renderer::begin_scene();
 
 			_blue_shader->bind();
-			_suaqre_vertex_array->bind();
-			glDrawElements(GL_TRIANGLES, _suaqre_vertex_array->get_index_buffer()->get_count(), GL_UNSIGNED_INT, nullptr);
+			Renderer::submit(_suaqre_vertex_array);
 
 			_shader->bind();
 
 			_vertex_array->bind();
-			glDrawElements(GL_TRIANGLES, _vertex_array->get_index_buffer()->get_count(), GL_UNSIGNED_INT, nullptr);
+			Renderer::submit(_vertex_array);
+
+			Renderer::end_scene();
 
 
 			for (Layer* layer : _layer_stack)

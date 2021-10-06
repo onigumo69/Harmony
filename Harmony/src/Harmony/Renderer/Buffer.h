@@ -48,7 +48,7 @@ namespace Harmony
 		{
 		}
 
-		uint32_t GetComponentCount() const
+		uint32_t get_component_count() const
 		{
 			switch (_type)
 			{
@@ -78,7 +78,7 @@ namespace Harmony
 		BufferLayout(const std::initializer_list<BufferElement>& elements)
 			: _elements(elements)
 		{
-			CalculateOffsetsAndStride();
+			calculate_offset_and_stride();
 		}
 
 		inline uint32_t get_stride() const { return _stride; }
@@ -90,7 +90,7 @@ namespace Harmony
 		std::vector<BufferElement>::const_iterator end() const { return _elements.end(); }
 
 	private:
-		void CalculateOffsetsAndStride()
+		void calculate_offset_and_stride()
 		{
 			uint32_t offset = 0;
 			_stride = 0;

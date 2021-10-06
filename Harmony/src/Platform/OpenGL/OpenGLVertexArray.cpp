@@ -62,7 +62,7 @@ namespace Harmony
 		{
 			glEnableVertexAttribArray(index);
 			glVertexAttribPointer(index,
-				element.GetComponentCount(),
+				element.get_component_count(),
 				ShaderDataTypeToOpenGLBaseType(element._type),
 				element._normalized ? GL_TRUE : GL_FALSE,
 				layout.get_stride(),

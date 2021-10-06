@@ -1,0 +1,17 @@
+#pragma once
+
+#include "Harmony/Renderer/Renderer.h"
+
+namespace Harmony
+{
+
+	class OpenGLRendererAPI : public RendererAPI
+	{
+	public:
+		virtual void set_clear_color(const glm::vec4& color) override;
+		virtual void clear() override;
+
+		virtual void draw_indexed(const std::shared_ptr<VertexArray>& vertex_array) override;
+	};
+
+}
