@@ -166,6 +166,7 @@
     <ClInclude Include="src\Harmony.h" />
     <ClInclude Include="src\Harmony\Application.h" />
     <ClInclude Include="src\Harmony\Core.h" />
+    <ClInclude Include="src\Harmony\Core\Timestep.h" />
     <ClInclude Include="src\Harmony\EntryPoint.h" />
     <ClInclude Include="src\Harmony\Event\ApplicationEvent.h" />
     <ClInclude Include="src\Harmony\Event\Event.h" />

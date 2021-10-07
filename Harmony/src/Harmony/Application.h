@@ -4,12 +4,10 @@
 #include "Event/Event.h"
 #include "Event/ApplicationEvent.h"
 
+#include "Core/Timestep.h"
+
 #include "LayerStack.h"
 #include "ImGui/ImGuiLayer.h"
-
-#include "Renderer/Shader.h"
-#include "Renderer/Buffer.h"
-#include "Renderer/VertexArray.h"
 
 #include "Renderer/OrthographicCamera.h"
 
@@ -19,7 +17,7 @@
 
 namespace Harmony
 {
-	class HARMONY_API Application
+	class Application
 	{
 	public:
 		Application();
@@ -43,13 +41,7 @@ namespace Harmony
 		bool _running = true;
 		LayerStack _layer_stack;
 
-		std::shared_ptr<Shader> _shader;
-		std::shared_ptr<VertexArray> _vertex_array;
-
-		std::shared_ptr<Shader> _blue_shader;
-		std::shared_ptr<VertexArray> _suaqre_vertex_array;
-
-		OrthographicCamera _ortho_camera;
+		float _last_frame_time = 0.0f;
 	private:
 		static Application* Instance;
 	};

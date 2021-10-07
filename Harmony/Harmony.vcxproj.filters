@@ -120,6 +120,9 @@
     <ClInclude Include="thirdparty\glm\glm\glm.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Harmony\Core\Timestep.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Harmony\Application.cpp">

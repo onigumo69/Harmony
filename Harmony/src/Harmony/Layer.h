@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core.h"
+#include "Core/Timestep.h"
 #include "Event/Event.h"
 
 #include <sstream>
@@ -15,7 +16,7 @@ namespace Harmony
 
 		virtual void on_attach() {}
 		virtual void on_detach() {}
-		virtual void on_update() {}
+		virtual void on_update(Timestep ts) {}
 		virtual void on_imgui_render() {}
 		virtual void on_event(Event& event) {}
 
