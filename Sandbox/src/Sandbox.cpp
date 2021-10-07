@@ -1,8 +1,13 @@
 #include <Harmony.h>
 
+#include "Platform/OpenGL/OpenGLShader.h"
+
 #include "imgui.h"
 
+#include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+
+#include <string>
 
 class ExampleLayer : public Harmony::Layer
 {
@@ -94,10 +99,10 @@ public:
 			}
 		)";
 
-		_shader.reset(new Harmony::Shader(vertex_source, fragment_source));
+		_shader.reset(Harmony::Shader::create(vertex_source, fragment_source));
 
 
-		std::string blue_vertex_source = R"(
+		std::string color_vertex_source = R"(
 			#version 330 core
 			
 			layout(location = 0) in vec3 a_Position;
@@ -114,20 +119,22 @@ public:
 			}
 		)";
 
-		std::string blue_fragment_source = R"(
+		std::string color_fragment_source = R"(
 			#version 330 core
 			
 			layout(location = 0) out vec4 color;
 
 			in vec3 v_Position;
 
+			uniform vec3 u_Color;
+
 			void main()
 			{
-				color = vec4(0.2, 0.3, 0.8, 1.0);
+				color = vec4(u_Color, 1.0);
 			}
 		)";
 
-		_blue_shader.reset(new Harmony::Shader(blue_vertex_source, blue_fragment_source));
+		_color_shader.reset(Harmony::Shader::create(color_vertex_source, color_fragment_source));
 	}
 
 	void on_update(Harmony::Timestep ts) override
@@ -156,13 +163,17 @@ public:
 		Harmony::Renderer::begin_scene(_camera);
 
 		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
+
+		std::dynamic_pointer_cast<Harmony::OpenGLShader>(_color_shader)->bind();
+		std::dynamic_pointer_cast<Harmony::OpenGLShader>(_color_shader)->upload_uniform_float3 ("u_Color", _square_color);
+
 		for (int y = 0; y < 20; y++)
 		{
 			for (int x = 0; x < 20; x++)
 			{
 				glm::vec3 pos(x * 0.11f, y * 0.11f, 0.0f);
 				glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
-				Harmony::Renderer::submit(_blue_shader, _square_vertex_array, transform);
+				Harmony::Renderer::submit(_color_shader, _square_vertex_array, transform);
 			}
 		}
 		Harmony::Renderer::submit(_shader, _vertex_array);
@@ -172,7 +183,9 @@ public:
 
 	virtual void on_imgui_render() override
 	{
-
+		ImGui::Begin("Settings");
+		ImGui::ColorEdit3("Square Color", glm::value_ptr(_square_color));
+		ImGui::End();
 	}
 
 	void on_event(Harmony::Event& event) override
@@ -183,7 +196,7 @@ private:
 	std::shared_ptr<Harmony::Shader> _shader;
 	std::shared_ptr<Harmony::VertexArray> _vertex_array;
 
-	std::shared_ptr<Harmony::Shader> _blue_shader;
+	std::shared_ptr<Harmony::Shader> _color_shader;
 	std::shared_ptr<Harmony::VertexArray> _square_vertex_array;
 
 	Harmony::OrthographicCamera _camera;
@@ -191,6 +204,8 @@ private:
 	float _camera_move_speed = 5.0f;
 	float _camera_rotation = 0.0f;
 	float _camera_rotation_speed = 180.0f;
+
+	glm::vec3 _square_color = { 0.2f, 0.3f, 0.8f };
 };
 
 class Sandbox : public Harmony::Application

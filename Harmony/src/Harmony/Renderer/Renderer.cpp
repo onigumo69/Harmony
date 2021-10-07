@@ -1,6 +1,8 @@
 #include "Renderer.h"
 #include "RenderCommand.h"
 
+#include "Platform/OpenGL/OpenGLShader.h"
+
 namespace Harmony
 {
 	Renderer::SceneData* Renderer::_scene_data = new Renderer::SceneData;
@@ -19,8 +21,8 @@ namespace Harmony
 		const glm::mat4& transform)
 	{
 		shader->bind();
-		shader->upload_uniform_mat4("u_ViewProjection", _scene_data->_view_projection_matrix);
-		shader->upload_uniform_mat4("u_Transform", transform);
+		std::dynamic_pointer_cast<OpenGLShader>(shader)->upload_uniform_mat4("u_ViewProjection", _scene_data->_view_projection_matrix);
+		std::dynamic_pointer_cast<OpenGLShader>(shader)->upload_uniform_mat4("u_Transform", transform);
 
 		vertex_array->bind();
 		RenderCommand::draw_indexed(vertex_array);
