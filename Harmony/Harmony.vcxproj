@@ -180,6 +180,7 @@
     <ClInclude Include="src\Harmony\LayerStack.h" />
     <ClInclude Include="src\Harmony\Log.h" />
     <ClInclude Include="src\Harmony\MouseButtonCode.h" />
+    <ClInclude Include="src\Harmony\Renderer\OrthographicCamera.h" />
     <ClInclude Include="src\Harmony\Renderer\Renderer.h" />
     <ClInclude Include="src\Harmony\Renderer\RendererAPI.h" />
     <ClInclude Include="src\Harmony\Renderer\RenderCommand.h" />
@@ -192,6 +193,7 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
+    <ClInclude Include="thirdparty\glm\glm\glm.hpp" />
     <ClInclude Include="thirdparty\imgui\imconfig.h" />
     <ClInclude Include="thirdparty\imgui\imgui.h" />
     <ClInclude Include="thirdparty\imgui\imgui_internal.h" />
@@ -204,6 +206,7 @@
     <ClCompile Include="src\Harmony\LayerStack.cpp" />
     <ClCompile Include="src\Harmony\Log.cpp" />
     <ClCompile Include="src\Harmony\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Harmony\Renderer\OrthographicCamera.cpp" />
     <ClCompile Include="src\Harmony\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Harmony\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\Harmony\Renderer\RenderCommand.cpp" />

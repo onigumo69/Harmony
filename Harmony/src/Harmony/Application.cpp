@@ -13,6 +13,7 @@ namespace Harmony
 	Application* Application::Instance = nullptr;
 
 	Application::Application()
+		: _ortho_camera(-1.6f, 1.6f, -0.9f, 0.9f)
 	{
 		HM_CORE_ASSERT(!Instance, "Application already exists!");
 		Instance = this;
@@ -77,6 +78,8 @@ namespace Harmony
 			layout(location = 0) in vec3 a_Position;
 			layout(location = 1) in vec4 a_Color;
 
+			uniform mat4 u_ViewProjection;
+
 			out vec3 v_Position;
 			out vec4 v_Color;
 
@@ -84,7 +87,7 @@ namespace Harmony
 			{
 				v_Position = a_Position;
 				v_Color = a_Color;
-				gl_Position = vec4(a_Position, 1.0);	
+				gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
 			}
 		)";
 
@@ -110,12 +113,14 @@ namespace Harmony
 			
 			layout(location = 0) in vec3 a_Position;
 
+			uniform mat4 u_ViewProjection;
+
 			out vec3 v_Position;
 
 			void main()
 			{
 				v_Position = a_Position;
-				gl_Position = vec4(a_Position, 1.0);	
+				gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
 			}
 		)";
 
@@ -146,15 +151,13 @@ namespace Harmony
 			RenderCommand::set_clear_color({ 0.1f, 0.1f, 0.1f, 1 });
 			RenderCommand::clear();
 
-			Renderer::begin_scene();
+			_ortho_camera.set_position({ 0.5f,0.5f,0.0f });
+			_ortho_camera.set_rotation(45.0f);
 
-			_blue_shader->bind();
-			Renderer::submit(_suaqre_vertex_array);
+			Renderer::begin_scene(_ortho_camera);
 
-			_shader->bind();
-
-			_vertex_array->bind();
-			Renderer::submit(_vertex_array);
+			Renderer::submit(_blue_shader, _suaqre_vertex_array);
+			Renderer::submit(_shader, _vertex_array);
 
 			Renderer::end_scene();
 

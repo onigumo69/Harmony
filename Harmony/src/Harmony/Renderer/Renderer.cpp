@@ -3,19 +3,24 @@
 
 namespace Harmony
 {
+	Renderer::SceneData* Renderer::_scene_data = new Renderer::SceneData;
 
-	void Renderer::begin_scene()
+	void Renderer::begin_scene(OrthographicCamera& camera)
 	{
+		_scene_data->_view_projection_matrix = camera.get_view_projection_matrix();
 	}
 
 	void Renderer::end_scene()
 	{
 	}
 
-	void Renderer::submit(const std::shared_ptr<VertexArray>& vertexArray)
+	void Renderer::submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertex_array)
 	{
-		vertexArray->bind();
-		RenderCommand::draw_indexed(vertexArray);
+		shader->bind();
+		shader->upload_uniform_mat4("u_ViewProjection", _scene_data->_view_projection_matrix);
+
+		vertex_array->bind();
+		RenderCommand::draw_indexed(vertex_array);
 	}
 
 }

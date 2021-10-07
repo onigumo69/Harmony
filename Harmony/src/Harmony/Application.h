@@ -11,6 +11,8 @@
 #include "Renderer/Buffer.h"
 #include "Renderer/VertexArray.h"
 
+#include "Renderer/OrthographicCamera.h"
+
 #include "Window.h"
 
 #include <memory>
@@ -47,6 +49,7 @@ namespace Harmony
 		std::shared_ptr<Shader> _blue_shader;
 		std::shared_ptr<VertexArray> _suaqre_vertex_array;
 
+		OrthographicCamera _ortho_camera;
 	private:
 		static Application* Instance;
 	};
