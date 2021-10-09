@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #if HM_DYNAMIC_LINK
 #ifdef HARMONY_BUILD_DLL
 	#define HARMONY_API __declspec(dllexport)
@@ -25,3 +27,14 @@
 #define BIT(x) (1 << x)
 
 #define HM_BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)
+
+namespace Harmony
+{
+
+	template<typename T>
+	using Scope = std::unique_ptr<T>;
+
+	template<typename T>
+	using Ref = std::shared_ptr<T>;
+
+}

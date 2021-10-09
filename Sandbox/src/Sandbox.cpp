@@ -24,7 +24,7 @@ public:
 			 0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
 		};
 
-		std::shared_ptr<Harmony::VertexBuffer> vertex_buffer;
+		Harmony::Ref<Harmony::VertexBuffer> vertex_buffer;
 		vertex_buffer.reset(Harmony::VertexBuffer::create(vertices, sizeof(vertices)));
 		Harmony::BufferLayout layout =
 		{
@@ -36,31 +36,32 @@ public:
 
 
 		uint32_t indices[3] = { 0,1,2 };
-		std::shared_ptr<Harmony::IndexBuffer> index_buffer;
+		Harmony::Ref<Harmony::IndexBuffer> index_buffer;
 		index_buffer.reset(Harmony::IndexBuffer::create(indices, sizeof(indices) / sizeof(uint32_t)));
 		_vertex_array->set_index_buffer(index_buffer);
 
 		_square_vertex_array.reset(Harmony::VertexArray::create());
 
-		float square_vertices[3 * 4] =
+		float square_vertices[5 * 4] =
 		{
-			-0.5f, -0.5f, 0.0f,
-			 0.5f, -0.5f, 0.0f,
-			 0.5f,  0.5f, 0.0f,
-			-0.5f,  0.5f, 0.0f
+					-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+					 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+					 0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+					-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
 		};
 
-		std::shared_ptr<Harmony::VertexBuffer> square_vertex_buffer;
+		Harmony::Ref<Harmony::VertexBuffer> square_vertex_buffer;
 		square_vertex_buffer.reset(Harmony::VertexBuffer::create(square_vertices, sizeof(square_vertices)));
 		square_vertex_buffer->set_layout(
 			{
-				{ Harmony::ShaderDataType::Float3, "a_Position" }
+				{ Harmony::ShaderDataType::Float3, "a_Position" },
+				{ Harmony::ShaderDataType::Float2, "a_TexCoord" }
 			});
 		_square_vertex_array->add_vertex_buffer(square_vertex_buffer);
 
 
 		uint32_t square_indices[6] = { 0, 1, 2, 2, 3, 0 };
-		std::shared_ptr<Harmony::IndexBuffer> square_index_buffer;
+		Harmony::Ref<Harmony::IndexBuffer> square_index_buffer;
 		square_index_buffer.reset(Harmony::IndexBuffer::create(square_indices, sizeof(square_indices) / sizeof(uint32_t)));
 		_square_vertex_array->set_index_buffer(square_index_buffer);
 
@@ -135,6 +136,46 @@ public:
 		)";
 
 		_color_shader.reset(Harmony::Shader::create(color_vertex_source, color_fragment_source));
+
+		std::string texture_shader_vertex_source = R"(
+			#version 330 core
+			
+			layout(location = 0) in vec3 a_Position;
+			layout(location = 1) in vec2 a_TexCoord;
+
+			uniform mat4 u_ViewProjection;
+			uniform mat4 u_Transform;
+
+			out vec2 v_TexCoord;
+
+			void main()
+			{
+				v_TexCoord = a_TexCoord;
+				gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);	
+			}
+		)";
+
+		std::string texture_shader_fragment_source = R"(
+			#version 330 core
+			
+			layout(location = 0) out vec4 color;
+
+			in vec2 v_TexCoord;
+			
+			uniform sampler2D u_Texture;
+
+			void main()
+			{
+				color = texture(u_Texture, v_TexCoord);
+			}
+		)";
+
+		_texture_shader.reset(Harmony::Shader::create(texture_shader_vertex_source, texture_shader_fragment_source));
+
+		_texture = Harmony::Texture2D::create("assets/textures/Checkerboard.png");
+
+		std::dynamic_pointer_cast<Harmony::OpenGLShader>(_texture_shader)->bind();
+		std::dynamic_pointer_cast<Harmony::OpenGLShader>(_texture_shader)->upload_uniform_int("u_Texture", 0);
 	}
 
 	void on_update(Harmony::Timestep ts) override
@@ -176,7 +217,9 @@ public:
 				Harmony::Renderer::submit(_color_shader, _square_vertex_array, transform);
 			}
 		}
-		Harmony::Renderer::submit(_shader, _vertex_array);
+
+		_texture->bind();
+		Harmony::Renderer::submit(_texture_shader, _square_vertex_array, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
 		Harmony::Renderer::end_scene();
 	}
@@ -193,11 +236,13 @@ public:
 
 	}
 private:
-	std::shared_ptr<Harmony::Shader> _shader;
-	std::shared_ptr<Harmony::VertexArray> _vertex_array;
+	Harmony::Ref<Harmony::Shader> _shader;
+	Harmony::Ref<Harmony::VertexArray> _vertex_array;
 
-	std::shared_ptr<Harmony::Shader> _color_shader;
-	std::shared_ptr<Harmony::VertexArray> _square_vertex_array;
+	Harmony::Ref<Harmony::Shader> _color_shader, _texture_shader;
+	Harmony::Ref<Harmony::VertexArray> _square_vertex_array;
+
+	Harmony::Ref<Harmony::Texture2D> _texture;
 
 	Harmony::OrthographicCamera _camera;
 	glm::vec3 _camera_position;

@@ -18,6 +18,7 @@
 
 #include "Harmony/Renderer/Buffer.h"
 #include "Harmony/Renderer/Shader.h"
+#include "Harmony/Renderer/Texture.h"
 #include "Harmony/Renderer/VertexArray.h"
 
 #include "Harmony/Renderer/OrthographicCamera.h"
