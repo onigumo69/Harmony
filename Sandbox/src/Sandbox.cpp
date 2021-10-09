@@ -173,6 +173,7 @@ public:
 		_texture_shader.reset(Harmony::Shader::create(texture_shader_vertex_source, texture_shader_fragment_source));
 
 		_texture = Harmony::Texture2D::create("assets/textures/Checkerboard.png");
+		_naraku_texture = Harmony::Texture2D::create("assets/textures/Grass.png");
 
 		std::dynamic_pointer_cast<Harmony::OpenGLShader>(_texture_shader)->bind();
 		std::dynamic_pointer_cast<Harmony::OpenGLShader>(_texture_shader)->upload_uniform_int("u_Texture", 0);
@@ -220,6 +221,9 @@ public:
 
 		_texture->bind();
 		Harmony::Renderer::submit(_texture_shader, _square_vertex_array, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+		
+		_naraku_texture->bind();
+		Harmony::Renderer::submit(_texture_shader, _square_vertex_array, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
 		Harmony::Renderer::end_scene();
 	}
@@ -242,7 +246,7 @@ private:
 	Harmony::Ref<Harmony::Shader> _color_shader, _texture_shader;
 	Harmony::Ref<Harmony::VertexArray> _square_vertex_array;
 
-	Harmony::Ref<Harmony::Texture2D> _texture;
+	Harmony::Ref<Harmony::Texture2D> _texture, _naraku_texture;
 
 	Harmony::OrthographicCamera _camera;
 	glm::vec3 _camera_position;

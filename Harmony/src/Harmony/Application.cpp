@@ -22,6 +22,8 @@ namespace Harmony
 		_window = std::unique_ptr<Window>(Window::create());
 		_window->set_event_callback(BIND_EVENT_FN(on_event));
 
+		Renderer::init();
+
 		_imgui_layer = new ImGuiLayer();
 		push_overlay(_imgui_layer);
 	}

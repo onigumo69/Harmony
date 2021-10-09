@@ -8,6 +8,11 @@ namespace Harmony
 	class RenderCommand
 	{
 	public:
+		inline static void init()
+		{
+			_renderer_api->init();
+		}
+
 		inline static void set_clear_color(const glm::vec4& color)
 		{
 			_renderer_api->set_clear_color(color);
