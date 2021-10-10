@@ -100,7 +100,7 @@ public:
 			}
 		)";
 
-		_shader.reset(Harmony::Shader::create(vertex_source, fragment_source));
+		_shader = Harmony::Shader::create("VertexPosColor", vertex_source, fragment_source);
 
 
 		std::string color_vertex_source = R"(
@@ -135,48 +135,15 @@ public:
 			}
 		)";
 
-		_color_shader.reset(Harmony::Shader::create(color_vertex_source, color_fragment_source));
+		_color_shader = Harmony::Shader::create("FlatColor", color_vertex_source, color_fragment_source);
 
-		std::string texture_shader_vertex_source = R"(
-			#version 330 core
-			
-			layout(location = 0) in vec3 a_Position;
-			layout(location = 1) in vec2 a_TexCoord;
-
-			uniform mat4 u_ViewProjection;
-			uniform mat4 u_Transform;
-
-			out vec2 v_TexCoord;
-
-			void main()
-			{
-				v_TexCoord = a_TexCoord;
-				gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);	
-			}
-		)";
-
-		std::string texture_shader_fragment_source = R"(
-			#version 330 core
-			
-			layout(location = 0) out vec4 color;
-
-			in vec2 v_TexCoord;
-			
-			uniform sampler2D u_Texture;
-
-			void main()
-			{
-				color = texture(u_Texture, v_TexCoord);
-			}
-		)";
-
-		_texture_shader.reset(Harmony::Shader::create(texture_shader_vertex_source, texture_shader_fragment_source));
+		auto texture_shader = _shader_library.load("assets/shaders/Texture.glsl");
 
 		_texture = Harmony::Texture2D::create("assets/textures/Checkerboard.png");
 		_naraku_texture = Harmony::Texture2D::create("assets/textures/Grass.png");
 
-		std::dynamic_pointer_cast<Harmony::OpenGLShader>(_texture_shader)->bind();
-		std::dynamic_pointer_cast<Harmony::OpenGLShader>(_texture_shader)->upload_uniform_int("u_Texture", 0);
+		std::dynamic_pointer_cast<Harmony::OpenGLShader>(texture_shader)->bind();
+		std::dynamic_pointer_cast<Harmony::OpenGLShader>(texture_shader)->upload_uniform_int("u_Texture", 0);
 	}
 
 	void on_update(Harmony::Timestep ts) override
@@ -219,11 +186,13 @@ public:
 			}
 		}
 
+		auto texture_shader = _shader_library.get("Texture");
+
 		_texture->bind();
-		Harmony::Renderer::submit(_texture_shader, _square_vertex_array, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+		Harmony::Renderer::submit(texture_shader, _square_vertex_array, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 		
 		_naraku_texture->bind();
-		Harmony::Renderer::submit(_texture_shader, _square_vertex_array, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+		Harmony::Renderer::submit(texture_shader, _square_vertex_array, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
 		Harmony::Renderer::end_scene();
 	}
@@ -240,10 +209,11 @@ public:
 
 	}
 private:
+	Harmony::ShaderLibrary _shader_library;
 	Harmony::Ref<Harmony::Shader> _shader;
 	Harmony::Ref<Harmony::VertexArray> _vertex_array;
 
-	Harmony::Ref<Harmony::Shader> _color_shader, _texture_shader;
+	Harmony::Ref<Harmony::Shader> _color_shader;
 	Harmony::Ref<Harmony::VertexArray> _square_vertex_array;
 
 	Harmony::Ref<Harmony::Texture2D> _texture, _naraku_texture;
