@@ -9,6 +9,7 @@
 #include "Harmony/Input.h"
 #include "Harmony/KeyCode.h"
 #include "Harmony/MouseButtonCode.h"
+#include "Harmony/OrthographicCameraController.h"
 
 #include "Harmony/ImGui/ImGuiLayer.h"
 

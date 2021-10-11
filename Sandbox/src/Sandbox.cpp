@@ -13,7 +13,7 @@ class ExampleLayer : public Harmony::Layer
 {
 public:
 	ExampleLayer()
-		: Layer("Example"), _camera(-1.6f, 1.6f, -0.9f, 0.9f), _camera_position(0.0f)
+		: Layer("Example"), _camera_controller(1280.0f / 720.0f)
 	{
 		_vertex_array.reset(Harmony::VertexArray::create());
 
@@ -148,28 +148,13 @@ public:
 
 	void on_update(Harmony::Timestep ts) override
 	{
-		if (Harmony::Input::is_key_pressed(HM_KEY_LEFT))
-			_camera_position.x -= _camera_move_speed * ts;
-		else if (Harmony::Input::is_key_pressed(HM_KEY_RIGHT))
-			_camera_position.x += _camera_move_speed * ts;
+		_camera_controller.on_update(ts);
 
-		if(Harmony::Input::is_key_pressed(HM_KEY_UP))
-			_camera_position.y += _camera_move_speed * ts;
-		else if (Harmony::Input::is_key_pressed(HM_KEY_DOWN))
-			_camera_position.y -= _camera_move_speed * ts;
-
-		if (Harmony::Input::is_key_pressed(HM_KEY_A))
-			_camera_rotation += _camera_move_speed * ts;
-		else if (Harmony::Input::is_key_pressed(HM_KEY_D))
-			_camera_rotation -= _camera_move_speed * ts;
-
+		// render
 		Harmony::RenderCommand::set_clear_color({ 0.1f, 0.1f, 0.1f, 1.0f });
 		Harmony::RenderCommand::clear();
 
-		_camera.set_position(_camera_position);
-		_camera.set_rotation(_camera_rotation);
-
-		Harmony::Renderer::begin_scene(_camera);
+		Harmony::Renderer::begin_scene(_camera_controller.get_camera());
 
 		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 
@@ -204,9 +189,9 @@ public:
 		ImGui::End();
 	}
 
-	void on_event(Harmony::Event& event) override
+	void on_event(Harmony::Event& e) override
 	{
-
+		_camera_controller.on_event(e);
 	}
 private:
 	Harmony::ShaderLibrary _shader_library;
@@ -218,12 +203,7 @@ private:
 
 	Harmony::Ref<Harmony::Texture2D> _texture, _naraku_texture;
 
-	Harmony::OrthographicCamera _camera;
-	glm::vec3 _camera_position;
-	float _camera_move_speed = 5.0f;
-	float _camera_rotation = 0.0f;
-	float _camera_rotation_speed = 180.0f;
-
+	Harmony::OrthographicCameraController _camera_controller;
 	glm::vec3 _square_color = { 0.2f, 0.3f, 0.8f };
 };
 

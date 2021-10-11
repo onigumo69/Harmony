@@ -10,6 +10,8 @@ namespace Harmony
 	public:
 		OrthographicCamera(float left, float right, float bottom, float top);
 
+		void set_projection(float left, float right, float bottom, float top);
+
 		const glm::vec3& get_position() const { return _position; }
 		void set_position(const glm::vec3& position)
 		{
