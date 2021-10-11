@@ -20,6 +20,8 @@ namespace Harmony
 		OrthographicCamera& get_camera() { return _camera; }
 		const OrthographicCamera& get_camera() const { return _camera; }
 
+		float get_zoom_level() const { return _zoom_level; }
+		void set_zoom_level(float level) { _zoom_level = level; }
 	private:
 		bool on_mouse_scrolled(MouseScrolledEvent& e);
 		bool on_window_resized(WindowResizeEvent& e);

@@ -35,10 +35,12 @@ namespace Harmony
 		inline static Application& get() { return *Instance; }
 	private:
 		bool on_window_close(WindowCloseEvent& e);
+		bool on_window_resize(WindowResizeEvent& e);
 
 		std::unique_ptr<Window> _window;
 		ImGuiLayer* _imgui_layer;
 		bool _running = true;
+		bool _minimized = false;
 		LayerStack _layer_stack;
 
 		float _last_frame_time = 0.0f;

@@ -12,6 +12,11 @@ namespace Harmony
 		RenderCommand::init();
 	}
 
+	void Renderer::on_window_resize(uint32_t width, uint32_t height)
+	{
+		RenderCommand::set_viewport(0, 0, width, height);
+	}
+
 	void Renderer::begin_scene(OrthographicCamera& camera)
 	{
 		_scene_data->_view_projection_matrix = camera.get_view_projection_matrix();

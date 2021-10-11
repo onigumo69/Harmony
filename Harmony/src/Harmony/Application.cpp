@@ -41,8 +41,11 @@ namespace Harmony
 			_last_frame_time = time;
 
 
-			for (Layer* layer : _layer_stack)
-				layer->on_update(timestep);
+			if (!_minimized)
+			{
+				for (Layer* layer : _layer_stack)
+					layer->on_update(timestep);
+			}
 
 			_imgui_layer->begin();
 			for (Layer* layer : _layer_stack)
@@ -57,6 +60,7 @@ namespace Harmony
 	{
 		EventDispatcher dispatcher(e);
 		dispatcher.dispatch<WindowCloseEvent>(BIND_EVENT_FN(on_window_close));
+		dispatcher.dispatch<WindowResizeEvent>(BIND_EVENT_FN(on_window_resize));
 
 		for (auto it = _layer_stack.end(); it != _layer_stack.begin(); )
 		{
@@ -83,4 +87,19 @@ namespace Harmony
 		_running = false;
 		return true;
 	}
+
+	bool Application::on_window_resize(WindowResizeEvent& e)
+	{
+		if (e.get_width() == 0 || e.get_height() == 0)
+		{
+			_minimized = true;
+			return false;
+		}
+
+		_minimized = false;
+		Renderer::on_window_resize(e.get_width(), e.get_height());
+
+		return false;
+	}
+
 }
