@@ -1,15 +1,15 @@
 #pragma once
 
 #include "Core.h"
-#include "Event/Event.h"
-#include "Event/ApplicationEvent.h"
+#include "Harmony/Event/Event.h"
+#include "Harmony/Event/ApplicationEvent.h"
 
-#include "Core/Timestep.h"
+#include "Timestep.h"
 
 #include "LayerStack.h"
-#include "ImGui/ImGuiLayer.h"
+#include "Harmony/ImGui/ImGuiLayer.h"
 
-#include "Renderer/OrthographicCamera.h"
+#include "Harmony/Renderer/OrthographicCamera.h"
 
 #include "Window.h"
 

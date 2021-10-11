@@ -1,7 +1,7 @@
 #include "OrthographicCameraController.h"
 
-#include "Input.h"
-#include "KeyCode.h"
+#include "Harmony/Core/Input.h"
+#include "Harmony/Core/KeyCode.h"
 
 namespace Harmony
 {

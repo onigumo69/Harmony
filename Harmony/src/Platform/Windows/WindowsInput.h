@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Harmony/Input.h"
+#include "Harmony/Core/Input.h"
 
 namespace Harmony
 {

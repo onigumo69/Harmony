@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Core.h"
-#include "Core/Timestep.h"
-#include "Event/Event.h"
+#include "Timestep.h"
+#include "Harmony/Event/Event.h"
 
 #include <sstream>
 

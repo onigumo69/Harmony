@@ -1,15 +1,15 @@
 #pragma once
 
 // for use by client applications
-#include "Harmony/Application.h"
-#include "Harmony/Log.h"
+#include "Harmony/Core/Application.h"
+#include "Harmony/Core/Log.h"
 #include "Harmony/Core/Timestep.h"
-#include "Harmony/Layer.h"
+#include "Harmony/Core/Layer.h"
 
-#include "Harmony/Input.h"
-#include "Harmony/KeyCode.h"
-#include "Harmony/MouseButtonCode.h"
-#include "Harmony/OrthographicCameraController.h"
+#include "Harmony/Core/Input.h"
+#include "Harmony/Core/KeyCode.h"
+#include "Harmony/Core/MouseButtonCode.h"
+#include "Harmony/Renderer/OrthographicCameraController.h"
 
 #include "Harmony/ImGui/ImGuiLayer.h"
 
@@ -27,5 +27,5 @@
 
 
 // ---Entry Point---------------------
-#include "Harmony/EntryPoint.h"
+#include "Harmony/Core/EntryPoint.h"
 // -----------------------------------

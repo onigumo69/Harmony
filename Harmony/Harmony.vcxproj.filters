@@ -18,16 +18,16 @@
     <ClInclude Include="src\Harmony.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Harmony\Core.h">
+    <ClInclude Include="src\Harmony\Core\Core.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Harmony\Application.h">
+    <ClInclude Include="src\Harmony\Core\Application.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Harmony\EntryPoint.h">
+    <ClInclude Include="src\Harmony\Core\EntryPoint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Harmony\Log.h">
+    <ClInclude Include="src\Harmony\Core\Log.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Harmony\Event\Event.h">
@@ -45,13 +45,13 @@
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Harmony\Window.h">
+    <ClInclude Include="src\Harmony\Core\Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Harmony\Layer.h">
+    <ClInclude Include="src\Harmony\Core\Layer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Harmony\LayerStack.h">
+    <ClInclude Include="src\Harmony\Core\LayerStack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Harmony\ImGui\ImGuiLayer.h">
@@ -72,13 +72,13 @@
     <ClInclude Include="src\Platform\Windows\WindowsInput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Harmony\Input.h">
+    <ClInclude Include="src\Harmony\Core\Input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Harmony\KeyCode.h">
+    <ClInclude Include="src\Harmony\Core\KeyCode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Harmony\MouseButtonCode.h">
+    <ClInclude Include="src\Harmony\Core\MouseButtonCode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h">
@@ -135,24 +135,24 @@
     <ClInclude Include="src\Harmony\Renderer\Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Harmony\OrthographicCameraController.h">
+    <ClInclude Include="src\Harmony\Renderer\OrthographicCameraController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Harmony\Application.cpp">
+    <ClCompile Include="src\Harmony\Core\Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Harmony\Log.cpp">
+    <ClCompile Include="src\Harmony\Core\Log.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Harmony\Layer.cpp">
+    <ClCompile Include="src\Harmony\Core\Layer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Harmony\LayerStack.cpp">
+    <ClCompile Include="src\Harmony\Core\LayerStack.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="thirdparty\glad\src\glad.c">
@@ -230,7 +230,7 @@
     <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Harmony\OrthographicCameraController.cpp">
+    <ClCompile Include="src\Harmony\Renderer\OrthographicCameraController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

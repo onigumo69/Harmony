@@ -1,6 +1,6 @@
 #include "Application.h"
 
-#include "Harmony/Log.h"
+#include "Log.h"
 
 #include "Input.h"
 

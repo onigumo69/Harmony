@@ -4,7 +4,7 @@
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_opengl3.h>
 
-#include "Harmony/Application.h"
+#include "Harmony/Core/Application.h"
 
 // for testing only
 #include <glad/glad.h>

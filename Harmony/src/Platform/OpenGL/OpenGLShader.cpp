@@ -1,6 +1,6 @@
 #include "OpenGLShader.h"
-#include "Harmony/Core.h"
-#include "Harmony/Log.h"
+#include "Harmony/Core/Core.h"
+#include "Harmony/Core/Log.h"
 
 #include <glad/glad.h>
 

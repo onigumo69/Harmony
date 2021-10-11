@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Harmony/Core.h"
+#include "Harmony/Core/Core.h"
 #include "Harmony/Event/Event.h"
 
 namespace Harmony

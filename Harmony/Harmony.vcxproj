@@ -164,24 +164,24 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Harmony.h" />
-    <ClInclude Include="src\Harmony\Application.h" />
-    <ClInclude Include="src\Harmony\Core.h" />
+    <ClInclude Include="src\Harmony\Core\Application.h" />
+    <ClInclude Include="src\Harmony\Core\Core.h" />
     <ClInclude Include="src\Harmony\Core\Timestep.h" />
-    <ClInclude Include="src\Harmony\EntryPoint.h" />
+    <ClInclude Include="src\Harmony\Core\EntryPoint.h" />
     <ClInclude Include="src\Harmony\Event\ApplicationEvent.h" />
     <ClInclude Include="src\Harmony\Event\Event.h" />
     <ClInclude Include="src\Harmony\Event\KeyEvent.h" />
     <ClInclude Include="src\Harmony\Event\MouseEvent.h" />
-    <ClInclude Include="src\Harmony\OrthographicCameraController.h" />
+    <ClInclude Include="src\Harmony\Renderer\OrthographicCameraController.h" />
     <ClInclude Include="src\Harmony\Renderer\Buffer.h" />
     <ClInclude Include="src\Harmony\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Harmony\ImGui\ImGuiLayer.h" />
-    <ClInclude Include="src\Harmony\Input.h" />
-    <ClInclude Include="src\Harmony\KeyCode.h" />
-    <ClInclude Include="src\Harmony\Layer.h" />
-    <ClInclude Include="src\Harmony\LayerStack.h" />
-    <ClInclude Include="src\Harmony\Log.h" />
-    <ClInclude Include="src\Harmony\MouseButtonCode.h" />
+    <ClInclude Include="src\Harmony\Core\Input.h" />
+    <ClInclude Include="src\Harmony\Core\KeyCode.h" />
+    <ClInclude Include="src\Harmony\Core\Layer.h" />
+    <ClInclude Include="src\Harmony\Core\LayerStack.h" />
+    <ClInclude Include="src\Harmony\Core\Log.h" />
+    <ClInclude Include="src\Harmony\Core\MouseButtonCode.h" />
     <ClInclude Include="src\Harmony\Renderer\OrthographicCamera.h" />
     <ClInclude Include="src\Harmony\Renderer\Renderer.h" />
     <ClInclude Include="src\Harmony\Renderer\RendererAPI.h" />
@@ -189,7 +189,7 @@
     <ClInclude Include="src\Harmony\Renderer\Shader.h" />
     <ClInclude Include="src\Harmony\Renderer\Texture.h" />
     <ClInclude Include="src\Harmony\Renderer\VertexArray.h" />
-    <ClInclude Include="src\Harmony\Window.h" />
+    <ClInclude Include="src\Harmony\Core\Window.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
@@ -206,12 +206,12 @@
     <ClInclude Include="thirdparty\stbimg\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Harmony\Application.cpp" />
+    <ClCompile Include="src\Harmony\Core\Application.cpp" />
     <ClCompile Include="src\Harmony\ImGui\ImGuiLayer.cpp" />
-    <ClCompile Include="src\Harmony\Layer.cpp" />
-    <ClCompile Include="src\Harmony\LayerStack.cpp" />
-    <ClCompile Include="src\Harmony\Log.cpp" />
-    <ClCompile Include="src\Harmony\OrthographicCameraController.cpp" />
+    <ClCompile Include="src\Harmony\Core\Layer.cpp" />
+    <ClCompile Include="src\Harmony\Core\LayerStack.cpp" />
+    <ClCompile Include="src\Harmony\Core\Log.cpp" />
+    <ClCompile Include="src\Harmony\Renderer\OrthographicCameraController.cpp" />
     <ClCompile Include="src\Harmony\Renderer\Buffer.cpp" />
     <ClCompile Include="src\Harmony\Renderer\OrthographicCamera.cpp" />
     <ClCompile Include="src\Harmony\Renderer\Renderer.cpp" />

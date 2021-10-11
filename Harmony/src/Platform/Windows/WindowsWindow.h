@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Harmony/Window.h"
+#include "Harmony/Core/Window.h"
 #include "Harmony/Renderer/GraphicsContext.h"
 
 #include <glad/glad.h>

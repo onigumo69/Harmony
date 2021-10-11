@@ -1,6 +1,6 @@
 #include "WindowsWindow.h"
 
-#include "Harmony/Log.h"
+#include "Harmony/Core/Log.h"
 
 #include "Harmony/Event/ApplicationEvent.h"
 #include "Harmony/Event/MouseEvent.h"

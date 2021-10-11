@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Renderer/OrthographicCamera.h"
-#include "Core/Timestep.h"
+#include "Harmony/Renderer/OrthographicCamera.h"
+#include "Harmony/Core/Timestep.h"
 
-#include "Event/ApplicationEvent.h"
-#include "Event/MouseEvent.h"
+#include "Harmony/Event/ApplicationEvent.h"
+#include "Harmony/Event/MouseEvent.h"
 
 namespace Harmony
 {

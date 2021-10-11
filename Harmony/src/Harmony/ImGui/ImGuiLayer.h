@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Harmony/Layer.h"
+#include "Harmony/Core/Layer.h"
 
 #include "Harmony/Event/ApplicationEvent.h"
 #include "Harmony/Event/KeyEvent.h"

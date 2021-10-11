@@ -1,6 +1,6 @@
 #include "WindowsInput.h"
 
-#include "Harmony/Application.h"
+#include "Harmony/Core/Application.h"
 #include <GLFW/glfw3.h>
 
 #include <utility>
