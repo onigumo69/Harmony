@@ -21,7 +21,7 @@ namespace Harmony
 		virtual const std::vector<std::shared_ptr<VertexBuffer>>& get_vertex_buffer() const = 0;
 		virtual const std::shared_ptr<IndexBuffer>& get_index_buffer() const = 0;
 
-		static VertexArray* create();
+		static Ref<VertexArray> create();
 	};
 
 }

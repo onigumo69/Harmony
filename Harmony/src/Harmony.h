@@ -24,8 +24,3 @@
 
 #include "Harmony/Renderer/OrthographicCamera.h"
 // -----------------------------------
-
-
-// ---Entry Point---------------------
-#include "Harmony/Core/EntryPoint.h"
-// -----------------------------------

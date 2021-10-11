@@ -1,4 +1,5 @@
-#include <Harmony.h>
+#include "Harmony.h"
+#include "Harmony/Core/EntryPoint.h"
 
 #include "Platform/OpenGL/OpenGLShader.h"
 
@@ -9,13 +10,15 @@
 
 #include <string>
 
+#include "Sandbox2D.h"
+
 class ExampleLayer : public Harmony::Layer
 {
 public:
 	ExampleLayer()
 		: Layer("Example"), _camera_controller(1280.0f / 720.0f)
 	{
-		_vertex_array.reset(Harmony::VertexArray::create());
+		_vertex_array = Harmony::VertexArray::create();
 
 		float vertices[3 * 7] =
 		{
@@ -40,7 +43,7 @@ public:
 		index_buffer.reset(Harmony::IndexBuffer::create(indices, sizeof(indices) / sizeof(uint32_t)));
 		_vertex_array->set_index_buffer(index_buffer);
 
-		_square_vertex_array.reset(Harmony::VertexArray::create());
+		_square_vertex_array = Harmony::VertexArray::create();
 
 		float square_vertices[5 * 4] =
 		{
@@ -140,7 +143,7 @@ public:
 		auto texture_shader = _shader_library.load("assets/shaders/Texture.glsl");
 
 		_texture = Harmony::Texture2D::create("assets/textures/Checkerboard.png");
-		_naraku_texture = Harmony::Texture2D::create("assets/textures/Grass.png");
+		_grass_texture = Harmony::Texture2D::create("assets/textures/Grass.png");
 
 		std::dynamic_pointer_cast<Harmony::OpenGLShader>(texture_shader)->bind();
 		std::dynamic_pointer_cast<Harmony::OpenGLShader>(texture_shader)->upload_uniform_int("u_Texture", 0);
@@ -159,7 +162,7 @@ public:
 		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 
 		std::dynamic_pointer_cast<Harmony::OpenGLShader>(_color_shader)->bind();
-		std::dynamic_pointer_cast<Harmony::OpenGLShader>(_color_shader)->upload_uniform_float3 ("u_Color", _square_color);
+		std::dynamic_pointer_cast<Harmony::OpenGLShader>(_color_shader)->upload_uniform_float3("u_Color", _square_color);
 
 		for (int y = 0; y < 20; y++)
 		{
@@ -176,7 +179,7 @@ public:
 		_texture->bind();
 		Harmony::Renderer::submit(texture_shader, _square_vertex_array, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 		
-		_naraku_texture->bind();
+		_grass_texture->bind();
 		Harmony::Renderer::submit(texture_shader, _square_vertex_array, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
 		Harmony::Renderer::end_scene();
@@ -201,7 +204,7 @@ private:
 	Harmony::Ref<Harmony::Shader> _color_shader;
 	Harmony::Ref<Harmony::VertexArray> _square_vertex_array;
 
-	Harmony::Ref<Harmony::Texture2D> _texture, _naraku_texture;
+	Harmony::Ref<Harmony::Texture2D> _texture, _grass_texture;
 
 	Harmony::OrthographicCameraController _camera_controller;
 	glm::vec3 _square_color = { 0.2f, 0.3f, 0.8f };
@@ -212,7 +215,8 @@ class Sandbox : public Harmony::Application
 public:
 	Sandbox()
 	{
-		push_layer(new ExampleLayer());
+		//push_layer(new ExampleLayer());
+		push_layer(new Sandbox2D());
 	}
 
 	~Sandbox()
