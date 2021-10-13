@@ -40,6 +40,9 @@ namespace Harmony
 		glTextureParameteri(_renderer_id, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTextureParameteri(_renderer_id, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
+		glTextureParameteri(_renderer_id, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTextureParameteri(_renderer_id, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
 		glTextureSubImage2D(_renderer_id, 0, 0, 0, _width, _height, data_format, GL_UNSIGNED_BYTE, data);
 
 		stbi_image_free(data);

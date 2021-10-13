@@ -184,6 +184,7 @@
     <ClInclude Include="src\Harmony\Core\MouseButtonCode.h" />
     <ClInclude Include="src\Harmony\Renderer\OrthographicCamera.h" />
     <ClInclude Include="src\Harmony\Renderer\Renderer.h" />
+    <ClInclude Include="src\Harmony\Renderer\Renderer2D.h" />
     <ClInclude Include="src\Harmony\Renderer\RendererAPI.h" />
     <ClInclude Include="src\Harmony\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Harmony\Renderer\Shader.h" />
@@ -215,6 +216,7 @@
     <ClCompile Include="src\Harmony\Renderer\Buffer.cpp" />
     <ClCompile Include="src\Harmony\Renderer\OrthographicCamera.cpp" />
     <ClCompile Include="src\Harmony\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Harmony\Renderer\Renderer2D.cpp" />
     <ClCompile Include="src\Harmony\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\Harmony\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Harmony\Renderer\Shader.cpp" />

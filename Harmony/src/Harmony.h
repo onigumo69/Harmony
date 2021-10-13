@@ -15,6 +15,7 @@
 
 // ---Renderer------------------------
 #include "Harmony/Renderer/Renderer.h"
+#include "Harmony/Renderer/Renderer2D.h"
 #include "Harmony/Renderer/RenderCommand.h"
 
 #include "Harmony/Renderer/Buffer.h"

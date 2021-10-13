@@ -1,4 +1,5 @@
 #include "Renderer.h"
+#include "Renderer2D.h"
 #include "RenderCommand.h"
 
 #include "Platform/OpenGL/OpenGLShader.h"
@@ -10,6 +11,7 @@ namespace Harmony
 	void Renderer::init()
 	{
 		RenderCommand::init();
+		Renderer2D::init();
 	}
 
 	void Renderer::on_window_resize(uint32_t width, uint32_t height)

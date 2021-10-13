@@ -20,5 +20,7 @@ private:
 	Harmony::Ref<Harmony::VertexArray> _square_vertex_array;
 	Harmony::Ref<Harmony::Shader> _flat_color_shader;
 
+	Harmony::Ref<Harmony::Texture2D> _check_board_texture;
+
 	glm::vec4 _square_color = { 0.2f, 0.3f, 0.8f, 1.0f };
 };
