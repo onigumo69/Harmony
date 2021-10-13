@@ -10,8 +10,6 @@
 
 namespace Harmony
 {
-	#define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
-
 	Application* Application::Instance = nullptr;
 
 	Application::Application()
@@ -19,8 +17,8 @@ namespace Harmony
 		HM_CORE_ASSERT(!Instance, "Application already exists!");
 		Instance = this;
 
-		_window = std::unique_ptr<Window>(Window::create());
-		_window->set_event_callback(BIND_EVENT_FN(on_event));
+		_window = Window::create();
+		_window->set_event_callback(HM_BIND_EVENT_FN(Application::on_event));
 
 		Renderer::init();
 
@@ -30,6 +28,7 @@ namespace Harmony
 
 	Application::~Application()
 	{
+		Renderer::shutdown();
 	}
 
 	void Application::run()
@@ -59,8 +58,8 @@ namespace Harmony
 	void Application::on_event(Event& e)
 	{
 		EventDispatcher dispatcher(e);
-		dispatcher.dispatch<WindowCloseEvent>(BIND_EVENT_FN(on_window_close));
-		dispatcher.dispatch<WindowResizeEvent>(BIND_EVENT_FN(on_window_resize));
+		dispatcher.dispatch<WindowCloseEvent>(HM_BIND_EVENT_FN(Application::on_window_close));
+		dispatcher.dispatch<WindowResizeEvent>(HM_BIND_EVENT_FN(Application::on_window_resize));
 
 		for (auto it = _layer_stack.end(); it != _layer_stack.begin(); )
 		{

@@ -6,7 +6,7 @@
 
 namespace Harmony
 {
-	class HARMONY_API KeyEvent : public Event
+	class KeyEvent : public Event
 	{
 	public:
 		inline int get_keycode() const { return _keycode; }
@@ -20,7 +20,7 @@ namespace Harmony
 		int _keycode;
 	};
 
-	class HARMONY_API KeyPressedEvent : public KeyEvent
+	class KeyPressedEvent : public KeyEvent
 	{
 	public:
 		KeyPressedEvent(int keycode, int repeat_count)
@@ -41,7 +41,7 @@ namespace Harmony
 		int _repeat_count;
 	};
 
-	class HARMONY_API KeyReleasedEvent : public KeyEvent
+	class KeyReleasedEvent : public KeyEvent
 	{
 	public:
 		KeyReleasedEvent(int keycode)
@@ -58,7 +58,7 @@ namespace Harmony
 		EVENT_CLASS_TYPE(KeyReleased)
 	};
 
-	class HARMONY_API KeyTypedEvent : public KeyEvent
+	class KeyTypedEvent : public KeyEvent
 	{
 	public:
 		KeyTypedEvent(int keycode)

@@ -3,22 +3,22 @@
 #include <memory>
 
 #include "Core.h"
-#include "spdlog/spdlog.h"
-#include "spdlog/fmt/ostr.h"
+#include <spdlog/spdlog.h>
+#include <spdlog/fmt/ostr.h>
 
 namespace Harmony
 {
 
-	class HARMONY_API Log
+	class Log
 	{
 	public:
 		static void init();
 
-		inline static std::shared_ptr<spdlog::logger>& get_core_logger() { return _core_logger; }
-		inline static std::shared_ptr<spdlog::logger>& get_client_logger() { return _client_logger; }
+		inline static Ref<spdlog::logger>& get_core_logger() { return _core_logger; }
+		inline static Ref<spdlog::logger>& get_client_logger() { return _client_logger; }
 	private:
-		static std::shared_ptr<spdlog::logger> _core_logger;
-		static std::shared_ptr<spdlog::logger> _client_logger;
+		static Ref<spdlog::logger> _core_logger;
+		static Ref<spdlog::logger> _client_logger;
 	};
 
 }

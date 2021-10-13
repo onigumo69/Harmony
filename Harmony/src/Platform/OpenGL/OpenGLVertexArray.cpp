@@ -49,7 +49,7 @@ namespace Harmony
 		glBindVertexArray(0);
 	}
 
-	void OpenGLVertexArray::add_vertex_buffer(const std::shared_ptr<VertexBuffer>& vertexBuffer)
+	void OpenGLVertexArray::add_vertex_buffer(const Ref<VertexBuffer>& vertexBuffer)
 	{
 		HM_CORE_ASSERT(vertexBuffer->get_layout().get_elements().size(), "Vertex Buffer has no layout!");
 
@@ -73,7 +73,7 @@ namespace Harmony
 		_vertex_buffer.push_back(vertexBuffer);
 	}
 
-	void OpenGLVertexArray::set_index_buffer(const std::shared_ptr<IndexBuffer>& indexBuffer)
+	void OpenGLVertexArray::set_index_buffer(const Ref<IndexBuffer>& indexBuffer)
 	{
 		glBindVertexArray(_renderer_id);
 		indexBuffer->bind();

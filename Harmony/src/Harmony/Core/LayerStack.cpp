@@ -3,11 +3,6 @@
 namespace Harmony
 {
 
-	LayerStack::LayerStack()
-	{
-		
-	}
-
 	LayerStack::~LayerStack()
 	{
 		for (Layer* layer : _layers)

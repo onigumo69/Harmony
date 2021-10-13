@@ -28,13 +28,13 @@ namespace Harmony
 			_renderer_api->clear();
 		}
 
-		inline static void draw_indexed(const std::shared_ptr<VertexArray>& vertex_array)
+		inline static void draw_indexed(const Ref<VertexArray>& vertex_array)
 		{
 			_renderer_api->draw_indexed(vertex_array);
 		}
 
 	private:
-		static RendererAPI* _renderer_api;
+		static Scope<RendererAPI> _renderer_api;
 	};
 
 }

@@ -30,7 +30,7 @@ namespace Harmony
 		virtual void shutdown();
 	private:
 		GLFWwindow* _window;
-		GraphicsContext* _context;
+		Scope<GraphicsContext> _context;
 
 		struct WindowData
 		{

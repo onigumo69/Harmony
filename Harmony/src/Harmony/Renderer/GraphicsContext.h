@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Harmony/Core/Core.h"
+
 namespace Harmony
 {
 
@@ -8,6 +10,8 @@ namespace Harmony
 	public:
 		virtual void init() = 0;
 		virtual void swap_buffers() = 0;
+
+		static Scope<GraphicsContext> create(void* window);
 	};
 
 }

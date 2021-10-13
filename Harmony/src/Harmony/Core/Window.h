@@ -18,7 +18,7 @@ namespace Harmony
 		{}
 	};
 
-	class HARMONY_API Window
+	class Window
 	{
 	public:
 		using EventCallbackFn = std::function<void(Event&)>;
@@ -36,6 +36,6 @@ namespace Harmony
 
 		virtual void* get_native_window() const = 0;
 
-		static Window* create(const WindowProps& props = WindowProps());
+		static Scope<Window> create(const WindowProps& props = WindowProps());
 	};
 }

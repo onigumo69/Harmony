@@ -6,7 +6,7 @@
 
 namespace Harmony
 {
-	class HARMONY_API MouseMovedEvent : public Event
+	class MouseMovedEvent : public Event
 	{
 	public:
 		MouseMovedEvent(float x, float y)
@@ -29,7 +29,7 @@ namespace Harmony
 		float _mouseX, _mouseY;
 	};
 
-	class HARMONY_API MouseScrolledEvent : public Event
+	class MouseScrolledEvent : public Event
 	{
 	public:
 		MouseScrolledEvent(float x_offset, float y_offset)
@@ -52,7 +52,7 @@ namespace Harmony
 		float _x_offset, _y_offset;
 	};
 
-	class HARMONY_API MouseButtonEvent : public Event
+	class MouseButtonEvent : public Event
 	{
 	public:
 		inline int get_mouse_button() const { return _button; }
@@ -66,7 +66,7 @@ namespace Harmony
 		int _button;
 	};
 
-	class HARMONY_API MouseButtonPressedEvent : public MouseButtonEvent
+	class MouseButtonPressedEvent : public MouseButtonEvent
 	{
 	public:
 		MouseButtonPressedEvent(int button)
@@ -83,7 +83,7 @@ namespace Harmony
 		EVENT_CLASS_TYPE(MouseButtonPressed)
 	};
 
-	class HARMONY_API MouseButtonReleasedEvent : public MouseButtonEvent
+	class MouseButtonReleasedEvent : public MouseButtonEvent
 	{
 	public:
 		MouseButtonReleasedEvent(int button)

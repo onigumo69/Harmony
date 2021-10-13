@@ -2,16 +2,6 @@
 
 #include <memory>
 
-#if HM_DYNAMIC_LINK
-#ifdef HARMONY_BUILD_DLL
-	#define HARMONY_API __declspec(dllexport)
-#else
-	#define HARMONY_API __declspec(dllimport)
-#endif
-#else
-	#define HARMONY_API
-#endif
-
 #ifdef HM_DEBUG
 	#define HM_ENABLE_ASSERTS
 #endif

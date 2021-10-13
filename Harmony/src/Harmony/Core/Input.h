@@ -6,7 +6,7 @@
 
 namespace Harmony
 {
-	class HARMONY_API Input
+	class Input
 	{
 	public:
 		inline static bool is_key_pressed(int keycode) { return Instance->is_key_pressed_impl(keycode); }

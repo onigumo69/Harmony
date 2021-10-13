@@ -16,7 +16,7 @@ namespace Harmony
 		switch (Renderer::get_api())
 		{
 		case RendererAPI::API::None:    HM_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
-		case RendererAPI::API::OpenGL:  return std::make_shared<OpenGLShader>(filepath);
+		case RendererAPI::API::OpenGL:  return create_ref<OpenGLShader>(filepath);
 		}
 
 		HM_CORE_ASSERT(false, "Unknown RendererAPI!");
@@ -28,7 +28,7 @@ namespace Harmony
 		switch (Renderer::get_api())
 		{
 		case RendererAPI::API::None:    HM_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
-		case RendererAPI::API::OpenGL:  return std::make_shared<OpenGLShader>(name, vertex_source, fragment_source);
+		case RendererAPI::API::OpenGL:  return create_ref<OpenGLShader>(name, vertex_source, fragment_source);
 		}
 
 		HM_CORE_ASSERT(false, "Unknown RendererAPI!");

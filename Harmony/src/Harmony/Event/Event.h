@@ -34,7 +34,7 @@ namespace Harmony
 
 #define EVENT_CLASS_CATEGORY(category) virtual int get_category_flags() const override { return category; }
 
-	class HARMONY_API Event
+	class Event
 	{
 	public:
 		bool _handled = false;

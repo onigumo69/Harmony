@@ -31,8 +31,7 @@ namespace Harmony
 			-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
 		};
 
-		Ref<VertexBuffer> square_vertex_buffer;
-		square_vertex_buffer.reset(VertexBuffer::create(square_vertices, sizeof(square_vertices)));
+		Ref<VertexBuffer> square_vertex_buffer = VertexBuffer::create(square_vertices, sizeof(square_vertices));
 		square_vertex_buffer->set_layout(
 			{
 				{ ShaderDataType::Float3, "a_Position" },
@@ -41,8 +40,7 @@ namespace Harmony
 		Data->quad_vertex_array->add_vertex_buffer(square_vertex_buffer);
 
 		uint32_t square_indices[6] = { 0, 1, 2, 2, 3, 0 };
-		Ref<IndexBuffer> square_index_buffer;
-		square_index_buffer.reset(IndexBuffer::create(square_indices, sizeof(square_indices) / sizeof(uint32_t)));
+		Ref<IndexBuffer> square_index_buffer = IndexBuffer::create(square_indices, sizeof(square_indices) / sizeof(uint32_t));
 		Data->quad_vertex_array->set_index_buffer(square_index_buffer);
 
 		Data->white_texture = Texture2D::create(1, 1);

@@ -212,6 +212,7 @@
     <ClCompile Include="src\Harmony\Core\Layer.cpp" />
     <ClCompile Include="src\Harmony\Core\LayerStack.cpp" />
     <ClCompile Include="src\Harmony\Core\Log.cpp" />
+    <ClCompile Include="src\Harmony\Renderer\GraphicsContext.cpp" />
     <ClCompile Include="src\Harmony\Renderer\OrthographicCameraController.cpp" />
     <ClCompile Include="src\Harmony\Renderer\Buffer.cpp" />
     <ClCompile Include="src\Harmony\Renderer\OrthographicCamera.cpp" />

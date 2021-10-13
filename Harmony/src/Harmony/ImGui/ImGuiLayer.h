@@ -9,7 +9,7 @@
 namespace Harmony
 {
 
-	class HARMONY_API ImGuiLayer : public Layer
+	class ImGuiLayer : public Layer
 	{
 	public:
 		ImGuiLayer();
@@ -17,7 +17,6 @@ namespace Harmony
 
 		virtual void on_attach() override;
 		virtual void on_detach() override;
-		virtual void on_imgui_render() override;
 
 		void begin();
 		void end();

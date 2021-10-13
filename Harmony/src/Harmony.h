@@ -1,6 +1,7 @@
 #pragma once
 
 // for use by client applications
+#include "Harmony/Core/Core.h"
 #include "Harmony/Core/Application.h"
 #include "Harmony/Core/Log.h"
 #include "Harmony/Core/Timestep.h"

@@ -3,7 +3,7 @@
 
 #include "Platform/OpenGL/OpenGLShader.h"
 
-#include "imgui.h"
+#include <imgui.h>
 
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -27,8 +27,7 @@ public:
 			 0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
 		};
 
-		Harmony::Ref<Harmony::VertexBuffer> vertex_buffer;
-		vertex_buffer.reset(Harmony::VertexBuffer::create(vertices, sizeof(vertices)));
+		Harmony::Ref<Harmony::VertexBuffer> vertex_buffer = Harmony::VertexBuffer::create(vertices, sizeof(vertices));
 		Harmony::BufferLayout layout =
 		{
 			{ Harmony::ShaderDataType::Float3, "a_Position" },
@@ -39,8 +38,7 @@ public:
 
 
 		uint32_t indices[3] = { 0,1,2 };
-		Harmony::Ref<Harmony::IndexBuffer> index_buffer;
-		index_buffer.reset(Harmony::IndexBuffer::create(indices, sizeof(indices) / sizeof(uint32_t)));
+		Harmony::Ref<Harmony::IndexBuffer> index_buffer = Harmony::IndexBuffer::create(indices, sizeof(indices) / sizeof(uint32_t));
 		_vertex_array->set_index_buffer(index_buffer);
 
 		_square_vertex_array = Harmony::VertexArray::create();
@@ -53,8 +51,7 @@ public:
 					-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
 		};
 
-		Harmony::Ref<Harmony::VertexBuffer> square_vertex_buffer;
-		square_vertex_buffer.reset(Harmony::VertexBuffer::create(square_vertices, sizeof(square_vertices)));
+		Harmony::Ref<Harmony::VertexBuffer> square_vertex_buffer = Harmony::VertexBuffer::create(square_vertices, sizeof(square_vertices));
 		square_vertex_buffer->set_layout(
 			{
 				{ Harmony::ShaderDataType::Float3, "a_Position" },
@@ -64,8 +61,7 @@ public:
 
 
 		uint32_t square_indices[6] = { 0, 1, 2, 2, 3, 0 };
-		Harmony::Ref<Harmony::IndexBuffer> square_index_buffer;
-		square_index_buffer.reset(Harmony::IndexBuffer::create(square_indices, sizeof(square_indices) / sizeof(uint32_t)));
+		Harmony::Ref<Harmony::IndexBuffer> square_index_buffer = Harmony::IndexBuffer::create(square_indices, sizeof(square_indices) / sizeof(uint32_t));
 		_square_vertex_array->set_index_buffer(square_index_buffer);
 
 		std::string vertex_source = R"(
@@ -145,8 +141,8 @@ public:
 		_texture = Harmony::Texture2D::create("assets/textures/Checkerboard.png");
 		_grass_texture = Harmony::Texture2D::create("assets/textures/Grass.png");
 
-		std::dynamic_pointer_cast<Harmony::OpenGLShader>(texture_shader)->bind();
-		std::dynamic_pointer_cast<Harmony::OpenGLShader>(texture_shader)->upload_uniform_int("u_Texture", 0);
+		texture_shader->bind();
+		texture_shader->set_int("u_Texture", 0);
 	}
 
 	void on_update(Harmony::Timestep ts) override
@@ -161,8 +157,8 @@ public:
 
 		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 
-		std::dynamic_pointer_cast<Harmony::OpenGLShader>(_color_shader)->bind();
-		std::dynamic_pointer_cast<Harmony::OpenGLShader>(_color_shader)->upload_uniform_float3("u_Color", _square_color);
+		_color_shader->bind();
+		_color_shader->set_float3("u_Color", _square_color);
 
 		for (int y = 0; y < 20; y++)
 		{

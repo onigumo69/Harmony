@@ -8,7 +8,7 @@
 
 namespace Harmony
 {
-	class HARMONY_API Layer
+	class Layer
 	{
 	public:
 		Layer(const std::string& debug_name = "Layer");

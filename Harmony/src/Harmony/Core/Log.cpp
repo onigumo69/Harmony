@@ -1,12 +1,12 @@
 #include "Log.h"
 
-#include "spdlog/sinks/stdout_color_sinks.h"
+#include <spdlog/sinks/stdout_color_sinks.h>
 
 namespace Harmony
 {
 
-	std::shared_ptr<spdlog::logger> Log::_core_logger;
-	std::shared_ptr<spdlog::logger> Log::_client_logger;
+	Ref<spdlog::logger> Log::_core_logger;
+	Ref<spdlog::logger> Log::_client_logger;
 
 	void Log::init()
 	{

@@ -11,16 +11,16 @@
 namespace Harmony
 {
 
-	static bool s_GLFWInitialized = false;
+	static uint8_t s_GLFWWindowCount = 0;
 
 	static void GLFWErrorCallback(int error, const char* description)
 	{
 		HM_CORE_ERROR("GLFW Error ({0}): {1}", error, description);
 	}
 
-	Window* Window::create(const WindowProps& props)
+	Scope<Window>  Window::create(const WindowProps& props)
 	{
-		return new WindowsWindow(props);
+		return create_scope<WindowsWindow>(props);
 	}
 
 	WindowsWindow::WindowsWindow(const WindowProps& props)
@@ -41,19 +41,19 @@ namespace Harmony
 
 		HM_CORE_INFO("Creating window {0} ({1}, {2})", props._title, props._width, props._height);
 
-		if (!s_GLFWInitialized)
+		if (s_GLFWWindowCount == 0)
 		{
 			// TODO: glfwTerminate on system shutdown
 			int success = glfwInit();
 			HM_CORE_ASSERT(success, "Could not intialize GLFW!");
 
 			glfwSetErrorCallback(GLFWErrorCallback);
-			s_GLFWInitialized = true;
 		}
 
 		_window = glfwCreateWindow((int)props._width, (int)props._height, _data._title.c_str(), nullptr, nullptr);
+		++s_GLFWWindowCount;
 
-		_context = new OpenGLContext(_window);
+		_context = GraphicsContext::create(_window);
 		_context->init();
 
 		glfwSetWindowUserPointer(_window, &_data);
@@ -153,6 +153,12 @@ namespace Harmony
 	void WindowsWindow::shutdown()
 	{
 		glfwDestroyWindow(_window);
+		--s_GLFWWindowCount;
+
+		if (s_GLFWWindowCount == 0)
+		{
+			glfwTerminate();
+		}
 	}
 
 	void WindowsWindow::on_update()

@@ -8,10 +8,10 @@
 namespace Harmony
 {
 	
-	class HARMONY_API LayerStack
+	class LayerStack
 	{
 	public:
-		LayerStack();
+		LayerStack() = default;
 		~LayerStack();
 
 		void push_layer(Layer* layer);

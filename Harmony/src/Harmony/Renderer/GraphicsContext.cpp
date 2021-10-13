@@ -1,17 +1,17 @@
-#include "VertexArray.h"
+#include "GraphicsContext.h"
 
 #include "Renderer.h"
-#include "Platform/OpenGL/OpenGLVertexArray.h"
+#include "Platform/OpenGL/OpenGLContext.h"
 
 namespace Harmony
 {
 
-	Ref<VertexArray> VertexArray::create()
+	Scope<GraphicsContext> GraphicsContext::create(void* window)
 	{
 		switch (Renderer::get_api())
 		{
 		case RendererAPI::API::None:    HM_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
-		case RendererAPI::API::OpenGL:  return create_ref<OpenGLVertexArray>();
+		case RendererAPI::API::OpenGL:  return create_scope<OpenGLContext>(static_cast<GLFWwindow*>(window));
 		}
 
 		HM_CORE_ASSERT(false, "Unknown RendererAPI!");

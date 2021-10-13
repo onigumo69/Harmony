@@ -14,6 +14,11 @@ namespace Harmony
 		Renderer2D::init();
 	}
 
+	void Renderer::shutdown()
+	{
+		Renderer2D::shutdown();
+	}
+
 	void Renderer::on_window_resize(uint32_t width, uint32_t height)
 	{
 		RenderCommand::set_viewport(0, 0, width, height);
@@ -28,13 +33,13 @@ namespace Harmony
 	{
 	}
 
-	void Renderer::submit(const std::shared_ptr<Shader>& shader,
-		const std::shared_ptr<VertexArray>& vertex_array,
+	void Renderer::submit(const Ref<Shader>& shader,
+		const Ref<VertexArray>& vertex_array,
 		const glm::mat4& transform)
 	{
 		shader->bind();
-		std::dynamic_pointer_cast<OpenGLShader>(shader)->upload_uniform_mat4("u_ViewProjection", _scene_data->_view_projection_matrix);
-		std::dynamic_pointer_cast<OpenGLShader>(shader)->upload_uniform_mat4("u_Transform", transform);
+		shader->set_mat4("u_ViewProjection", _scene_data->_view_projection_matrix);
+		shader->set_mat4("u_Transform", transform);
 
 		vertex_array->bind();
 		RenderCommand::draw_indexed(vertex_array);
