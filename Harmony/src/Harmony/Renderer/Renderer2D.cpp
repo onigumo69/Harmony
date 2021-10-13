@@ -12,8 +12,8 @@ namespace Harmony
 	struct Renderer2DStorage
 	{
 		Ref<VertexArray> quad_vertex_array;
-		Ref<Shader> flat_color_shader;
 		Ref<Shader> texture_shader;
+		Ref<Texture2D> white_texture;
 	};
 
 	static Renderer2DStorage* Data;
@@ -45,7 +45,10 @@ namespace Harmony
 		square_index_buffer.reset(IndexBuffer::create(square_indices, sizeof(square_indices) / sizeof(uint32_t)));
 		Data->quad_vertex_array->set_index_buffer(square_index_buffer);
 
-		Data->flat_color_shader = Shader::create("assets/shaders/FlatColor.glsl");
+		Data->white_texture = Texture2D::create(1, 1);
+		uint32_t white_texture_data = 0xffffffff;
+		Data->white_texture->set_data(&white_texture_data, sizeof(uint32_t));
+
 		Data->texture_shader = Shader::create("assets/shaders/Texture.glsl");
 		Data->texture_shader->bind();
 		Data->texture_shader->set_int("u_Texture", 0);
@@ -58,9 +61,6 @@ namespace Harmony
 
 	void Renderer2D::begin_scene(const OrthographicCamera& camera)
 	{
-		Data->flat_color_shader->bind();
-		Data->flat_color_shader->set_mat4("u_ViewProjection", camera.get_view_projection_matrix());
-
 		Data->texture_shader->bind();
 		Data->texture_shader->set_mat4("u_ViewProjection", camera.get_view_projection_matrix());
 	}
@@ -77,11 +77,11 @@ namespace Harmony
 
 	void Renderer2D::draw_quad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
 	{
-		Data->flat_color_shader->bind();
-		Data->flat_color_shader->set_float4("u_Color", color);
+		Data->texture_shader->set_float4("u_Color", color);
+		Data->white_texture->bind();
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
-		Data->flat_color_shader->set_mat4("u_Transform", transform);
+		Data->texture_shader->set_mat4("u_Transform", transform);
 
 		Data->quad_vertex_array->bind();
 		RenderCommand::draw_indexed(Data->quad_vertex_array);
@@ -89,12 +89,11 @@ namespace Harmony
 
 	void Renderer2D::draw_quad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture)
 	{
-		Data->texture_shader->bind();
+		Data->texture_shader->set_float4("u_Color", glm::vec4(1.0f));
+		texture->bind();
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 		Data->texture_shader->set_mat4("u_Transform", transform);
-
-		texture->bind();
 
 		Data->quad_vertex_array->bind();
 		RenderCommand::draw_indexed(Data->quad_vertex_array);

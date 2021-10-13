@@ -35,6 +35,8 @@ namespace Harmony
 	void OpenGLRendererAPI::draw_indexed(const std::shared_ptr<VertexArray>& vertex_array)
 	{
 		glDrawElements(GL_TRIANGLES, vertex_array->get_index_buffer()->get_count(), GL_UNSIGNED_INT, nullptr);
+		
+		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
 }
