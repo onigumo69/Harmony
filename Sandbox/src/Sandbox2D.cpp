@@ -1,4 +1,7 @@
 #include "Sandbox2D.h"
+
+#include "Harmony/Debug/Instrumentor.h"
+
 #include <imgui.h>
 
 #include <glm/gtc/matrix_transform.hpp>
@@ -22,19 +25,27 @@ void Sandbox2D::on_detach()
 void Sandbox2D::on_update(Harmony::Timestep ts)
 {
 	// Update
-	_camera_controller.on_update(ts);
+	{
+		HM_PROFILE_FUNCTION();
+		_camera_controller.on_update(ts);
+	}
 
 	// Render
-	Harmony::RenderCommand::set_clear_color({ 0.1f, 0.1f, 0.1f, 1 });
-	Harmony::RenderCommand::clear();
+	{
+		HM_PROFILE_SCOPE("Renderer Prep");
+		Harmony::RenderCommand::set_clear_color({ 0.1f, 0.1f, 0.1f, 1 });
+		Harmony::RenderCommand::clear();
+	}
 
-	Harmony::Renderer2D::begin_scene(_camera_controller.get_camera());
+	{
+		HM_PROFILE_SCOPE("Renderer Draw");
+		Harmony::Renderer2D::begin_scene(_camera_controller.get_camera());
+		Harmony::Renderer2D::draw_quad({ -1.0f, 0.0f }, { 0.8f, 0.8f }, { 0.8f, 0.2f, 0.3f, 1.0f });
+		Harmony::Renderer2D::draw_quad({ 0.5f, -0.5f }, { 0.5f, 0.75f }, { 0.2f, 0.3f, 0.8f, 1.0f });
+		Harmony::Renderer2D::draw_quad({ 0.0f, 0.0f, -0.1f }, { 10.0f, 10.0f }, _check_board_texture);
+		Harmony::Renderer2D::end_scene();
+	}
 
-	Harmony::Renderer2D::draw_quad({ -1.0f, 0.0f }, { 0.8f, 0.8f }, { 0.8f, 0.2f, 0.3f, 1.0f });
-	Harmony::Renderer2D::draw_quad({ 0.5f, -0.5f }, { 0.5f, 0.75f }, { 0.2f, 0.3f, 0.8f, 1.0f });
-	Harmony::Renderer2D::draw_quad({ 0.0f, 0.0f, -0.1f }, { 10.0f, 10.0f }, _check_board_texture);
-
-	Harmony::Renderer2D::end_scene();
 }
 
 void Sandbox2D::on_imgui_render()

@@ -141,6 +141,9 @@
     <ClInclude Include="src\Harmony\Renderer\Renderer2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Harmony\Debug\Instrumentor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Harmony\Core\Application.cpp">
