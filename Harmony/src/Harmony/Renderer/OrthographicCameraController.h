@@ -17,6 +17,8 @@ namespace Harmony
 		void on_update(Timestep ts);
 		void on_event(Event& e);
 
+		void on_resize(float width, float height);
+
 		OrthographicCamera& get_camera() { return _camera; }
 		const OrthographicCamera& get_camera() const { return _camera; }
 

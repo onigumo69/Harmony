@@ -16,12 +16,15 @@ namespace Harmony
 		virtual void bind() override;
 		virtual void unbind() override;
 
+		virtual void resize(uint32_t width, uint32_t height) override;
+
 		virtual uint32_t get_color_attachment_renderer_id() const override { return _color_attachment; }
 
 		virtual const FramebufferSpecification& get_specification() const override { return _specification; }
 	private:
-		uint32_t _renderer_id;
-		uint32_t _color_attachment, _depth_attachment;
+		uint32_t _renderer_id{};
+		uint32_t _color_attachment{};
+		uint32_t _depth_attachment{};
 		FramebufferSpecification _specification;
 	};
 

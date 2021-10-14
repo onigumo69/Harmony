@@ -50,6 +50,12 @@ namespace Harmony
 		dispatcher.dispatch<WindowResizeEvent>(HM_BIND_EVENT_FN(OrthographicCameraController::on_window_resized));
 	}
 
+	void OrthographicCameraController::on_resize(float width, float height)
+	{
+		_aspect_ratio = width / height;
+		_camera.set_projection(-_aspect_ratio * _zoom_level, _aspect_ratio * _zoom_level, -_zoom_level, _zoom_level);
+	}
+
 	bool OrthographicCameraController::on_mouse_scrolled(MouseScrolledEvent& e)
 	{
 		HM_PROFILE_FUNCTION();
@@ -64,8 +70,8 @@ namespace Harmony
 	{
 		HM_PROFILE_FUNCTION();
 
-		_aspect_ratio = (float)e.get_width() / (float)e.get_height();
-		_camera.set_projection(-_aspect_ratio * _zoom_level, _aspect_ratio * _zoom_level, -_zoom_level, _zoom_level);
+		on_resize((float)e.get_width(), (float)e.get_height());
+
 		return false;
 	}
 

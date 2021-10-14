@@ -1,14 +1,2 @@
-﻿  EditorApp.cpp
-D:\dev\Harmony\Harmony\src\Harmony\Debug\Instrumentor.h(113,1): warning C4267: 'initializing': conversion from 'size_t' to 'uint32_t', possible loss of data
-  EditorLayer.cpp
-D:\dev\Harmony\Harmony\src\Harmony\Debug\Instrumentor.h(113,1): warning C4267: 'initializing': conversion from 'size_t' to 'uint32_t', possible loss of data
-D:\dev\Harmony\HarmonyEditor\src\EditorLayer.cpp(154,33): warning C4312: 'type cast': conversion from 'uint32_t' to 'void *' of greater size
-D:\dev\Harmony\HarmonyEditor\src\EditorLayer.cpp(173,33): warning C4312: 'type cast': conversion from 'uint32_t' to 'void *' of greater size
-  Generating Code...
-LIBCMTD.lib(initializers.obj) : warning LNK4098: defaultlib 'libcmt.lib' conflicts with use of other libs; use /NODEFAULTLIB:library
-EditorApp.obj : error LNK2019: unresolved external symbol "public: __cdecl Harmony::Application::Application(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &)" (??0Application@Harmony@@QEAA@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) referenced in function "public: __cdecl Harmony::HarmonyEditor::HarmonyEditor(void)" (??0HarmonyEditor@Harmony@@QEAA@XZ)
-EditorLayer.obj : error LNK2019: unresolved external symbol "public: void __cdecl Harmony::Application::close(void)" (?close@Application@Harmony@@QEAAXXZ) referenced in function "public: virtual void __cdecl Harmony::EditorLayer::on_imgui_render(void)" (?on_imgui_render@EditorLayer@Harmony@@UEAAXXZ)
-EditorLayer.obj : error LNK2019: unresolved external symbol "public: static void __cdecl Harmony::Renderer2D::reset_stats(void)" (?reset_stats@Renderer2D@Harmony@@SAXXZ) referenced in function "public: virtual void __cdecl Harmony::EditorLayer::on_update(class Harmony::Timestep)" (?on_update@EditorLayer@Harmony@@UEAAXVTimestep@2@@Z)
-EditorLayer.obj : error LNK2019: unresolved external symbol "public: static struct Harmony::Renderer2D::Statistics __cdecl Harmony::Renderer2D::get_stats(void)" (?get_stats@Renderer2D@Harmony@@SA?AUStatistics@12@XZ) referenced in function "public: virtual void __cdecl Harmony::EditorLayer::on_imgui_render(void)" (?on_imgui_render@EditorLayer@Harmony@@UEAAXXZ)
-EditorLayer.obj : error LNK2019: unresolved external symbol "public: static class std::shared_ptr<class Harmony::Framebuffer> __cdecl Harmony::Framebuffer::create(struct Harmony::FramebufferSpecification const &)" (?create@Framebuffer@Harmony@@SA?AV?$shared_ptr@VFramebuffer@Harmony@@@std@@AEBUFramebufferSpecification@2@@Z) referenced in function "public: virtual void __cdecl Harmony::EditorLayer::on_attach(void)" (?on_attach@EditorLayer@Harmony@@UEAAXXZ)
-D:\dev\Harmony\x64\Debug\HarmonyEditor.exe : fatal error LNK1120: 5 unresolved externals
+﻿LIBCMTD.lib(initializers.obj) : warning LNK4098: defaultlib 'libcmt.lib' conflicts with use of other libs; use /NODEFAULTLIB:library
+  HarmonyEditor.vcxproj -> D:\dev\Harmony\x64\Debug\HarmonyEditor.exe

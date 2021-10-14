@@ -16,10 +16,19 @@ namespace Harmony
 	OpenGLFramebuffer::~OpenGLFramebuffer()
 	{
 		glDeleteFramebuffers(1, &_renderer_id);
+		glDeleteTextures(1, &_color_attachment);
+		glDeleteTextures(1, &_depth_attachment);
 	}
 
 	void OpenGLFramebuffer::invalidate()
 	{
+		if (_renderer_id)
+		{
+			glDeleteFramebuffers(1, &_renderer_id);
+			glDeleteTextures(1, &_color_attachment);
+			glDeleteTextures(1, &_depth_attachment);
+		}
+
 		glCreateFramebuffers(1, &_renderer_id);
 		glBindFramebuffer(GL_FRAMEBUFFER, _renderer_id);
 
@@ -34,11 +43,9 @@ namespace Harmony
 		glCreateTextures(GL_TEXTURE_2D, 1, &_depth_attachment);
 		glBindTexture(GL_TEXTURE_2D, _depth_attachment);
 		glTexStorage2D(GL_TEXTURE_2D, 1, GL_DEPTH24_STENCIL8, _specification.width, _specification.height);
-		// glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH24_STENCIL8, m_Specification.Width, m_Specification.Height, 0,
-		// GL_DEPTH_STENCIL, GL_UNSIGNED_INT_24_8, NULL);
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_TEXTURE_2D, _depth_attachment, 0);
 
-		HM_CORE_ASSERT(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, "Framebuffer is incomplete!");
+		//HM_CORE_ASSERT(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, "Framebuffer is incomplete!");
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
@@ -46,6 +53,7 @@ namespace Harmony
 	void OpenGLFramebuffer::bind()
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, _renderer_id);
+		glViewport(0, 0, _specification.width, _specification.height);
 	}
 
 	void OpenGLFramebuffer::unbind()
@@ -53,5 +61,12 @@ namespace Harmony
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
 
+	void OpenGLFramebuffer::resize(uint32_t width, uint32_t height)
+	{
+		_specification.width = width;
+		_specification.height = height;
+
+		invalidate();
+	}
 
 }
