@@ -28,9 +28,9 @@ namespace Harmony
 			_renderer_api->clear();
 		}
 
-		inline static void draw_indexed(const Ref<VertexArray>& vertex_array)
+		inline static void draw_indexed(const Ref<VertexArray>& vertex_array, uint32_t count = 0)
 		{
-			_renderer_api->draw_indexed(vertex_array);
+			_renderer_api->draw_indexed(vertex_array, count);
 		}
 
 	private:

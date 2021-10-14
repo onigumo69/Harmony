@@ -122,7 +122,7 @@ namespace Harmony
 	};
 }
 
-#define HM_PROFILE 1
+#define HM_PROFILE 0
 #if HM_PROFILE
 #define HM_PROFILE_BEGIN_SESSION(name, filepath) ::Harmony::Instrumentor::get().begin_session(name, filepath)
 #define HM_PROFILE_END_SESSION() ::Harmony::Instrumentor::get().end_session()

@@ -21,7 +21,7 @@ namespace Harmony
 		virtual void set_clear_color(const glm::vec4& color) = 0;
 		virtual void clear() = 0;
 
-		virtual void draw_indexed(const Ref<VertexArray>& vertex_array) = 0;
+		virtual void draw_indexed(const Ref<VertexArray>& vertex_array, uint32_t index_count = 0) = 0;
 
 		inline static API get_api() { return _api; }
 		

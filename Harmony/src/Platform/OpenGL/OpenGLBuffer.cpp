@@ -11,6 +11,15 @@ namespace Harmony
 	// VertexBuffer /////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////////////
 
+	OpenGLVertexBuffer::OpenGLVertexBuffer(uint32_t size)
+	{
+		HM_PROFILE_FUNCTION();
+
+		glCreateBuffers(1, &_renderer_id);
+		glBindBuffer(GL_ARRAY_BUFFER, _renderer_id);
+		glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);
+	}
+
 	OpenGLVertexBuffer::OpenGLVertexBuffer(float* vertices, uint32_t size)
 	{
 		HM_PROFILE_FUNCTION();
@@ -39,6 +48,12 @@ namespace Harmony
 		HM_PROFILE_FUNCTION();
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
+
+	void OpenGLVertexBuffer::set_data(const void* data, uint32_t size)
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, _renderer_id);
+		glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////

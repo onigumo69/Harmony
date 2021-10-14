@@ -114,9 +114,12 @@ namespace Harmony
 		virtual void bind() const = 0;
 		virtual void unbind() const = 0;
 
+		virtual void set_data(const void* data, uint32_t size) = 0;
+
 		virtual const BufferLayout& get_layout() const = 0;
 		virtual void set_layout(const BufferLayout& layout) = 0;
 
+		static Ref<VertexBuffer> create(uint32_t size);
 		static Ref<VertexBuffer> create(float* vertices, uint32_t size);
 	};
 
@@ -130,7 +133,7 @@ namespace Harmony
 
 		virtual uint32_t get_count() const = 0;
 
-		static Ref<IndexBuffer> create(uint32_t* indices, uint32_t size);
+		static Ref<IndexBuffer> create(uint32_t* indices, uint32_t count);
 	};
 
 }
