@@ -20,6 +20,7 @@
 #include "Harmony/Renderer/RenderCommand.h"
 
 #include "Harmony/Renderer/Buffer.h"
+#include "Harmony/Renderer/Framebuffer.h"
 #include "Harmony/Renderer/Shader.h"
 #include "Harmony/Renderer/Texture.h"
 #include "Harmony/Renderer/VertexArray.h"

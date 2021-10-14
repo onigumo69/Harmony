@@ -18,6 +18,11 @@ void Sandbox2D::on_attach()
 	HM_PROFILE_FUNCTION();
 
 	_check_board_texture = Harmony::Texture2D::create("assets/textures/Checkerboard.png");
+
+	Harmony::FramebufferSpecification fb_spec;
+	fb_spec.width = 1280;
+	fb_spec.height = 720;
+	_framebuffer = Harmony::Framebuffer::create(fb_spec);
 }
 
 void Sandbox2D::on_detach()
@@ -34,6 +39,7 @@ void Sandbox2D::on_update(Harmony::Timestep ts)
 	Harmony::Renderer2D::reset_stats();
 	{
 		HM_PROFILE_SCOPE("Renderer Prep");
+		_framebuffer->bind();
 		Harmony::RenderCommand::set_clear_color({ 0.1f, 0.1f, 0.1f, 1 });
 		Harmony::RenderCommand::clear();
 	}
@@ -61,6 +67,7 @@ void Sandbox2D::on_update(Harmony::Timestep ts)
 			}
 		}
 		Harmony::Renderer2D::end_scene();
+		_framebuffer->unbind();
 	}
 
 }
@@ -70,7 +77,7 @@ void Sandbox2D::on_imgui_render()
 	HM_PROFILE_FUNCTION();
 
 	// Note: Switch this to true to enable dockspace
-	static bool dockingEnabled = false;
+	static bool dockingEnabled = true;
 	if (dockingEnabled)
 	{
 		static bool dockspaceOpen = true;
@@ -142,8 +149,8 @@ void Sandbox2D::on_imgui_render()
 
 		ImGui::ColorEdit4("Square Color", glm::value_ptr(_square_color));
 
-		uint32_t texture_id = _check_board_texture->get_renderer_id();
-		ImGui::Image((void*)texture_id, ImVec2{ 256.0f, 256.0f });
+		uint32_t texture_id = _framebuffer->get_color_attachment_renderer_id();
+		ImGui::Image((void*)texture_id, ImVec2{ 1280.0f, 720.0f });
 		ImGui::End();
 
 		ImGui::End();
@@ -162,7 +169,7 @@ void Sandbox2D::on_imgui_render()
 		ImGui::ColorEdit4("Square Color", glm::value_ptr(_square_color));
 
 		uint32_t texture_id = _check_board_texture->get_renderer_id();
-		ImGui::Image((void*)texture_id, ImVec2{ 256.0f, 256.0f });
+		ImGui::Image((void*)texture_id, ImVec2{ 1280.0f, 720.0f });
 		ImGui::End();
 	}
 }
