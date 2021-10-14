@@ -199,6 +199,13 @@ namespace Harmony
 		upload_uniform_int(name, value);
 	}
 
+	void OpenGLShader::set_float(const std::string& name, float value)
+	{
+		HM_PROFILE_FUNCTION();
+
+		upload_uniform_float(name, value);
+	}
+
 	void OpenGLShader::set_float3(const std::string& name, const glm::vec3& value)
 	{
 		HM_PROFILE_FUNCTION();

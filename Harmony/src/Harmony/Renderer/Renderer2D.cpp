@@ -86,23 +86,75 @@ namespace Harmony
 		HM_PROFILE_FUNCTION();
 
 		Data->texture_shader->set_float4("u_Color", color);
+		Data->texture_shader->set_float("u_TilingFactor", 1.0f);
 		Data->white_texture->bind();
 
-		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) 
+			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 		Data->texture_shader->set_mat4("u_Transform", transform);
 
 		Data->quad_vertex_array->bind();
 		RenderCommand::draw_indexed(Data->quad_vertex_array);
 	}
 
-	void Renderer2D::draw_quad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture)
+	void Renderer2D::draw_quad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D>& texture, float tiling_factor, const glm::vec4& tint_color)
+	{
+		draw_quad({ position.x, position.y, 0.0f }, size, texture, tiling_factor, tint_color);
+	}
+
+	void Renderer2D::draw_quad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, float tiling_factor, const glm::vec4& tint_color)
 	{
 		HM_PROFILE_FUNCTION();
 
-		Data->texture_shader->set_float4("u_Color", glm::vec4(1.0f));
+		Data->texture_shader->set_float4("u_Color", tint_color);
+		Data->texture_shader->set_float("u_TilingFactor", tiling_factor);
 		texture->bind();
 
-		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) 
+			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+		Data->texture_shader->set_mat4("u_Transform", transform);
+
+		Data->quad_vertex_array->bind();
+		RenderCommand::draw_indexed(Data->quad_vertex_array);
+	}
+	
+	void Renderer2D::draw_rotated_quad(const glm::vec2& position, const glm::vec2& size, float rotation, const glm::vec4& color)
+	{
+		draw_rotated_quad({ position.x, position.y, 0.0f }, size, rotation, color);
+	}
+
+	void Renderer2D::draw_rotated_quad(const glm::vec3& position, const glm::vec2& size, float rotation, const glm::vec4& color)
+	{
+		HM_PROFILE_FUNCTION();
+
+		Data->texture_shader->set_float4("u_Color", color);
+		Data->texture_shader->set_float("u_TilingFactor", 1.0f);
+		Data->white_texture->bind();
+
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
+			* glm::rotate(glm::mat4(1.0f), rotation, { 0.0f, 0.0f, 1.0f })
+			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+		Data->texture_shader->set_mat4("u_Transform", transform);
+		Data->quad_vertex_array->bind();
+		RenderCommand::draw_indexed(Data->quad_vertex_array);
+	}
+
+	void Renderer2D::draw_rotated_quad(const glm::vec2& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, float tiling_factor, const glm::vec4& tint_color)
+	{
+		draw_rotated_quad({ position.x, position.y, 0.0f }, size, rotation, texture, tiling_factor, tint_color);
+	}
+
+	void Renderer2D::draw_rotated_quad(const glm::vec3& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, float tiling_factor, const glm::vec4& tint_color)
+	{
+		HM_PROFILE_FUNCTION();
+
+		Data->texture_shader->set_float4("u_Color", tint_color);
+		Data->texture_shader->set_float("u_TilingFactor", tiling_factor);
+		texture->bind();
+
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
+			* glm::rotate(glm::mat4(1.0f), rotation, { 0.0f, 0.0f, 1.0f })
+			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 		Data->texture_shader->set_mat4("u_Transform", transform);
 
 		Data->quad_vertex_array->bind();
