@@ -43,7 +43,8 @@ void Sandbox2D::on_update(Harmony::Timestep ts)
 		//Harmony::Renderer2D::draw_rotated_quad({ -1.0f, 0.0f }, { 0.8f, 0.8f }, glm::radians(-45.0f), { 0.8f, 0.2f, 0.3f, 1.0f });
 		Harmony::Renderer2D::draw_quad({ -1.0f, 0.0f }, { 0.8f, 0.8f }, { 0.8f, 0.2f, 0.3f, 1.0f });
 		Harmony::Renderer2D::draw_quad({ 0.5f, -0.5f }, { 0.5f, 0.75f }, { 0.2f, 0.3f, 0.8f, 1.0f });
-		//Harmony::Renderer2D::draw_quad({ 0.0f, 0.0f, -0.1f }, { 10.0f, 10.0f }, _check_board_texture, 10.0f);
+		Harmony::Renderer2D::draw_quad({ -5.0f, -5.0f, -0.1f }, { 10.0f, 10.0f }, _check_board_texture, 10.0f);
+		Harmony::Renderer2D::draw_quad({ -0.5f, -0.5f, 0.0f }, { 1.0f, 1.0f }, _check_board_texture, 20.0f);
 		Harmony::Renderer2D::end_scene();
 	}
 

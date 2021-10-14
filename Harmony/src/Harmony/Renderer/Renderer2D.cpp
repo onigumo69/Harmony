@@ -16,6 +16,8 @@ namespace Harmony
 		glm::vec3 position;
 		glm::vec4 color;
 		glm::vec2 tex_coord;
+		float tex_index;
+		float tiling_factor;
 	};
 
 	struct Renderer2DData
@@ -23,6 +25,7 @@ namespace Harmony
 		const uint32_t max_quads = 10000;
 		const uint32_t max_vertices = max_quads * 4;
 		const uint32_t max_indices = max_quads * 6;
+		static const uint32_t max_texture_slots = 32;
 
 		Ref<VertexArray> quad_vertex_array;
 		Ref<VertexBuffer> quad_vertex_buffer;
@@ -32,6 +35,9 @@ namespace Harmony
 		uint32_t quad_index_count = 0;
 		QuadVertex* quad_vertex_buffer_base = nullptr;
 		QuadVertex* quad_vertex_buffer_ptr = nullptr;
+
+		std::array<Ref<Texture2D>, max_texture_slots> texture_slots;
+		uint32_t texture_slot_index = 1;
 	};
 
 	static Renderer2DData Data;
@@ -45,7 +51,9 @@ namespace Harmony
 		Data.quad_vertex_buffer->set_layout({
 				{ ShaderDataType::Float3, "a_Position" },
 				{ ShaderDataType::Float4, "a_Color" },
-				{ ShaderDataType::Float2, "a_TexCoord" }
+				{ ShaderDataType::Float2, "a_TexCoord" },
+				{ ShaderDataType::Float, "a_TexIndex" },
+				{ ShaderDataType::Float, "a_TilingFactor" }
 			});
 
 		Data.quad_vertex_array->add_vertex_buffer(Data.quad_vertex_buffer);
@@ -75,9 +83,16 @@ namespace Harmony
 		uint32_t white_texture_data = 0xffffffff;
 		Data.white_texture->set_data(&white_texture_data, sizeof(uint32_t));
 
+		int32_t samplers[Data.max_texture_slots];
+		for (uint32_t i = 0; i < Data.max_texture_slots; i++)
+			samplers[i] = i;
+
 		Data.texture_shader = Shader::create("assets/shaders/Texture.glsl");
 		Data.texture_shader->bind();
-		Data.texture_shader->set_int("u_Texture", 0);
+		Data.texture_shader->set_int_array("u_Textures", samplers, Data.max_texture_slots);
+
+		// set all texture slots to 0
+		Data.texture_slots[0] = Data.white_texture;
 	}
 
 	void Renderer2D::shutdown()
@@ -95,6 +110,8 @@ namespace Harmony
 
 		Data.quad_index_count = 0;
 		Data.quad_vertex_buffer_ptr = Data.quad_vertex_buffer_base;
+
+		Data.texture_slot_index = 1;
 	}
 
 	void Renderer2D::end_scene()
@@ -109,6 +126,9 @@ namespace Harmony
 
 	void Renderer2D::flush()
 	{
+		for (uint32_t i = 0; i < Data.texture_slot_index; i++)
+			Data.texture_slots[i]->bind(i);
+
 		RenderCommand::draw_indexed(Data.quad_vertex_array, Data.quad_index_count);
 	}
 
@@ -121,24 +141,35 @@ namespace Harmony
 	{
 		HM_PROFILE_FUNCTION();
 
+		const float tex_index = 0.0f; // White Texture
+		const float tiling_factor = 1.0f;
+
 		Data.quad_vertex_buffer_ptr->position = position;
 		Data.quad_vertex_buffer_ptr->color = color;
 		Data.quad_vertex_buffer_ptr->tex_coord = { 0.0f, 0.0f };
+		Data.quad_vertex_buffer_ptr->tex_index = tex_index;
+		Data.quad_vertex_buffer_ptr->tiling_factor = tiling_factor;
 		Data.quad_vertex_buffer_ptr++;
 
 		Data.quad_vertex_buffer_ptr->position = { position.x + size.x, position.y, 0.0f };
 		Data.quad_vertex_buffer_ptr->color = color;
 		Data.quad_vertex_buffer_ptr->tex_coord = { 1.0f, 0.0f };
+		Data.quad_vertex_buffer_ptr->tex_index = tex_index;
+		Data.quad_vertex_buffer_ptr->tiling_factor = tiling_factor;
 		Data.quad_vertex_buffer_ptr++;
 
 		Data.quad_vertex_buffer_ptr->position = { position.x + size.x, position.y + size.y, 0.0f };
 		Data.quad_vertex_buffer_ptr->color = color;
 		Data.quad_vertex_buffer_ptr->tex_coord = { 1.0f, 1.0f };
+		Data.quad_vertex_buffer_ptr->tex_index = tex_index;
+		Data.quad_vertex_buffer_ptr->tiling_factor = tiling_factor;
 		Data.quad_vertex_buffer_ptr++;
 
 		Data.quad_vertex_buffer_ptr->position = { position.x, position.y + size.y, 0.0f };
 		Data.quad_vertex_buffer_ptr->color = color;
 		Data.quad_vertex_buffer_ptr->tex_coord = { 0.0f, 1.0f };
+		Data.quad_vertex_buffer_ptr->tex_index = tex_index;
+		Data.quad_vertex_buffer_ptr->tiling_factor = tiling_factor;
 		Data.quad_vertex_buffer_ptr++;
 
 		Data.quad_index_count += 6;
@@ -165,16 +196,69 @@ namespace Harmony
 	{
 		HM_PROFILE_FUNCTION();
 
+		constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+		float texture_index = 0.0f;
+		for (uint32_t i = 1; i < Data.texture_slot_index; i++)
+		{
+			if (*Data.texture_slots[i].get() == *texture.get())
+			{
+				texture_index = (float)i;
+				break;
+			}
+		}
+
+		if (texture_index == 0.0f)
+		{
+			texture_index = (float)Data.texture_slot_index;
+			Data.texture_slots[Data.texture_slot_index] = texture;
+			Data.texture_slot_index++;
+		}
+
+		Data.quad_vertex_buffer_ptr->position = position;
+		Data.quad_vertex_buffer_ptr->color = color;
+		Data.quad_vertex_buffer_ptr->tex_coord = { 0.0f, 0.0f };
+		Data.quad_vertex_buffer_ptr->tex_index = texture_index;
+		Data.quad_vertex_buffer_ptr->tiling_factor = tiling_factor;
+		Data.quad_vertex_buffer_ptr++;
+
+		Data.quad_vertex_buffer_ptr->position = { position.x + size.x, position.y, 0.0f };
+		Data.quad_vertex_buffer_ptr->color = color;
+		Data.quad_vertex_buffer_ptr->tex_coord = { 1.0f, 0.0f };
+		Data.quad_vertex_buffer_ptr->tex_index = texture_index;
+		Data.quad_vertex_buffer_ptr->tiling_factor = tiling_factor;
+		Data.quad_vertex_buffer_ptr++;
+
+		Data.quad_vertex_buffer_ptr->position = { position.x + size.x, position.y + size.y, 0.0f };
+		Data.quad_vertex_buffer_ptr->color = color;
+		Data.quad_vertex_buffer_ptr->tex_coord = { 1.0f, 1.0f };
+		Data.quad_vertex_buffer_ptr->tex_index = texture_index;
+		Data.quad_vertex_buffer_ptr->tiling_factor = tiling_factor;
+		Data.quad_vertex_buffer_ptr++;
+
+		Data.quad_vertex_buffer_ptr->position = { position.x, position.y + size.y, 0.0f };
+		Data.quad_vertex_buffer_ptr->color = color;
+		Data.quad_vertex_buffer_ptr->tex_coord = { 0.0f, 1.0f };
+		Data.quad_vertex_buffer_ptr->tex_index = texture_index;
+		Data.quad_vertex_buffer_ptr->tiling_factor = tiling_factor;
+		Data.quad_vertex_buffer_ptr++;
+
+		Data.quad_index_count += 6;
+
+#if OLD_PATH
+
 		Data.texture_shader->set_float4("u_Color", tint_color);
 		Data.texture_shader->set_float("u_TilingFactor", tiling_factor);
 		texture->bind();
 
-		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) 
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+
 		Data.texture_shader->set_mat4("u_Transform", transform);
 
 		Data.quad_vertex_array->bind();
 		RenderCommand::draw_indexed(Data.quad_vertex_array);
+#endif
 	}
 	
 	void Renderer2D::draw_rotated_quad(const glm::vec2& position, const glm::vec2& size, float rotation, const glm::vec4& color)

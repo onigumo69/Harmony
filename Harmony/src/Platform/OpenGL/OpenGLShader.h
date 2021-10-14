@@ -22,6 +22,7 @@ namespace Harmony
 		virtual void unbind() const override;
 
 		virtual void set_int(const std::string& name, int value) override;
+		virtual void set_int_array(const std::string& name, int* values, uint32_t count) override;
 		virtual void set_float(const std::string& name, float value) override;
 		virtual void set_float3(const std::string& name, const glm::vec3& value) override;
 		virtual void set_float4(const std::string& name, const glm::vec4& value) override;
@@ -30,7 +31,7 @@ namespace Harmony
 		virtual const std::string& get_name() const override { return _name; }
 
 		void upload_uniform_int(const std::string& name, int value);
-
+		void upload_uniform_int_array(const std::string& name, int* values, uint32_t count);
 		void upload_uniform_float(const std::string& name, float value);
 		void upload_uniform_float2(const std::string& name, const glm::vec2& value);
 		void upload_uniform_float3(const std::string& name, const glm::vec3& value);

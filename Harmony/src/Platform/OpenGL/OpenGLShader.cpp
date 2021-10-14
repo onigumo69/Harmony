@@ -199,6 +199,11 @@ namespace Harmony
 		upload_uniform_int(name, value);
 	}
 
+	void OpenGLShader::set_int_array(const std::string& name, int* values, uint32_t count)
+	{
+		upload_uniform_int_array(name, values, count);
+	}
+
 	void OpenGLShader::set_float(const std::string& name, float value)
 	{
 		HM_PROFILE_FUNCTION();
@@ -231,6 +236,12 @@ namespace Harmony
 	{
 		GLint location = glGetUniformLocation(_renderer_id, name.c_str());
 		glUniform1i(location, value);
+	}
+
+	void OpenGLShader::upload_uniform_int_array(const std::string& name, int* values, uint32_t count)
+	{
+		GLint location = glGetUniformLocation(_renderer_id, name.c_str());
+		glUniform1iv(location, count, values);
 	}
 
 	void OpenGLShader::upload_uniform_float(const std::string& name, float value)
