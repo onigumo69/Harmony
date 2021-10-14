@@ -4,6 +4,8 @@
 #include "Shader.h"
 #include "VertexArray.h"
 
+#include "Harmony/Debug/Instrumentor.h"
+
 #include <glm/gtc/matrix_transform.hpp>
 
 namespace Harmony
@@ -20,6 +22,8 @@ namespace Harmony
 
 	void Renderer2D::init()
 	{
+		HM_PROFILE_FUNCTION();
+
 		Data = new Renderer2DStorage();
 		Data->quad_vertex_array = VertexArray::create();
 
@@ -54,18 +58,22 @@ namespace Harmony
 
 	void Renderer2D::shutdown()
 	{
+		HM_PROFILE_FUNCTION();
+
 		delete Data;
 	}
 
 	void Renderer2D::begin_scene(const OrthographicCamera& camera)
 	{
+		HM_PROFILE_FUNCTION();
+
 		Data->texture_shader->bind();
 		Data->texture_shader->set_mat4("u_ViewProjection", camera.get_view_projection_matrix());
 	}
 
 	void Renderer2D::end_scene()
 	{
-
+		HM_PROFILE_FUNCTION();
 	}
 
 	void Renderer2D::draw_quad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)
@@ -75,6 +83,8 @@ namespace Harmony
 
 	void Renderer2D::draw_quad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
 	{
+		HM_PROFILE_FUNCTION();
+
 		Data->texture_shader->set_float4("u_Color", color);
 		Data->white_texture->bind();
 
@@ -87,6 +97,8 @@ namespace Harmony
 
 	void Renderer2D::draw_quad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture)
 	{
+		HM_PROFILE_FUNCTION();
+
 		Data->texture_shader->set_float4("u_Color", glm::vec4(1.0f));
 		texture->bind();
 

@@ -1,9 +1,9 @@
 #include "Application.h"
 
 #include "Log.h"
-
 #include "Input.h"
 
+#include "Harmony/Debug/Instrumentor.h"
 #include "Harmony/Renderer/Renderer.h"
 
 #include <GLFW/glfw3.h>
@@ -14,6 +14,8 @@ namespace Harmony
 
 	Application::Application()
 	{
+		HM_PROFILE_FUNCTION();
+
 		HM_CORE_ASSERT(!Instance, "Application already exists!");
 		Instance = this;
 
@@ -28,13 +30,19 @@ namespace Harmony
 
 	Application::~Application()
 	{
+		HM_PROFILE_FUNCTION();
+
 		Renderer::shutdown();
 	}
 
 	void Application::run()
 	{
+		HM_PROFILE_FUNCTION();
+
 		while (_running)
 		{
+			HM_PROFILE_SCOPE("RunLoop");
+
 			float time = (float)glfwGetTime();
 			Timestep timestep = time - _last_frame_time;
 			_last_frame_time = time;
@@ -42,14 +50,22 @@ namespace Harmony
 
 			if (!_minimized)
 			{
-				for (Layer* layer : _layer_stack)
-					layer->on_update(timestep);
-			}
+				{
+					HM_PROFILE_SCOPE("LayerStack on_update");
 
-			_imgui_layer->begin();
-			for (Layer* layer : _layer_stack)
-				layer->on_imgui_render();
-			_imgui_layer->end();
+					for (Layer* layer : _layer_stack)
+						layer->on_update(timestep);
+				}
+
+				_imgui_layer->begin();
+				{
+					HM_PROFILE_SCOPE("LayerStack on_imgui_render");
+
+					for (Layer* layer : _layer_stack)
+						layer->on_imgui_render();
+				}
+				_imgui_layer->end();
+			}
 
 			_window->on_update();
 		}
@@ -57,6 +73,8 @@ namespace Harmony
 
 	void Application::on_event(Event& e)
 	{
+		HM_PROFILE_FUNCTION();
+
 		EventDispatcher dispatcher(e);
 		dispatcher.dispatch<WindowCloseEvent>(HM_BIND_EVENT_FN(Application::on_window_close));
 		dispatcher.dispatch<WindowResizeEvent>(HM_BIND_EVENT_FN(Application::on_window_resize));
@@ -71,12 +89,16 @@ namespace Harmony
 
 	void Application::push_layer(Layer* layer)
 	{
+		HM_PROFILE_FUNCTION();
+
 		_layer_stack.push_layer(layer);
 		layer->on_attach();
 	}
 
 	void Application::push_overlay(Layer* overlay)
 	{
+		HM_PROFILE_FUNCTION();
+
 		_layer_stack.push_overlay(overlay);
 		overlay->on_attach();
 	}
@@ -89,6 +111,8 @@ namespace Harmony
 
 	bool Application::on_window_resize(WindowResizeEvent& e)
 	{
+		HM_PROFILE_FUNCTION();
+
 		if (e.get_width() == 0 || e.get_height() == 0)
 		{
 			_minimized = true;

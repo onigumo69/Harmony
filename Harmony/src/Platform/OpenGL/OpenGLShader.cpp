@@ -1,6 +1,7 @@
 #include "OpenGLShader.h"
 #include "Harmony/Core/Core.h"
 #include "Harmony/Core/Log.h"
+#include "Harmony/Debug/Instrumentor.h"
 
 #include <glad/glad.h>
 
@@ -26,6 +27,8 @@ namespace Harmony
 
 	OpenGLShader::OpenGLShader(const std::string& filepath)
 	{
+		HM_PROFILE_FUNCTION();
+
 		std::string source = read_file(filepath);
 		auto shader_sources = pre_process(source);
 		compile(shader_sources);
@@ -40,6 +43,8 @@ namespace Harmony
 
 	OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertex_source, const std::string& fragment_source)
 	{
+		HM_PROFILE_FUNCTION();
+
 		std::unordered_map<GLenum, std::string> sources;
 		sources[GL_VERTEX_SHADER] = vertex_source;
 		sources[GL_FRAGMENT_SHADER] = fragment_source;
@@ -48,11 +53,15 @@ namespace Harmony
 
 	OpenGLShader::~OpenGLShader()
 	{
+		HM_PROFILE_FUNCTION();
+
 		glDeleteProgram(_renderer_id);
 	}
 
 	std::string OpenGLShader::read_file(const std::string& filepath)
 	{
+		HM_PROFILE_FUNCTION();
+
 		std::string result;
 		std::ifstream in(filepath, std::ios::in | std::ios::binary);
 		if (in)
@@ -80,6 +89,8 @@ namespace Harmony
 
 	std::unordered_map<GLenum, std::string> OpenGLShader::pre_process(const std::string& source)
 	{
+		HM_PROFILE_FUNCTION();
+
 		std::unordered_map<GLenum, std::string> shader_sources;
 
 		const char* typeToken = "#type";
@@ -102,6 +113,8 @@ namespace Harmony
 
 	void OpenGLShader::compile(const std::unordered_map<GLenum, std::string>& shader_sources)
 	{
+		HM_PROFILE_FUNCTION();
+
 		GLuint program = glCreateProgram();
 		HM_CORE_ASSERT(shader_sources.size() <= 2, "We only support 2 shaders for now");
 		std::array<GLenum, 2> glShaderIDs;
@@ -167,31 +180,43 @@ namespace Harmony
 
 	void OpenGLShader::bind() const
 	{
+		HM_PROFILE_FUNCTION();
+
 		glUseProgram(_renderer_id);
 	}
 
 	void OpenGLShader::unbind() const
 	{
+		HM_PROFILE_FUNCTION();
+
 		glUseProgram(0);
 	}
 
 	void OpenGLShader::set_int(const std::string& name, int value)
 	{
+		HM_PROFILE_FUNCTION();
+
 		upload_uniform_int(name, value);
 	}
 
 	void OpenGLShader::set_float3(const std::string& name, const glm::vec3& value)
 	{
+		HM_PROFILE_FUNCTION();
+
 		upload_uniform_float3(name, value);
 	}
 
 	void OpenGLShader::set_float4(const std::string& name, const glm::vec4& value)
 	{
+		HM_PROFILE_FUNCTION();
+
 		upload_uniform_float4(name, value);
 	}
 
 	void OpenGLShader::set_mat4(const std::string& name, const glm::mat4& value)
 	{
+		HM_PROFILE_FUNCTION();
+
 		upload_uniform_mat4(name, value);
 	}
 

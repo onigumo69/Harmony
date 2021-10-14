@@ -2,6 +2,8 @@
 #include "Renderer2D.h"
 #include "RenderCommand.h"
 
+#include "Harmony/Debug/Instrumentor.h"
+
 #include "Platform/OpenGL/OpenGLShader.h"
 
 namespace Harmony
@@ -10,6 +12,8 @@ namespace Harmony
 
 	void Renderer::init()
 	{
+		HM_PROFILE_FUNCTION();
+
 		RenderCommand::init();
 		Renderer2D::init();
 	}

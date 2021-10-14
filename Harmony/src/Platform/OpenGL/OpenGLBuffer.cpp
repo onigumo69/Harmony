@@ -1,5 +1,7 @@
 #include "OpenGLBuffer.h"
 
+#include "Harmony/Debug/Instrumentor.h"
+
 #include <glad/glad.h>
 
 namespace Harmony
@@ -11,6 +13,8 @@ namespace Harmony
 
 	OpenGLVertexBuffer::OpenGLVertexBuffer(float* vertices, uint32_t size)
 	{
+		HM_PROFILE_FUNCTION();
+
 		glCreateBuffers(1, &_renderer_id);
 		glBindBuffer(GL_ARRAY_BUFFER, _renderer_id);
 		glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
@@ -18,16 +22,22 @@ namespace Harmony
 
 	OpenGLVertexBuffer::~OpenGLVertexBuffer()
 	{
+		HM_PROFILE_FUNCTION();
+
 		glDeleteBuffers(1, &_renderer_id);
 	}
 
 	void OpenGLVertexBuffer::bind() const
 	{
+		HM_PROFILE_FUNCTION();
+
 		glBindBuffer(GL_ARRAY_BUFFER, _renderer_id);
 	}
 
 	void OpenGLVertexBuffer::unbind() const
 	{
+		HM_PROFILE_FUNCTION();
+
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 
@@ -38,6 +48,8 @@ namespace Harmony
 	OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t* indices, uint32_t count)
 		: _count(count)
 	{
+		HM_PROFILE_FUNCTION();
+
 		glCreateBuffers(1, &_renderer_id);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _renderer_id);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), indices, GL_STATIC_DRAW);
@@ -45,16 +57,22 @@ namespace Harmony
 
 	OpenGLIndexBuffer::~OpenGLIndexBuffer()
 	{
+		HM_PROFILE_FUNCTION();
+
 		glDeleteBuffers(1, &_renderer_id);
 	}
 
 	void OpenGLIndexBuffer::bind() const
 	{
+		HM_PROFILE_FUNCTION();
+
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _renderer_id);
 	}
 
 	void OpenGLIndexBuffer::unbind() const
 	{
+		HM_PROFILE_FUNCTION();
+
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 

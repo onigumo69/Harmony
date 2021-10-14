@@ -1,7 +1,7 @@
 #include "WindowsWindow.h"
 
 #include "Harmony/Core/Log.h"
-
+#include "Harmony/Debug/Instrumentor.h"
 #include "Harmony/Event/ApplicationEvent.h"
 #include "Harmony/Event/MouseEvent.h"
 #include "Harmony/Event/KeyEvent.h"
@@ -25,16 +25,22 @@ namespace Harmony
 
 	WindowsWindow::WindowsWindow(const WindowProps& props)
 	{
+		HM_PROFILE_FUNCTION();
+
 		init(props);
 	}
 
 	WindowsWindow::~WindowsWindow()
 	{
+		HM_PROFILE_FUNCTION();
+
 		shutdown();
 	}
 
 	void WindowsWindow::init(const WindowProps& props)
 	{
+		HM_PROFILE_FUNCTION();
+
 		_data._title = props._title;
 		_data._width = props._width;
 		_data._height = props._height;
@@ -43,6 +49,8 @@ namespace Harmony
 
 		if (s_GLFWWindowCount == 0)
 		{
+			HM_PROFILE_SCOPE("glfwInit");
+
 			// TODO: glfwTerminate on system shutdown
 			int success = glfwInit();
 			HM_CORE_ASSERT(success, "Could not intialize GLFW!");
@@ -50,8 +58,12 @@ namespace Harmony
 			glfwSetErrorCallback(GLFWErrorCallback);
 		}
 
-		_window = glfwCreateWindow((int)props._width, (int)props._height, _data._title.c_str(), nullptr, nullptr);
-		++s_GLFWWindowCount;
+		{
+			HM_PROFILE_SCOPE("glfwCreateWindow");
+
+			_window = glfwCreateWindow((int)props._width, (int)props._height, _data._title.c_str(), nullptr, nullptr);
+			++s_GLFWWindowCount;
+		}
 
 		_context = GraphicsContext::create(_window);
 		_context->init();
@@ -152,6 +164,8 @@ namespace Harmony
 
 	void WindowsWindow::shutdown()
 	{
+		HM_PROFILE_FUNCTION();
+
 		glfwDestroyWindow(_window);
 		--s_GLFWWindowCount;
 
@@ -163,12 +177,16 @@ namespace Harmony
 
 	void WindowsWindow::on_update()
 	{
+		HM_PROFILE_FUNCTION();
+
 		glfwPollEvents();
 		_context->swap_buffers();
 	}
 
 	void WindowsWindow::set_vsync(bool enabled)
 	{
+		HM_PROFILE_FUNCTION();
+
 		if (enabled)
 			glfwSwapInterval(1);
 		else

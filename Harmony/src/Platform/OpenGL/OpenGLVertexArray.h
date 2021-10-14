@@ -14,8 +14,8 @@ namespace Harmony
 		virtual void bind() const override;
 		virtual void unbind() const override;
 
-		virtual void add_vertex_buffer(const Ref<VertexBuffer>& vertexBuffer) override;
-		virtual void set_index_buffer(const Ref<IndexBuffer>& indexBuffer) override;
+		virtual void add_vertex_buffer(const Ref<VertexBuffer>& vertex_buffer) override;
+		virtual void set_index_buffer(const Ref<IndexBuffer>& index_buffer) override;
 
 		virtual const std::vector<Ref<VertexBuffer>>& get_vertex_buffer() const { return _vertex_buffer; }
 		virtual const Ref<IndexBuffer>& get_index_buffer() const { return _index_buffer; };

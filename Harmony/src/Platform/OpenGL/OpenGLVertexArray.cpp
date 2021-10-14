@@ -1,5 +1,6 @@
 #include "Harmony/Core/Core.h"
 #include "Harmony/Core/Log.h"
+#include "Harmony/Debug/Instrumentor.h"
 
 #include "OpenGLVertexArray.h"
 
@@ -31,33 +32,43 @@ namespace Harmony
 
 	OpenGLVertexArray::OpenGLVertexArray()
 	{
+		HM_PROFILE_FUNCTION();
+
 		glCreateVertexArrays(1, &_renderer_id);
 	}
 
 	OpenGLVertexArray::~OpenGLVertexArray()
 	{
+		HM_PROFILE_FUNCTION();
+
 		glDeleteVertexArrays(1, &_renderer_id);
 	}
 
 	void OpenGLVertexArray::bind() const
 	{
+		HM_PROFILE_FUNCTION();
+
 		glBindVertexArray(_renderer_id);
 	}
 
 	void OpenGLVertexArray::unbind() const
 	{
+		HM_PROFILE_FUNCTION();
+
 		glBindVertexArray(0);
 	}
 
-	void OpenGLVertexArray::add_vertex_buffer(const Ref<VertexBuffer>& vertexBuffer)
+	void OpenGLVertexArray::add_vertex_buffer(const Ref<VertexBuffer>& vertex_buffer)
 	{
-		HM_CORE_ASSERT(vertexBuffer->get_layout().get_elements().size(), "Vertex Buffer has no layout!");
+		HM_PROFILE_FUNCTION();
+
+		HM_CORE_ASSERT(vertex_buffer->get_layout().get_elements().size(), "Vertex Buffer has no layout!");
 
 		glBindVertexArray(_renderer_id);
-		vertexBuffer->bind();
+		vertex_buffer->bind();
 
 		uint32_t index = 0;
-		const auto& layout = vertexBuffer->get_layout();
+		const auto& layout = vertex_buffer->get_layout();
 		for (const auto& element : layout)
 		{
 			glEnableVertexAttribArray(index);
@@ -70,15 +81,17 @@ namespace Harmony
 			index++;
 		}
 
-		_vertex_buffer.push_back(vertexBuffer);
+		_vertex_buffer.push_back(vertex_buffer);
 	}
 
-	void OpenGLVertexArray::set_index_buffer(const Ref<IndexBuffer>& indexBuffer)
+	void OpenGLVertexArray::set_index_buffer(const Ref<IndexBuffer>& index_buffer)
 	{
-		glBindVertexArray(_renderer_id);
-		indexBuffer->bind();
+		HM_PROFILE_FUNCTION();
 
-		_index_buffer = indexBuffer;
+		glBindVertexArray(_renderer_id);
+		index_buffer->bind();
+
+		_index_buffer = index_buffer;
 	}
 
 }

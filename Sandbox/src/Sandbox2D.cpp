@@ -15,20 +15,20 @@ Sandbox2D::Sandbox2D()
 
 void Sandbox2D::on_attach()
 {
+	HM_PROFILE_FUNCTION();
+
 	_check_board_texture = Harmony::Texture2D::create("assets/textures/Checkerboard.png");
 }
 
 void Sandbox2D::on_detach()
 {
+	HM_PROFILE_FUNCTION();
 }
 
 void Sandbox2D::on_update(Harmony::Timestep ts)
 {
 	// Update
-	{
-		HM_PROFILE_FUNCTION();
-		_camera_controller.on_update(ts);
-	}
+	_camera_controller.on_update(ts);
 
 	// Render
 	{

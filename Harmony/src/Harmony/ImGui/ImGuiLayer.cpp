@@ -5,6 +5,7 @@
 #include <backends/imgui_impl_opengl3.h>
 
 #include "Harmony/Core/Application.h"
+#include "Harmony/Debug/Instrumentor.h"
 
 // for testing only
 #include <glad/glad.h>
@@ -24,6 +25,8 @@ namespace Harmony
 
 	void ImGuiLayer::on_attach()
 	{
+		HM_PROFILE_FUNCTION();
+
 		// Setup Dear ImGui context
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
@@ -57,6 +60,8 @@ namespace Harmony
 
 	void ImGuiLayer::on_detach()
 	{
+		HM_PROFILE_FUNCTION();
+
 		ImGui_ImplOpenGL3_Shutdown();
 		ImGui_ImplGlfw_Shutdown();
 		ImGui::DestroyContext();
@@ -64,6 +69,8 @@ namespace Harmony
 
 	void ImGuiLayer::begin()
 	{
+		HM_PROFILE_FUNCTION();
+
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
@@ -71,6 +78,8 @@ namespace Harmony
 
 	void ImGuiLayer::end()
 	{
+		HM_PROFILE_FUNCTION();
+
 		ImGuiIO& io = ImGui::GetIO();
 
 		Application& app = Application::get();

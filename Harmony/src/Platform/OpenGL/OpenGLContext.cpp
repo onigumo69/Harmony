@@ -1,5 +1,6 @@
 #include "Harmony/Core/Core.h"
 #include "Harmony/Core/Log.h"
+#include "Harmony/Debug/Instrumentor.h"
 
 #include <glad/glad.h>
 #include <gl/GL.h>
@@ -17,6 +18,8 @@ namespace Harmony
 
 	void OpenGLContext::init()
 	{
+		HM_PROFILE_FUNCTION();
+
 		glfwMakeContextCurrent(_window_handle);
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		HM_CORE_ASSERT(status, "Failed to initialize Glad!");
@@ -30,6 +33,8 @@ namespace Harmony
 
 	void OpenGLContext::swap_buffers()
 	{
+		HM_PROFILE_FUNCTION();
+
 		glfwSwapBuffers(_window_handle);
 	}
 
