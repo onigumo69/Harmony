@@ -16,21 +16,21 @@ namespace Harmony
 	{
 		HM_PROFILE_FUNCTION();
 
-		if (Input::is_key_pressed(HM_KEY_A))
+		if (Input::is_key_pressed(KeyCode::A))
 			_camera_position.x -= _camera_translation_speed * ts;
-		else if (Input::is_key_pressed(HM_KEY_D))
+		else if (Input::is_key_pressed(KeyCode::D))
 			_camera_position.x += _camera_translation_speed * ts;
 
-		if (Input::is_key_pressed(HM_KEY_W))
+		if (Input::is_key_pressed(KeyCode::W))
 			_camera_position.y += _camera_translation_speed * ts;
-		else if (Input::is_key_pressed(HM_KEY_S))
+		else if (Input::is_key_pressed(KeyCode::S))
 			_camera_position.y -= _camera_translation_speed * ts;
 
 		if (_rotation)
 		{
-			if (Input::is_key_pressed(HM_KEY_Q))
+			if (Input::is_key_pressed(KeyCode::Q))
 				_camera_rotation += _camera_rotation_speed * ts;
-			if (Input::is_key_pressed(HM_KEY_E))
+			if (Input::is_key_pressed(KeyCode::E))
 				_camera_rotation -= _camera_rotation_speed * ts;
 
 			_camera.set_rotation(_camera_rotation);

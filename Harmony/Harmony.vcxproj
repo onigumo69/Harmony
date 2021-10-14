@@ -183,7 +183,7 @@
     <ClInclude Include="src\Harmony\Core\Layer.h" />
     <ClInclude Include="src\Harmony\Core\LayerStack.h" />
     <ClInclude Include="src\Harmony\Core\Log.h" />
-    <ClInclude Include="src\Harmony\Core\MouseButtonCode.h" />
+    <ClInclude Include="src\Harmony\Core\MouseCode.h" />
     <ClInclude Include="src\Harmony\Renderer\OrthographicCamera.h" />
     <ClInclude Include="src\Harmony\Renderer\Renderer.h" />
     <ClInclude Include="src\Harmony\Renderer\Renderer2D.h" />
@@ -200,7 +200,6 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLTexture.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h" />
-    <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="thirdparty\glm\glm\glm.hpp" />
     <ClInclude Include="thirdparty\imgui\imconfig.h" />
