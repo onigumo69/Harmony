@@ -79,9 +79,9 @@ namespace Harmony
 		dispatcher.dispatch<WindowCloseEvent>(HM_BIND_EVENT_FN(Application::on_window_close));
 		dispatcher.dispatch<WindowResizeEvent>(HM_BIND_EVENT_FN(Application::on_window_resize));
 
-		for (auto it = _layer_stack.end(); it != _layer_stack.begin(); )
+		for (auto it = _layer_stack.rbegin(); it != _layer_stack.rend(); ++it)
 		{
-			(*--it)->on_event(e);
+			(*it)->on_event(e);
 			if (e._handled)
 				break;
 		}
