@@ -32,6 +32,8 @@ namespace Harmony
 
 		inline Window& get_window() { return *_window; }
 
+		void close();
+
 		inline static Application& get() { return *Instance; }
 	private:
 		bool on_window_close(WindowCloseEvent& e);

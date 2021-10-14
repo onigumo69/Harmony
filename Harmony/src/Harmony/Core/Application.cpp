@@ -71,6 +71,11 @@ namespace Harmony
 		}
 	}
 
+	void Application::close()
+	{
+		_running = false;
+	}
+
 	void Application::on_event(Event& e)
 	{
 		HM_PROFILE_FUNCTION();

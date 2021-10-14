@@ -16,6 +16,7 @@ namespace Harmony
 
 		virtual uint32_t get_width() const override { return _width; }
 		virtual uint32_t get_height() const override { return _height; }
+		virtual uint32_t get_renderer_id() const override { return _renderer_id; }
 
 		virtual void set_data(void* data, uint32_t size) override;
 
