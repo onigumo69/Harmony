@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Event.h"
+#include "Harmony/Core/Input.h"
 
 #include <sstream>
 
@@ -55,21 +56,21 @@ namespace Harmony
 	class MouseButtonEvent : public Event
 	{
 	public:
-		inline int get_mouse_button() const { return _button; }
+		inline MouseCode get_mouse_button() const { return _button; }
 
 		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
 	protected:
-		MouseButtonEvent(int button)
+		MouseButtonEvent(MouseCode button)
 			: _button(button)
 		{}
 
-		int _button;
+		MouseCode _button;
 	};
 
 	class MouseButtonPressedEvent : public MouseButtonEvent
 	{
 	public:
-		MouseButtonPressedEvent(int button)
+		MouseButtonPressedEvent(MouseCode button)
 			: MouseButtonEvent(button)
 		{}
 
@@ -86,7 +87,7 @@ namespace Harmony
 	class MouseButtonReleasedEvent : public MouseButtonEvent
 	{
 	public:
-		MouseButtonReleasedEvent(int button)
+		MouseButtonReleasedEvent(MouseCode button)
 			: MouseButtonEvent(button) {}
 
 		std::string debug_to_string() const override

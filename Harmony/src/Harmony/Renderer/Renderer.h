@@ -29,7 +29,7 @@ namespace Harmony
 			glm::mat4 _view_projection_matrix;
 		};
 
-		static SceneData* _scene_data;
+		static Scope<SceneData> _scene_data;
 	};
 
 }

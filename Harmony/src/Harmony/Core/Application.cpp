@@ -35,6 +35,38 @@ namespace Harmony
 		Renderer::shutdown();
 	}
 
+	void Application::push_layer(Layer* layer)
+	{
+		HM_PROFILE_FUNCTION();
+
+		_layer_stack.push_layer(layer);
+		layer->on_attach();
+	}
+
+	void Application::push_overlay(Layer* overlay)
+	{
+		HM_PROFILE_FUNCTION();
+
+		_layer_stack.push_overlay(overlay);
+		overlay->on_attach();
+	}
+
+	void Application::on_event(Event& e)
+	{
+		HM_PROFILE_FUNCTION();
+
+		EventDispatcher dispatcher(e);
+		dispatcher.dispatch<WindowCloseEvent>(HM_BIND_EVENT_FN(Application::on_window_close));
+		dispatcher.dispatch<WindowResizeEvent>(HM_BIND_EVENT_FN(Application::on_window_resize));
+
+		for (auto it = _layer_stack.rbegin(); it != _layer_stack.rend(); ++it)
+		{
+			if (e._handled)
+				break;
+			(*it)->on_event(e);
+		}
+	}
+
 	void Application::run()
 	{
 		HM_PROFILE_FUNCTION();
@@ -74,38 +106,6 @@ namespace Harmony
 	void Application::close()
 	{
 		_running = false;
-	}
-
-	void Application::on_event(Event& e)
-	{
-		HM_PROFILE_FUNCTION();
-
-		EventDispatcher dispatcher(e);
-		dispatcher.dispatch<WindowCloseEvent>(HM_BIND_EVENT_FN(Application::on_window_close));
-		dispatcher.dispatch<WindowResizeEvent>(HM_BIND_EVENT_FN(Application::on_window_resize));
-
-		for (auto it = _layer_stack.rbegin(); it != _layer_stack.rend(); ++it)
-		{
-			(*it)->on_event(e);
-			if (e._handled)
-				break;
-		}
-	}
-
-	void Application::push_layer(Layer* layer)
-	{
-		HM_PROFILE_FUNCTION();
-
-		_layer_stack.push_layer(layer);
-		layer->on_attach();
-	}
-
-	void Application::push_overlay(Layer* overlay)
-	{
-		HM_PROFILE_FUNCTION();
-
-		_layer_stack.push_overlay(overlay);
-		overlay->on_attach();
 	}
 
 	bool Application::on_window_close(WindowCloseEvent& e)

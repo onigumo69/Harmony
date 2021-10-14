@@ -134,6 +134,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Harmony\thirdparty\glad\include\;$(SolutionDir)Harmony\thirdparty\stbimg\;$(SolutionDir)Harmony\thirdparty\imgui\;$(SolutionDir)Harmony\thirdparty\spdlog\include\;$(SolutionDir)Harmony\thirdparty\glm\;$(SolutionDir)Harmony\thirdparty\glfw\include\</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -152,6 +153,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Harmony\thirdparty\glad\include\;$(SolutionDir)Harmony\thirdparty\stbimg\;$(SolutionDir)Harmony\thirdparty\imgui\;$(SolutionDir)Harmony\thirdparty\spdlog\include\;$(SolutionDir)Harmony\thirdparty\glm\;$(SolutionDir)Harmony\thirdparty\glfw\include\</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

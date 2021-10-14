@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Event.h"
+#include "Harmony/Core/Input.h"
 
 #include <sstream>
 
@@ -9,21 +10,21 @@ namespace Harmony
 	class KeyEvent : public Event
 	{
 	public:
-		inline int get_keycode() const { return _keycode; }
+		inline KeyCode get_keycode() const { return _keycode; }
 
 		EVENT_CLASS_CATEGORY(EventCategoryKeyboard | EventCategoryInput)
 	protected:
-		KeyEvent(int keycode)
+		KeyEvent(KeyCode keycode)
 			: _keycode(keycode)
 		{}
 
-		int _keycode;
+		KeyCode _keycode;
 	};
 
 	class KeyPressedEvent : public KeyEvent
 	{
 	public:
-		KeyPressedEvent(int keycode, int repeat_count)
+		KeyPressedEvent(KeyCode keycode, int repeat_count)
 			: KeyEvent(keycode), _repeat_count(repeat_count)
 		{}
 
@@ -32,7 +33,7 @@ namespace Harmony
 		std::string debug_to_string() const override
 		{
 			std::stringstream ss;
-			ss << "KeyPressedEvent: " << _keycode << " (" << _repeat_count << " repeats)";
+			ss << "KeyPressedEvent: " << static_cast<int>(_keycode) << " (" << _repeat_count << " repeats)";
 			return ss.str();
 		}
 
@@ -44,14 +45,14 @@ namespace Harmony
 	class KeyReleasedEvent : public KeyEvent
 	{
 	public:
-		KeyReleasedEvent(int keycode)
+		KeyReleasedEvent(KeyCode keycode)
 			: KeyEvent(keycode)
 		{}
 
 		std::string debug_to_string() const override
 		{
 			std::stringstream ss;
-			ss << "KeyReleasedEvent: " << _keycode;
+			ss << "KeyReleasedEvent: " << static_cast<int>(_keycode);
 			return ss.str();
 		}
 
@@ -61,13 +62,13 @@ namespace Harmony
 	class KeyTypedEvent : public KeyEvent
 	{
 	public:
-		KeyTypedEvent(int keycode)
+		KeyTypedEvent(KeyCode keycode)
 			: KeyEvent(keycode) {}
 
 		std::string debug_to_string() const override
 		{
 			std::stringstream ss;
-			ss << "KeyTypedEvent: " << _keycode;
+			ss << "KeyTypedEvent: " << static_cast<int>(_keycode);
 			return ss.str();
 		}
 

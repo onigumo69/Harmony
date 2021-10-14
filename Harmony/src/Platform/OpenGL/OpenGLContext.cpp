@@ -3,7 +3,6 @@
 #include "Harmony/Debug/Instrumentor.h"
 
 #include <glad/glad.h>
-#include <gl/GL.h>
 
 #include "OpenGLContext.h"
 

@@ -29,7 +29,7 @@ namespace Harmony
 		EventCategoryMouseButton = BIT(4)
 	};
 
-#define EVENT_CLASS_TYPE(type) static EventType get_static_type() { return EventType::##type; }\
+#define EVENT_CLASS_TYPE(type) static EventType get_static_type() { return EventType::type; }\
 							   virtual EventType get_event_type() const override { return get_static_type(); }\
 							   virtual const char* get_name() const override { return #type; }
 
@@ -38,6 +38,8 @@ namespace Harmony
 	class Event
 	{
 	public:
+		virtual ~Event() = default;
+
 		bool _handled = false;
 
 		virtual EventType get_event_type() const = 0;
@@ -50,19 +52,17 @@ namespace Harmony
 
 	class EventDispatcher
 	{
-		template<typename T>
-		using EventFn = std::function<bool(T&)>;
 	public:
 		EventDispatcher(Event& event)
 			: _event(event)
 		{}
 
-		template<typename T>
-		bool dispatch(EventFn<T> func)
+		template<typename T, typename F>
+		bool dispatch(const F& func)
 		{
 			if (_event.get_event_type() == T::get_static_type())
 			{
-				_event._handled = func(*(T*)&_event);
+				_event._handled = func(static_cast<T&>(_event));
 				return true;
 			}
 			return false;

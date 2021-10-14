@@ -15,6 +15,8 @@
 
 #include <memory>
 
+int main(int argc, char** argv);
+
 namespace Harmony
 {
 	class Application
@@ -22,8 +24,6 @@ namespace Harmony
 	public:
 		Application(const std::string& name = "Harmony Core");
 		virtual ~Application();
-
-		void run();
 
 		void on_event(Event& e);
 
@@ -34,8 +34,11 @@ namespace Harmony
 
 		void close();
 
+		ImGuiLayer* get_imgui_layer() { return _imgui_layer; }
+
 		inline static Application& get() { return *Instance; }
 	private:
+		void run();
 		bool on_window_close(WindowCloseEvent& e);
 		bool on_window_resize(WindowResizeEvent& e);
 
@@ -48,6 +51,7 @@ namespace Harmony
 		float _last_frame_time = 0.0f;
 	private:
 		static Application* Instance;
+		friend int ::main(int argc, char** argv);
 	};
 
 	// to be defined in client side

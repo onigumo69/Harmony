@@ -9,7 +9,7 @@
 
 
 Sandbox2D::Sandbox2D()
-	: Layer("Sandbox2D"), _camera_controller(1280.0f / 720.0f)
+	: Layer("Sandbox2D"), _camera_controller(1280.0f / 720.0f), _square_color({ 0.2f, 0.3f, 0.8f, 1.0f })
 {
 }
 
@@ -46,7 +46,7 @@ void Sandbox2D::on_update(Harmony::Timestep ts)
 		Harmony::Renderer2D::begin_scene(_camera_controller.get_camera());
 		Harmony::Renderer2D::draw_rotated_quad({ 1.0f, 0.0f }, { 0.8f, 0.8f }, -45.0f, { 0.8f, 0.2f, 0.3f, 1.0f });
 		Harmony::Renderer2D::draw_quad({ -1.0f, 0.0f }, { 0.8f, 0.8f }, { 0.8f, 0.2f, 0.3f, 1.0f });
-		Harmony::Renderer2D::draw_quad({ 0.5f, -0.5f }, { 0.5f, 0.75f }, { 0.2f, 0.3f, 0.8f, 1.0f });
+		Harmony::Renderer2D::draw_quad({ 0.5f, -0.5f }, { 0.5f, 0.75f }, _square_color);
 		Harmony::Renderer2D::draw_quad({ 0.0f, 0.0f, -0.1f }, { 20.0f, 20.0f }, _check_board_texture, 10.0f);
 		Harmony::Renderer2D::draw_rotated_quad({ -2.0f, 0.0f, 0.0f }, { 1.0f, 1.0f }, rotation, _check_board_texture, 20.0f);
 		Harmony::Renderer2D::end_scene();

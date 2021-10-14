@@ -6,6 +6,4 @@ namespace Harmony
 		: _debug_name(debug_name)
 	{}
 
-	Layer::~Layer()
-	{}
 }

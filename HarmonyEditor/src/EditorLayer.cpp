@@ -33,8 +33,18 @@ namespace Harmony
 	{
 		HM_PROFILE_FUNCTION();
 
+		// Resize
+		if (Harmony::FramebufferSpecification spec = _framebuffer->get_specification();
+			_viewport_size.x > 0.0f && _viewport_size.y > 0.0f && // zero sized framebuffer is invalid
+			(spec.width != _viewport_size.x || spec.height != _viewport_size.y))
+		{
+			_framebuffer->resize((uint32_t)_viewport_size.x, (uint32_t)_viewport_size.y);
+			_camera_controller.on_resize(_viewport_size.x, _viewport_size.y);
+		}
+
 		// Update
-		_camera_controller.on_update(ts);
+		if (_viewport_focused)
+			_camera_controller.on_update(ts);
 
 		// Render
 		Harmony::Renderer2D::reset_stats();
@@ -151,14 +161,15 @@ namespace Harmony
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
 		ImGui::Begin("Viewport");
-		ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
-		if (_viewport_size != *((glm::vec2*)&viewportPanelSize))
-		{
-			_framebuffer->resize((uint32_t)viewportPanelSize.x, (uint32_t)viewportPanelSize.y);
-			_viewport_size = { viewportPanelSize.x, viewportPanelSize.y };
 
-			_camera_controller.on_resize(viewportPanelSize.x, viewportPanelSize.y);
-		}
+		_viewport_focused = ImGui::IsWindowFocused();
+		_viewport_hovered = ImGui::IsWindowHovered();
+		Application::get().get_imgui_layer()->block_events(!_viewport_focused || !_viewport_hovered);
+
+		ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
+
+		_viewport_size = { viewportPanelSize.x, viewportPanelSize.y };
+
 		uint32_t textureID = _framebuffer->get_color_attachment_renderer_id();
 		ImGui::Image((void*)textureID, ImVec2{ _viewport_size.x, _viewport_size.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 		ImGui::End();

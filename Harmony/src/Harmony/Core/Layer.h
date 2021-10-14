@@ -12,7 +12,7 @@ namespace Harmony
 	{
 	public:
 		Layer(const std::string& debug_name = "Layer");
-		virtual ~Layer();
+		virtual ~Layer() = default;
 
 		virtual void on_attach() {}
 		virtual void on_detach() {}

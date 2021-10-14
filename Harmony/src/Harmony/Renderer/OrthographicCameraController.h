@@ -35,7 +35,7 @@ namespace Harmony
 		bool _rotation;
 
 		glm::vec3 _camera_position = { 0.0f, 0.0f, 0.0f };
-		float _camera_rotation = 0.0f;
+		float _camera_rotation = 0.0f; // in degrees and counter-clockwise
 		float _camera_translation_speed = 5.0f;
 		float _camera_rotation_speed = 180.0f;
 	};

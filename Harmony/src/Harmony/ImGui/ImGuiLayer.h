@@ -13,14 +13,18 @@ namespace Harmony
 	{
 	public:
 		ImGuiLayer();
-		~ImGuiLayer();
+		~ImGuiLayer() = default;
 
 		virtual void on_attach() override;
 		virtual void on_detach() override;
+		virtual void on_event(Event& e) override;
 
 		void begin();
 		void end();
+
+		void block_events(bool block) { _block_events = block; }
 	private:
+		bool _block_events = true;
 		float _time = 0.0f;
 	};
 

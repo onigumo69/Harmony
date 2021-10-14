@@ -38,10 +38,10 @@ namespace Harmony
 		std::string _name;
 		ShaderDataType _type;
 		uint32_t _size;
-		uint32_t _offset;
+		size_t _offset;
 		bool _normalized;
 
-		BufferElement() {}
+		BufferElement() = default;
 
 		BufferElement(ShaderDataType type, const std::string& name, bool normalized = false)
 			: _name(name), _type(type), _size(ShaderDataTypeSize(type)), _offset(0), _normalized(normalized)
@@ -56,8 +56,8 @@ namespace Harmony
 			case ShaderDataType::Float2:  return 2;
 			case ShaderDataType::Float3:  return 3;
 			case ShaderDataType::Float4:  return 4;
-			case ShaderDataType::Mat3:    return 3 * 3;
-			case ShaderDataType::Mat4:    return 4 * 4;
+			case ShaderDataType::Mat3:    return 3; // * float3
+			case ShaderDataType::Mat4:    return 4; // * float4
 			case ShaderDataType::Int:     return 1;
 			case ShaderDataType::Int2:    return 2;
 			case ShaderDataType::Int3:    return 3;
@@ -92,7 +92,7 @@ namespace Harmony
 	private:
 		void calculate_offset_and_stride()
 		{
-			uint32_t offset = 0;
+			size_t offset = 0;
 			_stride = 0;
 			for (auto& element : _elements)
 			{
@@ -109,7 +109,7 @@ namespace Harmony
 	class VertexBuffer
 	{
 	public:
-		virtual ~VertexBuffer() {}
+		virtual ~VertexBuffer() = default;
 
 		virtual void bind() const = 0;
 		virtual void unbind() const = 0;
@@ -126,7 +126,7 @@ namespace Harmony
 	class IndexBuffer
 	{
 	public:
-		virtual ~IndexBuffer() {}
+		virtual ~IndexBuffer() = default;
 
 		virtual void bind() const = 0;
 		virtual void unbind() const = 0;

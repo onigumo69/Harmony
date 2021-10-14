@@ -1,6 +1,7 @@
 #include "Log.h"
 
 #include <spdlog/sinks/stdout_color_sinks.h>
+#include <spdlog/sinks/basic_file_sink.h>
 
 namespace Harmony
 {
@@ -10,12 +11,22 @@ namespace Harmony
 
 	void Log::init()
 	{
-		spdlog::set_pattern("%^[%T] %n: %v%$");
-		_core_logger = spdlog::stdout_color_mt("Harmony");
-		_core_logger->set_level(spdlog::level::trace);
+		std::vector<spdlog::sink_ptr> logSinks;
+		logSinks.emplace_back(std::make_shared<spdlog::sinks::stdout_color_sink_mt>());
+		logSinks.emplace_back(std::make_shared<spdlog::sinks::basic_file_sink_mt>("Hazel.log", true));
 
-		_client_logger = spdlog::stdout_color_mt("APP");
+		logSinks[0]->set_pattern("%^[%T] %n: %v%$");
+		logSinks[1]->set_pattern("[%T] [%l] %n: %v");
+
+		_core_logger = std::make_shared<spdlog::logger>("HAZEL", begin(logSinks), end(logSinks));
+		spdlog::register_logger(_core_logger);
+		_core_logger->set_level(spdlog::level::trace);
+		_core_logger->flush_on(spdlog::level::trace);
+
+		_client_logger = std::make_shared<spdlog::logger>("APP", begin(logSinks), end(logSinks));
+		spdlog::register_logger(_client_logger);
 		_client_logger->set_level(spdlog::level::trace);
+		_client_logger->flush_on(spdlog::level::trace);
 	}
 
 }

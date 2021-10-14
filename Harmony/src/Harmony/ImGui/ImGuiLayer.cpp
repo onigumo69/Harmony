@@ -19,10 +19,6 @@ namespace Harmony
 	{
 	}
 
-	ImGuiLayer::~ImGuiLayer()
-	{
-	}
-
 	void ImGuiLayer::on_attach()
 	{
 		HM_PROFILE_FUNCTION();
@@ -65,6 +61,16 @@ namespace Harmony
 		ImGui_ImplOpenGL3_Shutdown();
 		ImGui_ImplGlfw_Shutdown();
 		ImGui::DestroyContext();
+	}
+
+	void ImGuiLayer::on_event(Event& e)
+	{
+		if (_block_events)
+		{
+			ImGuiIO& io = ImGui::GetIO();
+			e._handled |= e.is_in_category(EventCategoryMouse) & io.WantCaptureMouse;
+			e._handled |= e.is_in_category(EventCategoryKeyboard) & io.WantCaptureKeyboard;
+		}
 	}
 
 	void ImGuiLayer::begin()

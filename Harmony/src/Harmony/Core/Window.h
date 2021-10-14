@@ -23,7 +23,7 @@ namespace Harmony
 	public:
 		using EventCallbackFn = std::function<void(Event&)>;
 
-		virtual ~Window() {}
+		virtual ~Window() = default;
 
 		virtual void on_update() = 0;
 

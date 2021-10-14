@@ -67,18 +67,52 @@ namespace Harmony
 		glBindVertexArray(_renderer_id);
 		vertex_buffer->bind();
 
-		uint32_t index = 0;
 		const auto& layout = vertex_buffer->get_layout();
 		for (const auto& element : layout)
 		{
-			glEnableVertexAttribArray(index);
-			glVertexAttribPointer(index,
-				element.get_component_count(),
-				ShaderDataTypeToOpenGLBaseType(element._type),
-				element._normalized ? GL_TRUE : GL_FALSE,
-				layout.get_stride(),
-				(const void*)element._offset);
-			index++;
+			switch (element._type)
+			{
+			case ShaderDataType::Float:
+			case ShaderDataType::Float2:
+			case ShaderDataType::Float3:
+			case ShaderDataType::Float4:
+			case ShaderDataType::Int:
+			case ShaderDataType::Int2:
+			case ShaderDataType::Int3:
+			case ShaderDataType::Int4:
+			case ShaderDataType::Bool:
+			{
+				glEnableVertexAttribArray(_vertex_buffer_index);
+				glVertexAttribPointer(_vertex_buffer_index,
+					element.get_component_count(),
+					ShaderDataTypeToOpenGLBaseType(element._type),
+					element._normalized ? GL_TRUE : GL_FALSE,
+					layout.get_stride(),
+					(const void*)element._offset);
+				_vertex_buffer_index++;
+				break;
+			}
+			case ShaderDataType::Mat3:
+			case ShaderDataType::Mat4:
+			{
+				uint8_t count = element.get_component_count();
+				for (uint8_t i = 0; i < count; i++)
+				{
+					glEnableVertexAttribArray(_vertex_buffer_index);
+					glVertexAttribPointer(_vertex_buffer_index,
+						count,
+						ShaderDataTypeToOpenGLBaseType(element._type),
+						element._normalized ? GL_TRUE : GL_FALSE,
+						layout.get_stride(),
+						(const void*)(sizeof(float) * count * i));
+					glVertexAttribDivisor(_vertex_buffer_index, 1);
+					_vertex_buffer_index++;
+				}
+				break;
+			}
+			default:
+				HM_CORE_ASSERT(false, "Unknown ShaderDataType!");
+			}
 		}
 
 		_vertex_buffer.push_back(vertex_buffer);

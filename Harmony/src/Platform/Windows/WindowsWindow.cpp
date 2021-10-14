@@ -1,10 +1,12 @@
 #include "WindowsWindow.h"
 
 #include "Harmony/Core/Log.h"
+#include "Harmony/Core/Input.h"
 #include "Harmony/Debug/Instrumentor.h"
 #include "Harmony/Event/ApplicationEvent.h"
 #include "Harmony/Event/MouseEvent.h"
 #include "Harmony/Event/KeyEvent.h"
+#include "Harmony/Renderer/Renderer.h"
 
 #include "Platform/OpenGL/OpenGLContext.h"
 
@@ -16,11 +18,6 @@ namespace Harmony
 	static void GLFWErrorCallback(int error, const char* description)
 	{
 		HM_CORE_ERROR("GLFW Error ({0}): {1}", error, description);
-	}
-
-	Scope<Window>  Window::create(const WindowProps& props)
-	{
-		return create_scope<WindowsWindow>(props);
 	}
 
 	WindowsWindow::WindowsWindow(const WindowProps& props)
@@ -53,13 +50,18 @@ namespace Harmony
 
 			// TODO: glfwTerminate on system shutdown
 			int success = glfwInit();
-			HM_CORE_ASSERT(success, "Could not intialize GLFW!");
+			HM_CORE_ASSERT(success, "Could not initialize GLFW!");
 
 			glfwSetErrorCallback(GLFWErrorCallback);
 		}
 
 		{
 			HM_PROFILE_SCOPE("glfwCreateWindow");
+
+#if defined(HM_DEBUG)
+			if (Renderer::get_api() == RendererAPI::API::OpenGL)
+				glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
+#endif
 
 			_window = glfwCreateWindow((int)props._width, (int)props._height, _data._title.c_str(), nullptr, nullptr);
 			++s_GLFWWindowCount;
@@ -97,19 +99,19 @@ namespace Harmony
 				{
 				case GLFW_PRESS:
 				{
-					KeyPressedEvent event(key, 0);
+					KeyPressedEvent event(static_cast<KeyCode>(key), 0);
 					data._event_callback(event);
 					break;
 				}
 				case GLFW_RELEASE:
 				{
-					KeyReleasedEvent event(key);
+					KeyReleasedEvent event(static_cast<KeyCode>(key));
 					data._event_callback(event);
 					break;
 				}
 				case GLFW_REPEAT:
 				{
-					KeyPressedEvent event(key, 1);
+					KeyPressedEvent event(static_cast<KeyCode>(key), 1);
 					data._event_callback(event);
 					break;
 				}
@@ -120,7 +122,7 @@ namespace Harmony
 			{
 				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
-				KeyTypedEvent event(keycode);
+				KeyTypedEvent event(static_cast<KeyCode>(keycode));
 				data._event_callback(event);
 			});
 
@@ -132,13 +134,13 @@ namespace Harmony
 				{
 				case GLFW_PRESS:
 				{
-					MouseButtonPressedEvent event(button);
+					MouseButtonPressedEvent event(static_cast<MouseCode>(button));
 					data._event_callback(event);
 					break;
 				}
 				case GLFW_RELEASE:
 				{
-					MouseButtonReleasedEvent event(button);
+					MouseButtonReleasedEvent event(static_cast<MouseCode>(button));
 					data._event_callback(event);
 					break;
 				}

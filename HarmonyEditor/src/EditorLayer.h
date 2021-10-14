@@ -26,6 +26,9 @@ namespace Harmony
 
 		Ref<Texture2D> _checkboard_texture;
 
+		bool _viewport_focused = false;
+		bool _viewport_hovered = false;
+
 		glm::vec2 _viewport_size = { 0.0f, 0.0f };
 
 		glm::vec4 _square_color = { 0.2f, 0.3f, 0.8f, 1.0f };

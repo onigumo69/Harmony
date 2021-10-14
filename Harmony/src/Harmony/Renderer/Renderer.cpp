@@ -8,7 +8,7 @@
 
 namespace Harmony
 {
-	Renderer::SceneData* Renderer::_scene_data = new Renderer::SceneData;
+	Scope<Renderer::SceneData> Renderer::_scene_data = create_scope<Renderer::SceneData>();
 
 	void Renderer::init()
 	{

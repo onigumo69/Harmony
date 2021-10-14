@@ -21,6 +21,7 @@ namespace Harmony
 		virtual const Ref<IndexBuffer>& get_index_buffer() const { return _index_buffer; };
 	private:
 		uint32_t _renderer_id;
+		uint32_t _vertex_buffer_index = 0;
 		std::vector<Ref<VertexBuffer>> _vertex_buffer;
 		Ref<IndexBuffer> _index_buffer;
 	};
