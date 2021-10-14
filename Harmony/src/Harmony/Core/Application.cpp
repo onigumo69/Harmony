@@ -12,14 +12,14 @@ namespace Harmony
 {
 	Application* Application::Instance = nullptr;
 
-	Application::Application()
+	Application::Application(const std::string& name)
 	{
 		HM_PROFILE_FUNCTION();
 
 		HM_CORE_ASSERT(!Instance, "Application already exists!");
 		Instance = this;
 
-		_window = Window::create();
+		_window = Window::create(WindowProps(name));
 		_window->set_event_callback(HM_BIND_EVENT_FN(Application::on_event));
 
 		Renderer::init();

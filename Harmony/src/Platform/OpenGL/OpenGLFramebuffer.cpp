@@ -1,5 +1,7 @@
 #include "OpenGLFramebuffer.h"
 
+#include "Harmony/Core/Core.h"
+
 #include <glad/glad.h>
 
 namespace Harmony

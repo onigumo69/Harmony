@@ -4,6 +4,7 @@
 
 #include <string>
 #include <functional>
+#include <ostream>
 
 namespace Harmony
 {

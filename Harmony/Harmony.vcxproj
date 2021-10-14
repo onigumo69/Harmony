@@ -130,7 +130,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>HM_DEBUG;HARMONY_BUILD_DLL;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HM_DEBUG</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Harmony\thirdparty\glad\include\;$(SolutionDir)Harmony\thirdparty\stbimg\;$(SolutionDir)Harmony\thirdparty\imgui\;$(SolutionDir)Harmony\thirdparty\spdlog\include\;$(SolutionDir)Harmony\thirdparty\glm\;$(SolutionDir)Harmony\thirdparty\glfw\include\</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -211,6 +211,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Harmony\Core\Application.cpp" />
+    <ClCompile Include="src\Harmony\Core\Window.cpp" />
     <ClCompile Include="src\Harmony\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Harmony\Core\Layer.cpp" />
     <ClCompile Include="src\Harmony\Core\LayerStack.cpp" />

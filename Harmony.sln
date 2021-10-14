@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Harmony", "Harmony\Harmony.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sandbox", "Sandbox\Sandbox.vcxproj", "{B8A2B266-6D35-4D6C-B138-FF1363ADF63A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HarmonyEditor", "HarmonyEditor\HarmonyEditor.vcxproj", "{307FF23D-F1CF-4375-AF26-9C7502346387}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,10 @@ Global
 		{B8A2B266-6D35-4D6C-B138-FF1363ADF63A}.Debug|x64.Build.0 = Debug|x64
 		{B8A2B266-6D35-4D6C-B138-FF1363ADF63A}.Release|x64.ActiveCfg = Release|x64
 		{B8A2B266-6D35-4D6C-B138-FF1363ADF63A}.Release|x64.Build.0 = Release|x64
+		{307FF23D-F1CF-4375-AF26-9C7502346387}.Debug|x64.ActiveCfg = Debug|x64
+		{307FF23D-F1CF-4375-AF26-9C7502346387}.Debug|x64.Build.0 = Debug|x64
+		{307FF23D-F1CF-4375-AF26-9C7502346387}.Release|x64.ActiveCfg = Release|x64
+		{307FF23D-F1CF-4375-AF26-9C7502346387}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

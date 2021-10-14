@@ -20,7 +20,7 @@ namespace Harmony
 	class Application
 	{
 	public:
-		Application();
+		Application(const std::string& name = "Harmony Core");
 		virtual ~Application();
 
 		void run();

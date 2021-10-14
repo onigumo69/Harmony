@@ -12,6 +12,8 @@
 #include "Harmony/Core/MouseButtonCode.h"
 #include "Harmony/Renderer/OrthographicCameraController.h"
 
+#include "Harmony/Debug/Instrumentor.h"
+
 #include "Harmony/ImGui/ImGuiLayer.h"
 
 // ---Renderer------------------------
