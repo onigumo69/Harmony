@@ -22,9 +22,9 @@ namespace Harmony
 
 	struct Renderer2DData
 	{
-		const uint32_t max_quads = 10000;
-		const uint32_t max_vertices = max_quads * 4;
-		const uint32_t max_indices = max_quads * 6;
+		static const uint32_t max_quads = 20000;
+		static const uint32_t max_vertices = max_quads * 4;
+		static const uint32_t max_indices = max_quads * 6;
 		static const uint32_t max_texture_slots = 32;
 
 		Ref<VertexArray> quad_vertex_array;
@@ -40,6 +40,8 @@ namespace Harmony
 		uint32_t texture_slot_index = 1;
 
 		glm::vec4 quad_vertex_positions[4];
+
+		Renderer2D::Statistics stats;
 	};
 
 	static Renderer2DData Data;
@@ -137,6 +139,17 @@ namespace Harmony
 			Data.texture_slots[i]->bind(i);
 
 		RenderCommand::draw_indexed(Data.quad_vertex_array, Data.quad_index_count);
+		Data.stats.draw_calls++;
+	}
+
+	void Renderer2D::flush_and_reset()
+	{
+		end_scene();
+
+		Data.quad_index_count = 0;
+		Data.quad_vertex_buffer_ptr = Data.quad_vertex_buffer_base;
+
+		Data.texture_slot_index = 1;
 	}
 
 	void Renderer2D::draw_quad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)
@@ -147,6 +160,9 @@ namespace Harmony
 	void Renderer2D::draw_quad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
 	{
 		HM_PROFILE_FUNCTION();
+
+		if (Data.quad_index_count >= Renderer2DData::max_indices)
+			flush_and_reset();
 
 		const float texture_index = 0.0f; // White Texture
 		const float tiling_factor = 1.0f;
@@ -183,6 +199,8 @@ namespace Harmony
 		Data.quad_vertex_buffer_ptr++;
 
 		Data.quad_index_count += 6;
+
+		Data.stats.quad_count++;
 	}
 
 	void Renderer2D::draw_quad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D>& texture, float tiling_factor, const glm::vec4& tint_color)
@@ -193,6 +211,9 @@ namespace Harmony
 	void Renderer2D::draw_quad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, float tiling_factor, const glm::vec4& tint_color)
 	{
 		HM_PROFILE_FUNCTION();
+
+		if (Data.quad_index_count >= Renderer2DData::max_indices)
+			flush_and_reset();
 
 		constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
 
@@ -245,6 +266,8 @@ namespace Harmony
 		Data.quad_vertex_buffer_ptr++;
 
 		Data.quad_index_count += 6;
+
+		Data.stats.quad_count++;
 	}
 	
 	void Renderer2D::draw_rotated_quad(const glm::vec2& position, const glm::vec2& size, float rotation, const glm::vec4& color)
@@ -255,6 +278,9 @@ namespace Harmony
 	void Renderer2D::draw_rotated_quad(const glm::vec3& position, const glm::vec2& size, float rotation, const glm::vec4& color)
 	{
 		HM_PROFILE_FUNCTION();
+
+		if (Data.quad_index_count >= Renderer2DData::max_indices)
+			flush_and_reset();
 
 		const float texture_index = 0.0f;
 		const float tiling_factor = 1.0f;
@@ -292,6 +318,8 @@ namespace Harmony
 		Data.quad_vertex_buffer_ptr++;
 
 		Data.quad_index_count += 6;
+
+		Data.stats.quad_count++;
 	}
 
 	void Renderer2D::draw_rotated_quad(const glm::vec2& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, float tiling_factor, const glm::vec4& tint_color)
@@ -302,6 +330,9 @@ namespace Harmony
 	void Renderer2D::draw_rotated_quad(const glm::vec3& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, float tiling_factor, const glm::vec4& tint_color)
 	{
 		HM_PROFILE_FUNCTION();
+
+		if (Data.quad_index_count >= Renderer2DData::max_indices)
+			flush_and_reset();
 
 		constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
 
@@ -355,6 +386,17 @@ namespace Harmony
 		Data.quad_vertex_buffer_ptr++;
 
 		Data.quad_index_count += 6;
+
+		Data.stats.quad_count++;
 	}
 
+	void Renderer2D::reset_stats()
+	{
+		memset(&Data.stats, 0, sizeof(Statistics));
+	}
+
+	Renderer2D::Statistics Renderer2D::get_stats()
+	{
+		return Data.stats;
+	}
 }
