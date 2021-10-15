@@ -165,6 +165,9 @@
     <ClInclude Include="src\Harmony\Scene\SceneCamera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Harmony\Scene\ScriptableEntity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Harmony\Core\Application.cpp">

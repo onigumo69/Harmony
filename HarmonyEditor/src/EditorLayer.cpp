@@ -37,6 +37,35 @@ namespace Harmony
 		_second_camera_entity = _active_scene->create_entity("Clip Space Entity");
 		auto& cc = _second_camera_entity.add_component<CameraComponent>();
 		cc.primary = false;
+
+		class CameraController : public ScriptableEntity
+		{
+		public:
+			void OnCreate()
+			{
+			}
+
+			void OnDestroy()
+			{
+			}
+
+			void OnUpdate(Timestep ts)
+			{
+				auto& transform = get_component<TransformComponent>().Transform;
+				float speed = 5.0f;
+
+				if (Input::is_key_pressed(Key::A))
+					transform[3][0] -= speed * ts;
+				if (Input::is_key_pressed(Key::D))
+					transform[3][0] += speed * ts;
+				if (Input::is_key_pressed(Key::W))
+					transform[3][1] += speed * ts;
+				if (Input::is_key_pressed(Key::S))
+					transform[3][1] -= speed * ts;
+			}
+		};
+
+		_camera_entity.add_component<NativeScriptComponent>().Bind<CameraController>();
 	}
 
 	void EditorLayer::on_detach()
@@ -188,8 +217,8 @@ namespace Harmony
 
 		_viewport_size = { viewportPanelSize.x, viewportPanelSize.y };
 
-		uint32_t textureID = _framebuffer->get_color_attachment_renderer_id();
-		ImGui::Image((void*)textureID, ImVec2{ _viewport_size.x, _viewport_size.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+		uint64_t textureID = _framebuffer->get_color_attachment_renderer_id();
+		ImGui::Image(reinterpret_cast<void*>(textureID), ImVec2{ _viewport_size.x, _viewport_size.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 		ImGui::End();
 		ImGui::PopStyleVar();
 
