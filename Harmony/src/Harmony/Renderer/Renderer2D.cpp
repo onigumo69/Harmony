@@ -111,6 +111,21 @@ namespace Harmony
 		delete[] Data.quad_vertex_buffer_base;
 	}
 
+	void Renderer2D::begin_scene(const Camera& camera, const glm::mat4& transform)
+	{
+		HM_PROFILE_FUNCTION();
+
+		glm::mat4 viewProj = camera.get_projection() * glm::inverse(transform);
+
+		Data.texture_shader->bind();
+		Data.texture_shader->set_mat4("u_ViewProjection", viewProj);
+
+		Data.quad_index_count = 0;
+		Data.quad_vertex_buffer_ptr = Data.quad_vertex_buffer_base;
+
+		Data.texture_slot_index = 1;
+	}
+
 	void Renderer2D::begin_scene(const OrthographicCamera& camera)
 	{
 		HM_PROFILE_FUNCTION();

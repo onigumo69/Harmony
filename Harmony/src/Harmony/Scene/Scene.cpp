@@ -62,14 +62,39 @@ namespace Harmony
 
 	void Scene::on_update(Timestep ts)
 	{
-		auto group = _registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
-		for (auto entity : group)
-		{
-			auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+		// Render 2D
+		Camera* main_camera = nullptr;
+		glm::mat4* camera_transform = nullptr;
 
-			Renderer2D::draw_quad(transform, sprite.Color);
+		{
+			auto group = _registry.view<TransformComponent, CameraComponent>();
+			for (auto entity : group)
+			{
+				auto [transform, camera] = group.get<TransformComponent, CameraComponent>(entity);
+
+				if (camera.primary)
+				{
+					main_camera = &camera.camera;
+					camera_transform = &transform.Transform;
+					break;
+				}
+			}
 		}
 
+		if (main_camera)
+		{
+			Renderer2D::begin_scene(main_camera->get_projection(), *camera_transform);
+
+			auto group = _registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
+			for (auto entity : group)
+			{
+				auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+
+				Renderer2D::draw_quad(transform, sprite.Color);
+			}
+
+			Renderer2D::end_scene();
+		}
 
 	}
 

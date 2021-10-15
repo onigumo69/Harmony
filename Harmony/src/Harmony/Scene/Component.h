@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Harmony/Renderer/Camera.h"
+
 #include <glm/glm.hpp>
 
 #include <string>
@@ -40,6 +42,18 @@ namespace Harmony
 		SpriteRendererComponent(const SpriteRendererComponent&) = default;
 		SpriteRendererComponent(const glm::vec4 & color)
 			: Color(color)
+		{}
+	};
+
+	struct CameraComponent
+	{
+		Camera camera;
+		bool primary = true;
+
+		CameraComponent() = default;
+		CameraComponent(const CameraComponent&) = default;
+		CameraComponent(const glm::mat4 & projection)
+			: camera(projection)
 		{}
 	};
 

@@ -30,6 +30,13 @@ namespace Harmony
 		square.add_component<SpriteRendererComponent>(glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
 
 		_square_entity = square;
+
+		_camera_entity = _active_scene->create_entity("Camera Entity");
+		_camera_entity.add_component<CameraComponent>(glm::ortho(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
+
+		_second_camera_entity = _active_scene->create_entity("Clip Space Entity");
+		auto& cc = _second_camera_entity.add_component<CameraComponent>(glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f));
+		cc.primary = false;
 	}
 
 	void EditorLayer::on_detach()
@@ -60,12 +67,8 @@ namespace Harmony
 		RenderCommand::set_clear_color({ 0.1f, 0.1f, 0.1f, 1 });
 		RenderCommand::clear();
 
-		Renderer2D::begin_scene(_camera_controller.get_camera());
-
 		// Update scene
 		_active_scene->on_update(ts);
-
-		Renderer2D::end_scene();
 
 		_framebuffer->unbind();
 	}
@@ -152,6 +155,15 @@ namespace Harmony
 			auto& squareColor = _square_entity.get_component<SpriteRendererComponent>().Color;
 			ImGui::ColorEdit4("Square Color", glm::value_ptr(squareColor));
 			ImGui::Separator();
+		}
+
+		ImGui::DragFloat3("Camera Transform",
+			glm::value_ptr(_camera_entity.get_component<TransformComponent>().Transform[3]));
+
+		if (ImGui::Checkbox("Camera A", &_primary_camera))
+		{
+			_camera_entity.get_component<CameraComponent>().primary = _primary_camera;
+			_second_camera_entity.get_component<CameraComponent>().primary = !_primary_camera;
 		}
 
 		ImGui::End();

@@ -175,6 +175,7 @@
     <ClInclude Include="src\Harmony\Event\Event.h" />
     <ClInclude Include="src\Harmony\Event\KeyEvent.h" />
     <ClInclude Include="src\Harmony\Event\MouseEvent.h" />
+    <ClInclude Include="src\Harmony\Renderer\Camera.h" />
     <ClInclude Include="src\Harmony\Renderer\Framebuffer.h" />
     <ClInclude Include="src\Harmony\Renderer\OrthographicCameraController.h" />
     <ClInclude Include="src\Harmony\Renderer\Buffer.h" />

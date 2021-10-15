@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Camera.h"
 #include "OrthographicCamera.h"
 #include "Texture.h"
 
@@ -12,6 +13,7 @@ namespace Harmony
 		static void init();
 		static void shutdown();
 
+		static void begin_scene(const Camera& camera, const glm::mat4& transform);
 		static void begin_scene(const OrthographicCamera& camera);
 		static void end_scene();
 		static void flush();

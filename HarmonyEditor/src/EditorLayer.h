@@ -26,6 +26,10 @@ namespace Harmony
 
 		Ref<Scene> _active_scene;
 		Entity _square_entity;
+		Entity _camera_entity;
+		Entity _second_camera_entity;
+
+		bool _primary_camera = true;
 
 		Ref<Texture2D> _checkboard_texture;
 
