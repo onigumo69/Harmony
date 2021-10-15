@@ -8,6 +8,8 @@
 namespace Harmony
 {
 
+	static const uint32_t MaxFramebufferSize = 8192;
+
 	OpenGLFramebuffer::OpenGLFramebuffer(const FramebufferSpecification& spec)
 		: _specification(spec)
 	{
@@ -64,6 +66,12 @@ namespace Harmony
 
 	void OpenGLFramebuffer::resize(uint32_t width, uint32_t height)
 	{
+		if (width == 0 || height == 0 || width > MaxFramebufferSize || height > MaxFramebufferSize)
+		{
+			HM_CORE_WARN("Attempted to rezize framebuffer to {0}, {1}", width, height);
+			return;
+		}
+
 		_specification.width = width;
 		_specification.height = height;
 

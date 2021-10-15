@@ -132,7 +132,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>HM_DEBUG</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Harmony\thirdparty\glad\include\;$(SolutionDir)Harmony\thirdparty\stbimg\;$(SolutionDir)Harmony\thirdparty\imgui\;$(SolutionDir)Harmony\thirdparty\spdlog\include\;$(SolutionDir)Harmony\thirdparty\glm\;$(SolutionDir)Harmony\thirdparty\glfw\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Harmony\thirdparty\glad\include\;$(SolutionDir)Harmony\thirdparty\stbimg\;$(SolutionDir)Harmony\thirdparty\imgui\;$(SolutionDir)Harmony\thirdparty\spdlog\include\;$(SolutionDir)Harmony\thirdparty\entt\include\;$(SolutionDir)Harmony\thirdparty\glm\;$(SolutionDir)Harmony\thirdparty\glfw\include\</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -151,7 +151,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>HARMONY_BUILD_DLL;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Harmony\thirdparty\glad\include\;$(SolutionDir)Harmony\thirdparty\stbimg\;$(SolutionDir)Harmony\thirdparty\imgui\;$(SolutionDir)Harmony\thirdparty\spdlog\include\;$(SolutionDir)Harmony\thirdparty\glm\;$(SolutionDir)Harmony\thirdparty\glfw\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)Harmony\thirdparty\glad\include\;$(SolutionDir)Harmony\thirdparty\stbimg\;$(SolutionDir)Harmony\thirdparty\imgui\;$(SolutionDir)Harmony\thirdparty\spdlog\include\;$(SolutionDir)Harmony\thirdparty\entt\include\;$(SolutionDir)Harmony\thirdparty\glm\;$(SolutionDir)Harmony\thirdparty\glfw\include\</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -195,6 +195,8 @@
     <ClInclude Include="src\Harmony\Renderer\Texture.h" />
     <ClInclude Include="src\Harmony\Renderer\VertexArray.h" />
     <ClInclude Include="src\Harmony\Core\Window.h" />
+    <ClInclude Include="src\Harmony\Scene\Component.h" />
+    <ClInclude Include="src\Harmony\Scene\Scene.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLFramebuffer.h" />
@@ -203,6 +205,7 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLTexture.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
+    <ClInclude Include="thirdparty\entt\include\entt.hpp" />
     <ClInclude Include="thirdparty\glm\glm\glm.hpp" />
     <ClInclude Include="thirdparty\imgui\imconfig.h" />
     <ClInclude Include="thirdparty\imgui\imgui.h" />
@@ -229,6 +232,7 @@
     <ClCompile Include="src\Harmony\Renderer\Shader.cpp" />
     <ClCompile Include="src\Harmony\Renderer\Texture.cpp" />
     <ClCompile Include="src\Harmony\Renderer\VertexArray.cpp" />
+    <ClCompile Include="src\Harmony\Scene\Scene.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLFramebuffer.cpp" />

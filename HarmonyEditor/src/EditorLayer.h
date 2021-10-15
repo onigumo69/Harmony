@@ -24,6 +24,9 @@ namespace Harmony
 		Ref<Shader> _flat_color_shader;
 		Ref<Framebuffer> _framebuffer;
 
+		Ref<Scene> _active_scene;
+		entt::entity _square_entity;
+
 		Ref<Texture2D> _checkboard_texture;
 
 		bool _viewport_focused = false;

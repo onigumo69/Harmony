@@ -16,12 +16,20 @@ namespace Harmony
 	{
 		HM_PROFILE_FUNCTION();
 
-		_checkboard_texture = Harmony::Texture2D::create("assets/textures/Checkerboard.png");
+		_checkboard_texture = Texture2D::create("assets/textures/Checkerboard.png");
 
-		Harmony::FramebufferSpecification fb_spec;
+		FramebufferSpecification fb_spec;
 		fb_spec.width = 1280;
 		fb_spec.height = 720;
-		_framebuffer = Harmony::Framebuffer::create(fb_spec);
+		_framebuffer = Framebuffer::create(fb_spec);
+
+		_active_scene = create_ref<Scene>();
+
+		auto square = _active_scene->create_entity();
+		_active_scene->reg().emplace<TransformComponent>(square);
+		_active_scene->reg().emplace<SpriteRendererComponent>(square, glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
+
+		_square_entity = square;
 	}
 
 	void EditorLayer::on_detach()
@@ -29,7 +37,7 @@ namespace Harmony
 		HM_PROFILE_FUNCTION();
 	}
 
-	void EditorLayer::on_update(Harmony::Timestep ts)
+	void EditorLayer::on_update(Timestep ts)
 	{
 		HM_PROFILE_FUNCTION();
 
@@ -47,39 +55,19 @@ namespace Harmony
 			_camera_controller.on_update(ts);
 
 		// Render
-		Harmony::Renderer2D::reset_stats();
-		{
-			HM_PROFILE_SCOPE("Renderer Prep");
-			_framebuffer->bind();
-			Harmony::RenderCommand::set_clear_color({ 0.1f, 0.1f, 0.1f, 1 });
-			Harmony::RenderCommand::clear();
-		}
+		Renderer2D::reset_stats();
+		_framebuffer->bind();
+		RenderCommand::set_clear_color({ 0.1f, 0.1f, 0.1f, 1 });
+		RenderCommand::clear();
 
-		{
-			static float rotation = 0.0f;
-			rotation += ts * 50.0f;
+		Renderer2D::begin_scene(_camera_controller.get_camera());
 
-			HM_PROFILE_SCOPE("Renderer Draw");
-			Harmony::Renderer2D::begin_scene(_camera_controller.get_camera());
-			Harmony::Renderer2D::draw_rotated_quad({ 1.0f, 0.0f }, { 0.8f, 0.8f }, -45.0f, { 0.8f, 0.2f, 0.3f, 1.0f });
-			Harmony::Renderer2D::draw_quad({ -1.0f, 0.0f }, { 0.8f, 0.8f }, { 0.8f, 0.2f, 0.3f, 1.0f });
-			Harmony::Renderer2D::draw_quad({ 0.5f, -0.5f }, { 0.5f, 0.75f }, _square_color);
-			Harmony::Renderer2D::draw_quad({ 0.0f, 0.0f, -0.1f }, { 20.0f, 20.0f }, _checkboard_texture, 10.0f);
-			Harmony::Renderer2D::draw_rotated_quad({ -2.0f, 0.0f, 0.0f }, { 1.0f, 1.0f }, rotation, _checkboard_texture, 20.0f);
-			Harmony::Renderer2D::end_scene();
+		// Update scene
+		_active_scene->on_update(ts);
 
-			Harmony::Renderer2D::begin_scene(_camera_controller.get_camera());
-			for (float y = -5.0f; y < 5.0f; y += 0.5f)
-			{
-				for (float x = -5.0f; x < 5.0f; x += 0.5f)
-				{
-					glm::vec4 color = { (x + 5.0f) / 10.0f, 0.4f, (y + 5.0f) / 10.0f, 0.7f };
-					Harmony::Renderer2D::draw_quad({ x, y }, { 0.45f, 0.45f }, color);
-				}
-			}
-			Harmony::Renderer2D::end_scene();
-			_framebuffer->unbind();
-		}
+		Renderer2D::end_scene();
+
+		_framebuffer->unbind();
 	}
 
 	void EditorLayer::on_imgui_render()
@@ -139,7 +127,7 @@ namespace Harmony
 				// which we can't undo at the moment without finer window depth/z control.
 				//ImGui::MenuItem("Fullscreen", NULL, &opt_fullscreen_persistant);
 
-				if (ImGui::MenuItem("Exit")) Harmony::Application::get().close();
+				if (ImGui::MenuItem("Exit")) Application::get().close();
 				ImGui::EndMenu();
 			}
 
@@ -148,14 +136,15 @@ namespace Harmony
 
 		ImGui::Begin("Settings");
 
-		auto stats = Harmony::Renderer2D::get_stats();
+		auto stats = Renderer2D::get_stats();
 		ImGui::Text("Renderer2D Stats:");
 		ImGui::Text("Draw Calls: %d", stats.draw_calls);
 		ImGui::Text("Quads: %d", stats.quad_count);
 		ImGui::Text("Vertices: %d", stats.get_total_vertex_count());
 		ImGui::Text("Indices: %d", stats.get_total_index_count());
 
-		ImGui::ColorEdit4("Square Color", glm::value_ptr(_square_color));
+		auto& square_color = _active_scene->reg().get<SpriteRendererComponent>(_square_entity).Color;
+		ImGui::ColorEdit4("Square Color", glm::value_ptr(square_color));
 
 		ImGui::End();
 
@@ -168,7 +157,13 @@ namespace Harmony
 
 		ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
 
-		_viewport_size = { viewportPanelSize.x, viewportPanelSize.y };
+		if (_viewport_size != *((glm::vec2*)&viewportPanelSize) && viewportPanelSize.x > 0 && viewportPanelSize.y > 0)
+		{
+			_framebuffer->resize((uint32_t)viewportPanelSize.x, (uint32_t)viewportPanelSize.y);
+			_viewport_size = { viewportPanelSize.x, viewportPanelSize.y };
+
+			_camera_controller.on_resize(viewportPanelSize.x, viewportPanelSize.y);
+		}
 
 		uint32_t textureID = _framebuffer->get_color_attachment_renderer_id();
 		ImGui::Image((void*)textureID, ImVec2{ _viewport_size.x, _viewport_size.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
@@ -178,7 +173,7 @@ namespace Harmony
 		ImGui::End();
 	}
 
-	void EditorLayer::on_event(Harmony::Event& e)
+	void EditorLayer::on_event(Event& e)
 	{
 		_camera_controller.on_event(e);
 	}

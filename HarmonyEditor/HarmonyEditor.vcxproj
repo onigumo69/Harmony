@@ -120,7 +120,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>HM_DEBUG;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Harmony\thirdparty\glm\;$(SolutionDir)Harmony\thirdparty\glfw\include\;$(SolutionDir)Harmony\src\;$(SolutionDir)Harmony\thirdparty\spdlog\include\;$(SolutionDir)Harmony\thirdparty\imgui\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Harmony\thirdparty\entt\include\;$(SolutionDir)Harmony\thirdparty\glm\;$(SolutionDir)Harmony\thirdparty\glfw\include\;$(SolutionDir)Harmony\src\;$(SolutionDir)Harmony\thirdparty\spdlog\include\;$(SolutionDir)Harmony\thirdparty\imgui\</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -139,7 +139,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Harmony\thirdparty\glm\;$(SolutionDir)Harmony\thirdparty\glfw\include\;$(SolutionDir)Harmony\src\;$(SolutionDir)Harmony\thirdparty\spdlog\include\;$(SolutionDir)Harmony\thirdparty\imgui\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Harmony\thirdparty\entt\include\;$(SolutionDir)Harmony\thirdparty\glm\;$(SolutionDir)Harmony\thirdparty\glfw\include\;$(SolutionDir)Harmony\src\;$(SolutionDir)Harmony\thirdparty\spdlog\include\;$(SolutionDir)Harmony\thirdparty\imgui\</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
