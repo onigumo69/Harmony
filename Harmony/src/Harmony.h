@@ -14,6 +14,7 @@
 #include "Harmony/Renderer/OrthographicCameraController.h"
 
 #include "Harmony/Scene/Component.h"
+#include "Harmony/Scene/Entity.h"
 #include "Harmony/Scene/Scene.h"
 
 #include "Harmony/Debug/Instrumentor.h"

@@ -7,20 +7,22 @@
 namespace Harmony
 {
 
+	class Entity;
+
 	class Scene
 	{
 	public:
 		Scene();
 		~Scene();
 
-		entt::entity create_entity();
-
-		entt::registry& reg() { return _registry; }
+		Entity create_entity(const std::string& name = std::string());
 
 		void on_update(Timestep ts);
 
 	private:
 		entt::registry _registry;
+
+		friend class Entity;
 	};
 
 }

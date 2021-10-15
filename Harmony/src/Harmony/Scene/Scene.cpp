@@ -1,6 +1,8 @@
 #include "Scene.h"
 #include "Component.h"
 
+#include "Entity.h"
+
 #include "Harmony/Renderer/Renderer2D.h"
 
 #include <glm/glm.hpp>
@@ -49,9 +51,13 @@ namespace Harmony
 	{
 	}
 
-	entt::entity Scene::create_entity()
+	Entity Scene::create_entity(const std::string& name)
 	{
-		return _registry.create();
+		Entity entity = { _registry.create(), this };
+		entity.add_component<TransformComponent>();
+		auto& tag = entity.add_component<TagComponent>();
+		tag.Tag = name.empty() ? "Entity" : name;
+		return entity;
 	}
 
 	void Scene::on_update(Timestep ts)

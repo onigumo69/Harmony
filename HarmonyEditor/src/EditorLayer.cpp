@@ -25,9 +25,9 @@ namespace Harmony
 
 		_active_scene = create_ref<Scene>();
 
-		auto square = _active_scene->create_entity();
-		_active_scene->reg().emplace<TransformComponent>(square);
-		_active_scene->reg().emplace<SpriteRendererComponent>(square, glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
+		// Entity
+		auto square = _active_scene->create_entity("Green Square");
+		square.add_component<SpriteRendererComponent>(glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
 
 		_square_entity = square;
 	}
@@ -143,8 +143,16 @@ namespace Harmony
 		ImGui::Text("Vertices: %d", stats.get_total_vertex_count());
 		ImGui::Text("Indices: %d", stats.get_total_index_count());
 
-		auto& square_color = _active_scene->reg().get<SpriteRendererComponent>(_square_entity).Color;
-		ImGui::ColorEdit4("Square Color", glm::value_ptr(square_color));
+		if (_square_entity)
+		{
+			ImGui::Separator();
+			auto& tag = _square_entity.get_component<TagComponent>().Tag;
+			ImGui::Text("%s", tag.c_str());
+
+			auto& squareColor = _square_entity.get_component<SpriteRendererComponent>().Color;
+			ImGui::ColorEdit4("Square Color", glm::value_ptr(squareColor));
+			ImGui::Separator();
+		}
 
 		ImGui::End();
 
