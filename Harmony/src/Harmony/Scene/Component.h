@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Harmony/Renderer/Camera.h"
+#include "SceneCamera.h"
 
 #include <glm/glm.hpp>
 
@@ -47,14 +47,12 @@ namespace Harmony
 
 	struct CameraComponent
 	{
-		Camera camera;
+		SceneCamera camera;
 		bool primary = true;
+		bool FixedAspectRatio = false;
 
 		CameraComponent() = default;
 		CameraComponent(const CameraComponent&) = default;
-		CameraComponent(const glm::mat4 & projection)
-			: camera(projection)
-		{}
 	};
 
 }

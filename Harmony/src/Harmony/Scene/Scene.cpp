@@ -67,10 +67,10 @@ namespace Harmony
 		glm::mat4* camera_transform = nullptr;
 
 		{
-			auto group = _registry.view<TransformComponent, CameraComponent>();
-			for (auto entity : group)
+			auto view = _registry.view<TransformComponent, CameraComponent>();
+			for (auto entity : view)
 			{
-				auto [transform, camera] = group.get<TransformComponent, CameraComponent>(entity);
+				auto [transform, camera] = view.get<TransformComponent, CameraComponent>(entity);
 
 				if (camera.primary)
 				{
@@ -94,6 +94,22 @@ namespace Harmony
 			}
 
 			Renderer2D::end_scene();
+		}
+
+	}
+
+	void Scene::on_viewport_resize(uint32_t width, uint32_t height)
+	{
+		_viewport_width = width;
+		_viewport_height = height;
+
+		// Resize our non-FixedAspectRatio cameras
+		auto view = _registry.view<CameraComponent>();
+		for (auto entity : view)
+		{
+			auto& camera_component = view.get<CameraComponent>(entity);
+			if (!camera_component.FixedAspectRatio)
+				camera_component.camera.set_viewport_size(width, height);
 		}
 
 	}

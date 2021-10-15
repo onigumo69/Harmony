@@ -199,6 +199,7 @@
     <ClInclude Include="src\Harmony\Scene\Component.h" />
     <ClInclude Include="src\Harmony\Scene\Entity.h" />
     <ClInclude Include="src\Harmony\Scene\Scene.h" />
+    <ClInclude Include="src\Harmony\Scene\SceneCamera.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLFramebuffer.h" />
@@ -236,6 +237,7 @@
     <ClCompile Include="src\Harmony\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\Harmony\Scene\Entity.cpp" />
     <ClCompile Include="src\Harmony\Scene\Scene.cpp" />
+    <ClCompile Include="src\Harmony\Scene\SceneCamera.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLFramebuffer.cpp" />

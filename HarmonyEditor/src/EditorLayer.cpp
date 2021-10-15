@@ -32,10 +32,10 @@ namespace Harmony
 		_square_entity = square;
 
 		_camera_entity = _active_scene->create_entity("Camera Entity");
-		_camera_entity.add_component<CameraComponent>(glm::ortho(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
+		_camera_entity.add_component<CameraComponent>();
 
 		_second_camera_entity = _active_scene->create_entity("Clip Space Entity");
-		auto& cc = _second_camera_entity.add_component<CameraComponent>(glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f));
+		auto& cc = _second_camera_entity.add_component<CameraComponent>();
 		cc.primary = false;
 	}
 
@@ -55,6 +55,8 @@ namespace Harmony
 		{
 			_framebuffer->resize((uint32_t)_viewport_size.x, (uint32_t)_viewport_size.y);
 			_camera_controller.on_resize(_viewport_size.x, _viewport_size.y);
+
+			_active_scene->on_viewport_resize((uint32_t)_viewport_size.x, (uint32_t)_viewport_size.y);
 		}
 
 		// Update
@@ -164,6 +166,13 @@ namespace Harmony
 		{
 			_camera_entity.get_component<CameraComponent>().primary = _primary_camera;
 			_second_camera_entity.get_component<CameraComponent>().primary = !_primary_camera;
+		}
+
+		{
+			auto& camera = _second_camera_entity.get_component<CameraComponent>().camera;
+			float ortho_size = camera.get_orthographic_size();
+			if (ImGui::DragFloat("Second Camera Ortho Size", &ortho_size))
+				camera.set_orthographic_size(ortho_size);
 		}
 
 		ImGui::End();
