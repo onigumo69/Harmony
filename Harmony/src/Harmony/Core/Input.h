@@ -4,7 +4,7 @@
 #include "KeyCode.h"
 #include "MouseCode.h"
 
-#include <utility>
+#include <glm/glm.hpp>
 
 namespace Harmony
 {
@@ -13,7 +13,7 @@ namespace Harmony
 	public:
 		static bool is_key_pressed(KeyCode key);
 		static bool is_mouse_button_pressed(MouseCode button);
-		static std::pair<float, float> get_mouse_position();
+		static glm::vec2 get_mouse_position();
 		static float get_mouse_x();
 		static float get_mouse_y();
 	};

@@ -16,23 +16,23 @@ namespace Harmony
 	{
 		HM_PROFILE_FUNCTION();
 
-		if (Input::is_key_pressed(KeyCode::A))
+		if (Input::is_key_pressed(Key::A))
 		{
 			_camera_position.x -= cos(glm::radians(_camera_rotation)) * _camera_translation_speed * ts;
 			_camera_position.y -= sin(glm::radians(_camera_rotation)) * _camera_translation_speed * ts;
 		}
-		else if (Input::is_key_pressed(KeyCode::D))
+		else if (Input::is_key_pressed(Key::D))
 		{
 			_camera_position.x += cos(glm::radians(_camera_rotation)) * _camera_translation_speed * ts;
 			_camera_position.y += sin(glm::radians(_camera_rotation)) * _camera_translation_speed * ts;
 		}
 
-		if (Input::is_key_pressed(KeyCode::W))
+		if (Input::is_key_pressed(Key::W))
 		{
 			_camera_position.x += -sin(glm::radians(_camera_rotation)) * _camera_translation_speed * ts;
 			_camera_position.y += cos(glm::radians(_camera_rotation)) * _camera_translation_speed * ts;
 		}
-		else if (Input::is_key_pressed(KeyCode::S))
+		else if (Input::is_key_pressed(Key::S))
 		{
 			_camera_position.x -= -sin(glm::radians(_camera_rotation)) * _camera_translation_speed * ts;
 			_camera_position.y -= cos(glm::radians(_camera_rotation)) * _camera_translation_speed * ts;
@@ -40,9 +40,9 @@ namespace Harmony
 
 		if (_rotation)
 		{
-			if (Input::is_key_pressed(KeyCode::Q))
+			if (Input::is_key_pressed(Key::Q))
 				_camera_rotation += _camera_rotation_speed * ts;
-			if (Input::is_key_pressed(KeyCode::E))
+			if (Input::is_key_pressed(Key::E))
 				_camera_rotation -= _camera_rotation_speed * ts;
 
 			if (_camera_rotation > 180.0f)

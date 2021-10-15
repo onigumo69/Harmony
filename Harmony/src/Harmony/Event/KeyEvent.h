@@ -14,7 +14,7 @@ namespace Harmony
 
 		EVENT_CLASS_CATEGORY(EventCategoryKeyboard | EventCategoryInput)
 	protected:
-		KeyEvent(KeyCode keycode)
+		KeyEvent(const KeyCode keycode)
 			: _keycode(keycode)
 		{}
 
@@ -24,11 +24,11 @@ namespace Harmony
 	class KeyPressedEvent : public KeyEvent
 	{
 	public:
-		KeyPressedEvent(KeyCode keycode, int repeat_count)
+		KeyPressedEvent(const KeyCode keycode, const int repeat_count)
 			: KeyEvent(keycode), _repeat_count(repeat_count)
 		{}
 
-		inline int get_repeat_count() const { return _repeat_count; }
+		uint16_t get_repeat_count() const { return _repeat_count; }
 
 		std::string debug_to_string() const override
 		{
@@ -39,13 +39,13 @@ namespace Harmony
 
 		EVENT_CLASS_TYPE(KeyPressed)
 	private:
-		int _repeat_count;
+		uint16_t _repeat_count;
 	};
 
 	class KeyReleasedEvent : public KeyEvent
 	{
 	public:
-		KeyReleasedEvent(KeyCode keycode)
+		KeyReleasedEvent(const KeyCode keycode)
 			: KeyEvent(keycode)
 		{}
 
@@ -62,7 +62,7 @@ namespace Harmony
 	class KeyTypedEvent : public KeyEvent
 	{
 	public:
-		KeyTypedEvent(KeyCode keycode)
+		KeyTypedEvent(const KeyCode keycode)
 			: KeyEvent(keycode) {}
 
 		std::string debug_to_string() const override

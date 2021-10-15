@@ -104,7 +104,8 @@ namespace Harmony
 						ShaderDataTypeToOpenGLBaseType(element._type),
 						element._normalized ? GL_TRUE : GL_FALSE,
 						layout.get_stride(),
-						(const void*)(sizeof(float) * count * i));
+						(const void*)(element._offset + sizeof(float) * count * i));
+
 					glVertexAttribDivisor(_vertex_buffer_index, 1);
 					_vertex_buffer_index++;
 				}

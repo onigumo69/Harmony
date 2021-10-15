@@ -8,21 +8,21 @@
 namespace Harmony
 {
 
-	bool Input::is_key_pressed(KeyCode keycode)
+	bool Input::is_key_pressed(const KeyCode keycode)
 	{
 		auto window = static_cast<GLFWwindow*>(Application::get().get_window().get_native_window());
 		auto state = glfwGetKey(window, static_cast<int32_t>(keycode));
 		return state == GLFW_PRESS || state == GLFW_REPEAT;
 	}
 
-	bool Input::is_mouse_button_pressed(MouseCode button)
+	bool Input::is_mouse_button_pressed(const MouseCode button)
 	{
 		auto window = static_cast<GLFWwindow*>(Application::get().get_window().get_native_window());
 		auto state = glfwGetMouseButton(window, static_cast<int32_t>(button));
 		return state == GLFW_PRESS;
 	}
 
-	std::pair<float, float> Input::get_mouse_position()
+	glm::vec2 Input::get_mouse_position()
 	{
 		auto window = static_cast<GLFWwindow*>(Application::get().get_window().get_native_window());
 		double xpos, ypos;
@@ -33,13 +33,11 @@ namespace Harmony
 
 	float Input::get_mouse_x()
 	{
-		std::pair<float, float> pos = get_mouse_position();
-		return pos.first;
+		return get_mouse_position().x;
 	}
 
 	float Input::get_mouse_y()
 	{
-		std::pair<float, float> pos = get_mouse_position();
-		return pos.second;
+		return get_mouse_position().y;
 	}
 }

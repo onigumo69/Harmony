@@ -95,7 +95,7 @@ namespace Harmony
 		Data.texture_shader->bind();
 		Data.texture_shader->set_int_array("u_Textures", samplers, Data.max_texture_slots);
 
-		// set all texture slots to 0
+		// set first texture slot to 0
 		Data.texture_slots[0] = Data.white_texture;
 
 		Data.quad_vertex_positions[0] = { -0.5f, -0.5f, 0.0f, 1.0f };
@@ -200,7 +200,7 @@ namespace Harmony
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
-		draw_quad(transform, texture, tiling_factor);
+		draw_quad(transform, texture, tiling_factor, tint_color);
 	}
 
 	void Renderer2D::draw_quad(const glm::mat4& transform, const glm::vec4& color)
@@ -243,7 +243,7 @@ namespace Harmony
 		float textureIndex = 0.0f;
 		for (uint32_t i = 1; i < Data.texture_slot_index; i++)
 		{
-			if (*Data.texture_slots[i].get() == *texture.get())
+			if (*Data.texture_slots[i] == *texture)
 			{
 				textureIndex = (float)i;
 				break;

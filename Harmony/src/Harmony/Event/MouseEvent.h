@@ -10,7 +10,7 @@ namespace Harmony
 	class MouseMovedEvent : public Event
 	{
 	public:
-		MouseMovedEvent(float x, float y)
+		MouseMovedEvent(const float x, const float y)
 			: _mouseX(x), _mouseY(y)
 		{}
 
@@ -33,7 +33,7 @@ namespace Harmony
 	class MouseScrolledEvent : public Event
 	{
 	public:
-		MouseScrolledEvent(float x_offset, float y_offset)
+		MouseScrolledEvent(const float x_offset, const float y_offset)
 			: _x_offset(x_offset), _y_offset(y_offset)
 		{}
 
@@ -56,11 +56,11 @@ namespace Harmony
 	class MouseButtonEvent : public Event
 	{
 	public:
-		inline MouseCode get_mouse_button() const { return _button; }
+		MouseCode get_mouse_button() const { return _button; }
 
 		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
 	protected:
-		MouseButtonEvent(MouseCode button)
+		MouseButtonEvent(const MouseCode button)
 			: _button(button)
 		{}
 
@@ -70,7 +70,7 @@ namespace Harmony
 	class MouseButtonPressedEvent : public MouseButtonEvent
 	{
 	public:
-		MouseButtonPressedEvent(MouseCode button)
+		MouseButtonPressedEvent(const MouseCode button)
 			: MouseButtonEvent(button)
 		{}
 
@@ -87,7 +87,7 @@ namespace Harmony
 	class MouseButtonReleasedEvent : public MouseButtonEvent
 	{
 	public:
-		MouseButtonReleasedEvent(MouseCode button)
+		MouseButtonReleasedEvent(const MouseCode button)
 			: MouseButtonEvent(button) {}
 
 		std::string debug_to_string() const override
