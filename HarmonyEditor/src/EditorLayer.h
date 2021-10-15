@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Harmony.h"
+#include "Panels/SceneHierarchyPanel.h"
 
 namespace Harmony
 {
@@ -39,6 +40,9 @@ namespace Harmony
 		glm::vec2 _viewport_size = { 0.0f, 0.0f };
 
 		glm::vec4 _square_color = { 0.2f, 0.3f, 0.8f, 1.0f };
+
+		// Panels
+		SceneHierarchyPanel _scene_hierarchy_panel;
 	};
 
 }

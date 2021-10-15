@@ -43,6 +43,8 @@ namespace Harmony
 		public:
 			void OnCreate()
 			{
+				auto& transform = get_component<TransformComponent>().Transform;
+				transform[3][0] = rand() % 10 - 5.0f;
 			}
 
 			void OnDestroy()
@@ -52,6 +54,7 @@ namespace Harmony
 			void OnUpdate(Timestep ts)
 			{
 				auto& transform = get_component<TransformComponent>().Transform;
+
 				float speed = 5.0f;
 
 				if (Input::is_key_pressed(Key::A))
@@ -66,6 +69,9 @@ namespace Harmony
 		};
 
 		_camera_entity.add_component<NativeScriptComponent>().Bind<CameraController>();
+		_second_camera_entity.add_component<NativeScriptComponent>().Bind<CameraController>();
+
+		_scene_hierarchy_panel.set_context(_active_scene);
 	}
 
 	void EditorLayer::on_detach()
@@ -167,6 +173,8 @@ namespace Harmony
 
 			ImGui::EndMenuBar();
 		}
+
+		_scene_hierarchy_panel.on_imgui_render();
 
 		ImGui::Begin("Settings");
 

@@ -162,10 +162,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\EditorLayer.h" />
+    <ClInclude Include="src\Panels\SceneHierarchyPanel.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\EditorApp.cpp" />
     <ClCompile Include="src\EditorLayer.cpp" />
+    <ClCompile Include="src\Panels\SceneHierarchyPanel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Harmony\Harmony.vcxproj">

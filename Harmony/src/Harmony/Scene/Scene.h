@@ -26,6 +26,7 @@ namespace Harmony
 		uint32_t _viewport_height{};
 
 		friend class Entity;
+		friend class SceneHierarchyPanel;
 	};
 
 }

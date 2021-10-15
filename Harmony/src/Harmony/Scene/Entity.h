@@ -45,7 +45,17 @@ namespace Harmony
 		}
 
 		operator bool() const { return _entity_handle != entt::null; }
+		operator uint32_t() const { return (uint32_t)_entity_handle; }
 
+		bool operator==(const Entity& other) const
+		{
+			return _entity_handle == other._entity_handle && _scene == other._scene;
+		}
+
+		bool operator!=(const Entity& other) const
+		{
+			return !(*this == other);
+		}
 	private:
 		entt::entity _entity_handle{ entt::null };
 		Scene* _scene = nullptr;
