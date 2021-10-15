@@ -44,10 +44,10 @@ namespace Harmony
 			_scene->_registry.remove<T>(_entity_handle);
 		}
 
-		operator bool() const { return static_cast<int>(_entity_handle) != 0; }
+		operator bool() const { return _entity_handle != entt::null; }
 
 	private:
-		entt::entity _entity_handle{ 0 };
+		entt::entity _entity_handle{ entt::null };
 		Scene* _scene = nullptr;
 	};
 
