@@ -269,31 +269,11 @@ namespace Harmony
 	{
 		HM_PROFILE_FUNCTION();
 
-		constexpr size_t quad_vertex_count = 4;
-		const float texture_index = 0.0f;
-		constexpr glm::vec2 texture_coords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
-		const float tiling_factor = 1.0f;
-
-		if (Data.quad_index_count >= Renderer2DData::max_indices)
-			flush_and_reset();
-
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::rotate(glm::mat4(1.0f), glm::radians(rotation), { 0.0f, 0.0f, 1.0f })
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
-		for (size_t i = 0; i < quad_vertex_count; i++)
-		{
-			Data.quad_vertex_buffer_ptr->position = transform * Data.quad_vertex_positions[i];
-			Data.quad_vertex_buffer_ptr->color = color;
-			Data.quad_vertex_buffer_ptr->tex_coord = texture_coords[i];
-			Data.quad_vertex_buffer_ptr->tex_index = texture_index;
-			Data.quad_vertex_buffer_ptr->tiling_factor = tiling_factor;
-			Data.quad_vertex_buffer_ptr++;
-		}
-
-		Data.quad_index_count += 6;
-
-		Data.stats.quad_count++;
+		draw_quad(transform, color);
 	}
 
 	void Renderer2D::draw_rotated_quad(const glm::vec2& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, float tiling_factor, const glm::vec4& tint_color)
@@ -305,49 +285,11 @@ namespace Harmony
 	{
 		HM_PROFILE_FUNCTION();
 
-		constexpr size_t quad_vertex_count = 4;
-		constexpr glm::vec2 texture_coords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
-
-		if (Data.quad_index_count >= Renderer2DData::max_indices)
-			flush_and_reset();
-
-		float texture_index = 0.0f;
-		for (uint32_t i = 1; i < Data.texture_slot_index; i++)
-		{
-			if (*Data.texture_slots[i].get() == *texture.get())
-			{
-				texture_index = (float)i;
-				break;
-			}
-		}
-
-		if (texture_index == 0.0f)
-		{
-			if (Data.texture_slot_index >= Renderer2DData::max_texture_slots)
-				flush_and_reset();
-
-			texture_index = (float)Data.texture_slot_index;
-			Data.texture_slots[Data.texture_slot_index] = texture;
-			Data.texture_slot_index++;
-		}
-
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::rotate(glm::mat4(1.0f), glm::radians(rotation), { 0.0f, 0.0f, 1.0f })
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
-		for (size_t i = 0; i < quad_vertex_count; i++)
-		{
-			Data.quad_vertex_buffer_ptr->position = transform * Data.quad_vertex_positions[i];
-			Data.quad_vertex_buffer_ptr->color = tint_color;
-			Data.quad_vertex_buffer_ptr->tex_coord = texture_coords[i];
-			Data.quad_vertex_buffer_ptr->tex_index = texture_index;
-			Data.quad_vertex_buffer_ptr->tiling_factor = tiling_factor;
-			Data.quad_vertex_buffer_ptr++;
-		}
-
-		Data.quad_index_count += 6;
-
-		Data.stats.quad_count++;
+		draw_quad(transform, texture, tiling_factor, tint_color);
 	}
 
 	void Renderer2D::reset_stats()

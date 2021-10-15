@@ -157,13 +157,7 @@ namespace Harmony
 
 		ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
 
-		if (_viewport_size != *((glm::vec2*)&viewportPanelSize) && viewportPanelSize.x > 0 && viewportPanelSize.y > 0)
-		{
-			_framebuffer->resize((uint32_t)viewportPanelSize.x, (uint32_t)viewportPanelSize.y);
-			_viewport_size = { viewportPanelSize.x, viewportPanelSize.y };
-
-			_camera_controller.on_resize(viewportPanelSize.x, viewportPanelSize.y);
-		}
+		_viewport_size = { viewportPanelSize.x, viewportPanelSize.y };
 
 		uint32_t textureID = _framebuffer->get_color_attachment_renderer_id();
 		ImGui::Image((void*)textureID, ImVec2{ _viewport_size.x, _viewport_size.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
