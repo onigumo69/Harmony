@@ -19,6 +19,7 @@ namespace Harmony
 		void on_imgui_render();
 	private:
 		void draw_entity_node(Entity entity);
+		void draw_components(Entity entity);
 	private:
 		Ref<Scene> m_Context;
 		Entity m_SelectionContext;
