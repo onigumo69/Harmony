@@ -1,1 +1,1 @@
-a simple OpenGL game engine
+a well architectured OpenGL game engine
